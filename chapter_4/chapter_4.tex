@@ -1,0 +1,138 @@
+\chapter{Detection and tracking of the leukocyte adhesion cascade \emph{in vitro}}
+\ifpdf
+    \graphicspath{{chapter_4/figs/}}
+\fi
+Leukocyte extravasation, is the process of leukocyte migration out of the vasculature. At the site of tissue damage or inflammation leukocytes move from circulating in the blood to the surrounding tissue. The arrest of circulating leukocytes and their exit from the vasculature relies on appropriate expression and coordination of cell surface adhesion receptors on the leukocytes and endothelium~\cite{Mayadas1993}. The series of adhesion and activation events from the arrest of leukocytes leading to their extravasation is known as the leukocyte adhesion cascade. A sequence of five steps have been identified in the leukocyte adhesion cascade; slow rolling, adhesion strengthening, intraluminal crawling, paracellular and transcellular migration, and migration through the basement membrane~\cite{Ley2007}.
+
+A variety of adhesion receptors have been implicated in leukocyte endothelial interactions and are thought to play roles in recruitment, arrest, and extravasation of leukocytes. A critical role is played by the family of $\beta$2 or leukocyte integrins~\cite{Springer1990, Mayadas1993}. The genetic disease leukocyte adhesion deficiency I (LADI) is caused by a mutation of the $\beta$2 integrin gene. The increased concentration of circulating leukocytes in patients with LADI implies that $\beta$2 or leukocyte integrins play an important role in leukocyte extravasation. Patients with LADI are susceptible to frequent bacterial and fungal infections~\cite{Anderson1987}. Effective arrest of leukocytes at an inflammation site requires local activation of circulating leukocytes. The circulating leukocytes transiently interact with the activated endothelium, reducing their velocity in the direction of flow, allowing activation of their $\beta$2 integrins, leading to arrest and extravasation. This transient interaction is manifested as rolling of the leukocytes along the vessel wall in areas of inflammation~\cite{Mayadas1993, Atherton1972}.
+
+The selectins are a family of adhesion receptors that have been shown to mediate rolling of leukocytes. There are three known selectins; L-Selectin, E-Selectin and P-Selectin, which are encoded by three closely linked genes~\cite{Watson1990}. The integral membrane protein leukocyte receptor P-selectin is stored within the membrane of Weibel-Palade bodies (WPBs) of endothelial cells~\cite{Bonfanti1989, McEver1989}, from where it is delivered to the cell surface within minutes after secretagogue-triggered exocytosis~\cite{McEver2002}. P-selectin plays a key early role in the inflammatory trafficking of leukocytes, being the first receptor involved in recruiting leukocytes from flowing plasma to the endothelial surface~\cite{Larsen1989}.
+
+To observe mechanisms of leukocyte recruitment across human endothelial cells an \emph{in vitro} environment mimicking the bloodstream is reproduced and interactions recorded. A phase contrast microscope connected to a flow assay system records video frames of leukocytes under flow on a confluent monolayer of human umbilical vein endothelial cells (HUVECs). Physiological levels of shear stress are applied by controlling the flow rate. Hypotheses can be tested by comparing the effect of inhibitors of leukocyte recruitment across HUVECs to a control group of cells.
+
+Phase contrast microscopy is advantageous for the study of live cells and their motility. It provides good contrast for cell edge detection without exogenous dyes, uses only moderate levels of light and is free from artefacts of bleaching and photo-damage as are common in fluorescence microscopy~\cite{Ambuhl2012}. Phase contrast microscopy translates tiny variations in the phase of incident light from a specimen into perceptible changes in light amplitude. Phase differences in light occur due to the relative refraction index of the medium through which the light has travelled.
+
+Analysis of the phase contrast image sequence aquired during the flow assay has thus far been limited to manually counting the number of interactions occuing between the leukocytes and endothelium. An interaction is deemed to be an event in which a leukocyte, slows significantly or stops. This method of analysis is time consuming, requires a subjective judgement and is prone to human error.
+
+It is proposed that a computational approach to quantify these rolling assays, would yield much more information leading to biological insight into the adhesion cascade and mechnamisms of leukocyte rolling.
+
+\subsection{Image acquisition}
+HUVECs were seeded into $\mu$-slides IL-4 (ibidi, Munich, Germany) \SIrange{24}{48}{\hour} before experimentation. The slide was placed on the microscope stage of an Axiovert 100 (Carl Zeiss, Welwyn Garden City, UK) maintained at \SI{37}{\celsius} and imaged using a 20$\times$ lens. The $\mu$-slide was connected to a syringe pump system (Harvard Aparatus, Holliston, MA, USA) to draw fluid through the chamber to give a wall shear stress of \SI{0.07}{\pascal} (0.7~$dyne~cm^{-2}$). Perfusion media (HBSS + Ca$^{2+}$ + Mg$^{2+}$ + 0.2~\% BSA) was drawn through the chamber for a few minutes to flush thorough any cellular debris and ensure the HUVEC monolayer was intact. HUVECs were treated with perfusion media with or without PMA (\SI{100}{\nano\gram\per\milli\litre}) for \SI{5}{\minute} under flow. \SI{e6}{\per\milli\litre} THP-1 cells (grown in RPMI medium 1640 (Gibco BRL) plus \SI{4.5}{\gram\per\litre} D-glucose, \SI{1.5}{\gram\per\litre} sodium bicarbonate, \SI{1}{\mmol} sodium pyruvate \SI{10}{\mmol} hepes, \SI{300}{\milli\gram\per\litre} L-glutamine, \SI{0.05}{\mmol} 2-mercaptoethanol and 10~\% FCS) were added to the media +⁄− PMA (\SI{100}{\nano\gram\per\milli\litre}) to stimulate or mock stimulate HUVECs. For each condition a \SI{3}{\minute} movie was recorded to observe any THP-1 adhesive interactions with the monolayer. Videos were captured using a Sony CCD-Iris camera and ADVC 110 analogue to digital video converter (GV Thomson, Billancourt, France). 
+
+\subsection{Image processing}
+Processing and analysis of the leukocyte adhesion cascade image sequence aims to, accurately detect the leukocytes in each frame of the video, link leukocytes between frames forming a trajectory, and output information about the trajectory of each leukocyte. A variety of approaches have been trialled to meet these requirements.
+
+To detect leukocytes in each frame of the video a manual segmentation approach is impractical due to the large number of image frames to be analysed and the level of reproducibility required. An automatic threshold based segmentation, although increasingly common in fluorescence microscopy, accurate and robust procedures for phase contrast images are less well developed~\cite{Hand2009}. 
+
+Two prominent artifacts introduced by phase contrast microscopy are halos and shade-offs. A halo is a bright region surrounding a specimen, and the shade-off is an effect where the intensity profile of a large specimen gradually increases from the edges to the center. Halos are observed in this study as the result of diffracted light passing through the phase ring as well as the non-phase areas and interacting at the image plane~\cite{Yin2012}. The halo adds artificial structure to the specimen. In our setting, bright halos appear around the leukocytes with an intensity and width that depend on the local thickness of the cell. Shade-offs equalise the intensity of the inner and outer regions of large leukocytes to the same value~\cite{Otaki2000}, which complicates the separation between foreground and background and hampers the use of thresholding techniques. The bright ring surrounding the adhering leukocyte in the leftmost image of Fig.\ref{leukocyteRolling-zoom} is an example of a halo, the shade-off can also be observed in this image. The halo effect can be exploited in this study since it provides a distinctive signature for the leukocytes.
+
+Determining accurate segmentation contours is not a priority in this study, since the exposure time and flow rate is such that a leukocyte cell appears in a video frame as a streak, where its length is dependent on its speed. Morphological information about the cell, therefore cannot be reliably extracted. As such the objective of the image processing is to detect the leukocytes and determine their position in each video frame. To achieve this the distinctive halo effect can be exploited using a Haar-features object recognition classification cascade~\cite{Lienhart2002}. 
+
+Leukocyte detection and tracking was performed in Python, using the OpenCV (Open Source Computer Vision) programming library. The video processing pipeline is comprised of four stages; a background removal pre-processing step, training a cascade classifier, detecting leukocytes using the classifier and linking leukocytes between frames to form trajectories. 
+
+\begin{figure}[h]\centering
+	\begin{subfigure}[b]{0.7\linewidth}
+		\begin{tikzpicture}[figurename=leukocyteRolling, zoomboxarray,
+			zoomboxes below,
+			zoomboxarray columns=4,
+			zoomboxarray rows=1,
+			connect zoomboxes,
+			zoombox paths/.append style={thick, dashed, gray}]
+			\node [image node] {\includegraphics[width=\textwidth]{150224_Luc_1_MMImages_1-1.png}};
+			\zoombox[magnification=8]{0.365, 0.27}
+			\zoombox[magnification=8]{0.47, 0.52}
+			\zoombox[magnification=8]{0.565, 0.38}
+			\zoombox[magnification=8]{0.647, 0.18}
+		\end{tikzpicture}
+	\end{subfigure}
+\caption{Image (a) is a frame obtained from a phase contrast microscope image sequence of leukocytes under flow on a monolayer of human umbilical vein endothelial cells (HUVECs). Images (b) from left to right are a firmly adhering leukocyte, a slow rolling leukocyte, a rolling leukocyte and the rightmost image is debris or dead cells.}
+\label{leukocyteRolling}
+\end{figure}
+
+\subsubsection{Background removal}
+An adaptive histogram equalisation is performed on each frame prior to background subtraction, this removes uneven illumination in the video and enhances the difference between leukocytes and the HUVEC monolayer. The image is divided into smaller tiles, and histogram equalisation applied. To reduce amplification of noise, contrast limiting is applied, if any histogram bin is above the specified contrast limit, those pixels are clipped and distributed uniformly to other bins before applying histogram equalisation. After equalisation, to remove artifacts in tile borders, bilinear interpolation is applied~\cite{Hummel1977}.
+
+A common approach to aid in identifying moving objects in a video sequence is to perform a background subtraction. Given a constant background, moving objects can be identified as regions within a frame that differ significantly from a background model. Identifying moving objects from a video sequence is a fundamental and critical task in video surveillance, traffic monitoring and analysis, human detection and tracking, and gesture recognition in human-machine interface~\cite{Cheung2004}. To identify leukocytes flowing over a constant background of a fixed HUVEC monolayer, a background removal algorithm is needed that is robust to changes in illumination and can detect long term changes.
+
+A first attempt at removing the background was to create a mean image, from all the frames in the sequence, and subtract this mean image from each frame of the sequence. This method did enhance the moving leukocytes over the static background but did not account for the subtle changes in background illumination over the image sequence and the longer-term changes. Firmly adhering leukocytes that transmigrate or move slowly over a long time period, and debris in the flow can cause artifacts in the background subtracted image.
+
+An improvement to the background subtraction algorithm was to use a running average background image. For each frame in the image sequence a mean of $n$ frames surrounding it is calculated and the absolute difference between the current frame and the background image for that frame is calculated. Taking the absolute difference between the original image and averaged image is advantageous over a simple subtraction because an absolute difference method exposes illumination changes beyond the bit depth of the image, by maintaining negative values. The running average also responds to gradual changes in illumination throughout the time-series and does not create significant image artifacts. Typically, an $n$ value of 100 is effective, this can be adjusted depending on the flow rate and frame rate of the setup. The algorithm uses the closest $n$ frames and for frames in the middle of the sequence uses $n/2$ frames ahead and $n/2$ frames behind. For frames at the start of the sequence the running average uses more frames that are ahead of the current, and for frames at the end more frames prior to the current are used.
+
+\subsubsection{Cascade classifier detection}
+To detect leukocytes in video frames a machine learning approach for visual object recognition capable of detecting objects quickly and accurately has been applied. Object detection is based on a framework originally developed for real time face detection using a set of Haar-like features~\cite{Viola2001, Lienhart2002}.
+
+Haar wavelet feature sets are a faster alternative to image intensity features, that have been used in object detection~\cite{Papageorgiou1998}. An adaption of Haar features is Haar-like features, which considers adjacent rectangular regions at a specific location in a detection window, sums up the pixel intensities in each region and calculates the difference between these sums. This difference is then used to categorise subsections of an image. 
+
+A cascade of boosted classifiers working with Haar-like features is trained with a few hundred image samples of the object to be detected, in this case leukocytes at different stages of the adhesion cascade. Positive samples (Fig.~\ref{positive_images:a}) are views containing a leukocyte, these were selected manually to include a range of leukocytes with differing background illumination and at different stages in the adhesion cascade. Negative samples (Fig.~\ref{negative_images:b}) are arbitrary background images with the same dimensions as the positive samples. To generate negative samples an ImageJ macro was written to extract a set of fixed size image regions from the video at random frames and positions, any of these images containing leukocytes were then manually removed. 
+\begin{figure}[htbp]{} 
+	\begin{subfigure}[b]{\linewidth}
+		\centering
+		\includegraphics[width=0.1\linewidth]{positive_images_01} 
+		\includegraphics[width=0.1\linewidth]{positive_images_02} 
+		\includegraphics[width=0.1\linewidth]{positive_images_03} 
+		\includegraphics[width=0.1\linewidth]{positive_images_04} 
+		\includegraphics[width=0.1\linewidth]{positive_images_05} 
+		\includegraphics[width=0.1\linewidth]{positive_images_06} 
+		\includegraphics[width=0.1\linewidth]{positive_images_07} 
+		\includegraphics[width=0.1\linewidth]{positive_images_08} 
+		\caption{} 
+		\label{positive_images:a} 
+	\end{subfigure} 
+	\begin{subfigure}[b]{\linewidth}
+		\centering
+		\includegraphics[width=0.1\linewidth]{negative_images_01} 
+		\includegraphics[width=0.1\linewidth]{negative_images_02} 
+		\includegraphics[width=0.1\linewidth]{negative_images_03} 
+		\includegraphics[width=0.1\linewidth]{negative_images_04} 
+		\includegraphics[width=0.1\linewidth]{negative_images_05} 
+		\includegraphics[width=0.1\linewidth]{negative_images_06} 
+		\includegraphics[width=0.1\linewidth]{negative_images_07} 
+		\includegraphics[width=0.1\linewidth]{negative_images_08} 
+		\caption{} 
+		\label{negative_images:b} 
+	\end{subfigure} 
+\caption{Example of positive and negative samples used to train the object detection classifier. This is performed after background subtraction, the halo artifact produces a distinctive ring around leukocytes. Images in (a) are positive samples containing a leukocyte. Images in (b) do not contain leukocytes and are negative images.}
+\label{positiveNegativeSamples} 
+\end{figure}
+
+From the positive samples and negative samples a superset of training sample objects is created using the \emph{opencv\_createsamples} utility. This takes each positive sample and creates a large set of images, where each image in the set is transformed and distorted positive image that is overlaid onto a random negative sample. The transformations include rotating the source image randomly around three axes, adding white noise to the foreground and performing inversions. This utility allows for the number of samples created from one image to be adjusted, the maximum rotations in the $x$, $y$ and $z$ directions to be specified, and the maximum pixel value deviation to be set. The leukocyte classifier creates 1500 samples from each positive sample, where the maximum pixel value deviation is set to 20 and \SI{0.2}{\radian} maximum angular deviation is set.
+
+The next step is to train the classifier with the \emph{opencv\_traincascade} utility using the samples superset created. The resultant Haar-like features classifier consists of successively more complex classifiers in a cascade structureHaar-like features. This cascade structure increases the detection speed by quickly rejecting regions unlikely to contain leukocytes and focusing attention on promising regions of the image. The rationale behind this is that it is often possible to rapidly determine where in an image an object might be~\cite{Itti1998}. The classifier at every stage is complex but are constructed from basic classifiers, using the gentle AdaBoost technique~\cite{Friedman2000}.
+
+After a classifier has been trained, generating an extensible markup language (XML) file, it can be used to detect objects of different sizes within a region of interest. To search for objects in the image a search window is moved across the image and at every location uses the classifier to check the likelihood of an object being present. The search window can be resized and scan the image multiple times to check for objects of interest in different sizes. Since leukocytes are of approximately the same size within our image a small range of size is searched. The OpenCV \emph{detectMultiScale} function checks if a region is likely to contain an object, and returns a data frame of detected objects as rectangles with $x$, $y$ coordinates and width and height.
+
+\subsubsection{Tracking leukocyte trajectories}
+Having detected the positions of leukocytes in each frame the next step is to link the leukocytes between frames to form trajectories. For this purpose existing tracking packages such as \emph{TrackMate} in ImageJ and \emph{TrackPy} in Python were trialled. These were found more suited to problems of tracking particles in Brownian motion. A tracking protocol has been written to exploit the unidirectional nature of the leukocyte flow assay. The premise behind this trajectory tracking mechanism is for each detected leukocyte, termed the \emph{original leukocyte}, to create a list of \emph{candidate leukocytes} in the proceeding frame. The \emph{candidate particles} are selected as those that lie within a preset range of $x$ values from the \emph{original leukocyte}, and have $y$ values greater than the \emph{original leukocyte}. The \emph{chosen particle} is then selected as the \emph{candidate particle} that is closest to the \emph{original particle} in the $y$ axis. The \emph{original particle} and \emph{chosen particle} in both frames are matched and allocated the same \emph{particle\_ID}, allowing for the trajectory to be mapped over multiple frames.
+
+The data frame containing the detected leukocyte rectangles $x$ and $y$ coordinates is used in the tracking stage of this workflow. The data frame is sorted by the frame number and then the leukocytes $y$-coordinates. Leukocytes in the first frame of the video are assigned a \emph{particle\_ID} depending on their $y$-coordinate. From this initial setup a \emph{particle\_ID} is given to all of the leukocytes in the data frame. For each row in the data frame if the particle does not have a \emph{particle\_ID} assigned then it is assigned the next highest \emph{particle\_ID}. Following this, the algorithm looks ahead to particles in the next frame searches for \emph{candidate particles} within a narrow band of $x$ values and $y$ values greater than the \emph{original particle}. This gives a list of candidate particles in the next frame that could be linked to form a trajectory. Typically, the range to search in the $x$ axis is narrow given that the flow is in one direction and the variation in the $x$ value between frames should be minimal. The candidate particles in the lookahead frame are sorted according to their $y$ values, the particle with the minimum $y$ value,if it exists, is assigned the same \emph{particle\_ID} as the original particle. In the instance that the initial particle has a \emph{particle\_ID} already assigned then the chosen particle in the lookahead frame is assigned the same value as the original particle. 
+
+After iterating through all the rows in the data frame every detected leukocyte in every frame of the video has a \emph{particle\_ID} assigned to it. Further to this trajectories can be pruned based on their minimum length, very short trajectories that occur in less than 10 frames are unlikely to be real so are removed. 
+
+\begin{figure}[h]\centering
+	\begin{subfigure}[b]{0.7\linewidth}
+		\begin{tikzpicture}[figurename=leukocyteRolling, zoomboxarray,
+			zoomboxes below,
+			zoomboxarray columns=3,
+			zoomboxarray rows=1,
+			connect zoomboxes,
+			zoombox paths/.append style={thick, dashed, gray}]
+			\node [image node] {\includegraphics[width=\textwidth]{150224_Luc_1_MMImages_1_0090.png}};
+			\zoombox[magnification=8]{0.369, 0.262}
+			\zoombox[magnification=8]{0.474, 0.511}
+			\zoombox[magnification=8]{0.569, 0.372}
+		\end{tikzpicture}
+	\end{subfigure}
+\caption{Image (a) is a frame obtained from a phase contrast microscope image sequence of leukocytes under flow on a monolayer of human umbilical vein endothelial cells (HUVECs), with object detection and tracking applied. Images in (b) show successful tracking of a firmly adhering leukocyte on the left and two rolling leukocytes in the middle and rightmost images.}
+\label{leukocyteRolling}
+\end{figure}
+
+\subsection{Discussion}
+At this preliminary stage the leukocyte detection and tracking workflow has not been extensively tested. A first step in assessing the validity and accuracy of the technique described is to compare the numbers of slow rolling and firmly adhering leukocytes in videos quantified with the detection and tracking routine to those that have been quantified manually. If the methodology described is able to detect similar numbers of these slow rolling or firmly adhering leukocytes it would indicate that this method is able to quantify biological differences in different video sequences. 
+
+The sensitivity of the Haar-like features object detection may be improved by adjusting parameters in the \emph{detectMultiScale} window, such as the minimum number of neighbours. The object classification works well but has difficulty when particles are very close or overlapping, by allowing more objects in a set area may improve the detection rate.
+
+A number of improvements can also be implemented to improve the particle tracking. An easy improvement would be to remove all leukocyte trajectories that are in the first or last frame of the video, since these cannot be considered as complete trajectories. The number of frames that the tracking algorithm looks ahead could be increased. If a particle is not detected in a frame the trajectory may be preserved.
+
+An alternative method of pruning trajectories, rather than specifying a limit to the minimum number of frames for a trajectory, would be to only accept trajectories as valid if they first appear with a $y$ coordinate near the top of the image and end with a $y$ coordinate near the bottom of the image. This may prove a more valid approach to tracing trajectories.
+
+A final improvement that could be very interesting biologically and allow for much deeper analysis would be to segment the background HUVEC monolayer. A segmentation protocol could be applied to do this or it could even be done manually, as there are usually less than 100 cells to segment in an image. By doing this the role of individual endothelial cells in the leukocyte adhesion cased could be observed and quantified. 

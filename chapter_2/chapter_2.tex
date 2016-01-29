@@ -1,0 +1,224 @@
+\ifpdf
+	\graphicspath{{chapter_2/figs/}}
+\fi
+\chapter{Morphometric analyses of endothelial organelles}
+Analyses of endothelial organelle morphometry were performed on confocal microscopy images acquired with separate cell organelle channels. Cell nuclei were fluorescent stained with non-antibody methods, additional organelles were stained with immunofluorescence antibody methods.
+Our capability to image the Weibel-Palade bodies (WPBs) of primary human umbilical endothelial cells (HUVECs) on a high-throughput screening confocal microscope, provides substantial data on which to study the mechanisms of WPB formation and function. A methodology previously developed to quantify images from these high-throughput WPB studies at a population level, has been used to advance the understanding of the underlying nature of endothelial processes~\cite{Ferraro2014,Stevenson2014}. This methodology was used as a basis for further development and more advanced analysis to include endothelial cell segmentation and data analysis at a cellular level. Analysis at a cellular level has allowed an even broader range of hypotheses to be investigated.
+
+High-throughput studies of WPBs at a population level have shown that they do not exhibit a normal distribution of lengths. It has been hypothesised that within a population of endothelial cells, subpopulations exist with distinct morphometric features and related functions. Acquiring morphometric data at a cellular and whole population level allows these kinds of hypotheses to be tested. Studies of exocytic response can also be performed, where endothelial cells are treated with different secretagogues.
+
+\section{Morphometric analysis of Weibel-Palade bodies}
+\subsection{Image acquisition}
+Images are obtained from an Opera high-content screening (PerkinElmer) confocal microscope of HUVECs. The HUVECs are cultured, fixed and immunostained in 96-well microtitre plates and imaged using a 40$\times$ air objective lens (numerical aperture of 0.6). At 40$\times$ magnification the width and height of each pixel in the obtained images corresponds to a physical width and height of \SI{0.1615}{\micro\meter}. Morphometric measurements can thereby be returned corresponding to the correct physical dimensions. The resolution limit of the microscope can be calculated using Abbe's equation~\cite{Abbe1873},
+
+\begin{equation}
+R=0.61\frac{\lambda}{NA},
+\end{equation}
+
+where, $R$ is the resolution limit, $\lambda$ is the wavelength and $NA$ the numerical aperture of the optical system. The available excitation wavelength range on the microscope of \SIrange{488}{640}{\nano\meter} and numerical aperture gives a minimum resolvable resolution range of \SIrange{496}{650}{\nano\meter}. The smallest resolvable structures in the images obtained are therefore between 2 and 4 pixels in length. Typically, 9 fields of view are imaged per well, generating datasets of 864 images and approximately 10000 complete endothelial cells.
+
+Cell nuclei are stained either by Hoechst or DAPI (4',6-diamidino-2-phenylindole) dyes, which bind to tightly packed AT-rich regions of DNA in chromosomes within the nucleus, making an effective nuclear stain. 
+
+Immunostaining of vWF within WPBs involves the use of a primary and a secondary antibody. Over multiple experiments many different antibodies have been trialled for this purpose. A Dako rabbit anti-vWF polyclonal primary antibody, is an antiserum that has many different antibodies that recognise different portions of the vWF protein, since it is produced using whole vWF isolated from human plasma to immunise the rabbit. In fixed HUVECs, the Dako antibody will bind to the vWF that is in WPBs but will also bind to the unprocessed vWF that is in the endoplasmic reticulum (ER). The ER is a mesh-like structure that extends over the interior of the cell, the ER staining may overlap with the WPB staining and make it difficult to identify WPB against the ER.
+
+To overcome the ER interference problem, a secondary rabbit anti-propeptide polyclonal antibody is used. This is a rabbit antibody from rabbits that were injected with a synthetic 8 amino acid peptide sequence (SSPLSHRS) that is found at the end of the proregion of vWF after it has been processed. This sequence is not available for antibodies to bind to it in the unprocessed ER form of vWF, so as a result, the antibodies will only bind to the vWF in WPBs.
+
+The cell plasma membrane is stained either by anti-VE-Cadherin antibodies or fluorophore-conjugated wheat germ agglutinin (WGA). Anti-VE-Cadherin is an antibody specific for VE-Cadherin, which is a cell-cell adhesion glycoprotein found in between endothelial cells~\cite{Vestweber2008}. It is important for holding endothelial cells together with their neighbour cells to form a tight barrier. WGA is a member of the lectin family that binds to N-acetyl-D-glucosamine and sialic acid residues found on the surface of cell membranes, that has been used extensively to stain surface membranes.
+
+The hypothesis being tested dictates the experimental setup and the specific cell organelles that are immunostained and imaged. Invariably, vWF is immunostained and imaged as a marker for WPBs along with cell nuclei, additional staining may include the \emph{trans}-Golgi network (TGN), endoplasmic reticulum and cell plasma membrane. PerkinElmer's Opera high throughput confocal microscope allows for a maximum of 4 channels to be imaged per experiment. Along with the vWF channel, two channels are required for accurate cell segmentation, namely, the nuclei and plasma membrane channel. This leaves the last channel that can be used to stain for additional organelles or left empty.
+
+The resulting image data is combined as a set of images each with multiple channels, in a 16-bit TIFF format.
+\subsection{Image processing}
+An ImageJ~\cite{Schneider2012} macro has been written for image processing of WPB stained images in endothelial cells. The image processing approach is divided into three parts; segmentation of WPBs, segmentation of nuclei and segmentation of endothelial cells. The segmentation of WPBs depends upon thresholding of the vWF immunostained channel, whilst cellular segmentation uses segmented nuclei as a seed to find contours in the plasma membrane channel.
+
+An iterative approach implemented using a for loop processes each image in a dataset sequentially. Images that are erroneous perhaps due to problems in staining can easily be excluded. This method is advantageous providing an output for each image, including overlays of segmentation contours and results tables. An overlay of segmentation contours allows the segmentation result to be checked visually to ensure it is accurate. On each iteration of the loop results are appended to the results tables and overwritten. 
+
+The flowchart in Fig.~\ref{imageProcessingPipeline:WPB} presents each step in the image processing pipeline for the three channels. The black arrows indicate dependencies between the channels. The plasma membrane channel is dependent on an input from the nucleus channel as the nucleus acts as a seed for the cell. The WPB channel is dependent on an input form the plasma membrane channel to assign a WPB to it's constituent cell. Segmented nuclei are used as seeds to find the plasma membrane boundaries, hence the plasma membrane channel has a dependence on the nuclei channel. When the cell boundaries have been identified an image termed the~\emph{influence zone} is generated giving each cell in the image a unique greyscale pixel identifier (Fig.~\ref{pmChannel:d}). For each segmented WPB the pixel values at the corresponding locations in the \emph{influence zone} image are measured to ascertain to which cell the object belongs. The WPB channel therefore, also have a dependence on the plasma membrane channel for cell identification. The processing of the ImageJ macro is constructed in an order relative to these dependencies, such that the nucleus channel is processed first, followed by the plasma membrane channel and finally the WPB channel.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.6\textwidth]{imageProcessingPipeline.pdf}
+	\caption[Image processing pipeline WPB]{for morphometric analyses of Weibel-Palade bodies. The dark red trapeziums indicate inputs and outputs, red ellipses represent significant intermediary images in the pipeline, blue rectangles are image processing steps and blue diamonds represent image duplications.}
+	\label{imageProcessingPipeline:WPB}
+\end{figure}
+
+\subsubsection{Nuclei segmentation}
+The first stage of the image processing workflow is to segment nuclei. Identifying nuclei is fundamental to cellular segmentation, and therefore the assignment of WPBs to their constituent cells. The consistent staining of the DAPI and Hoechst fluorescent dyes over many experiments, has lead to the development of a stable optimised nuclei segmentation routine that does not need adjusting between experiments.
+
+A first attempt for segmentation of nuclei, was to threshold the nuclei as foreground objects and remove any artifacts in the thresholded image smaller than a predetermined size. Measurements would then be taken of the remaining objects. In most cases this basic approach to segmentation is adequate, however this method fails to separate close or touching nuclei. An attempt to overcome this was to use the watershed transform~\cite{Vincent1991} on the segmented objects. The watershed approach was found to over-segment the nuclei, for example the nucleus in the lower image of Fig.~\ref{nucleiChannel-zoom} would be incorrectly split by the watershed transform.
+
+A new segmentation protocol was developed to separate close and touching nuclei. The nuclei channel image is duplicated to form two images referred to in Fig.~\ref{imageProcessingPipeline:WPB} as \emph{nucImg1} and \emph{nucImg2}. The integrity of the raw image is mainly preserved in \emph{nucImg2}, only a median filter is applied, with a 5~$\times$~5 kernel to remove noise. The \emph{nucImg1} image is thresholded, using the IsoData algorithm~\cite{Ridler1978}, creating a binary image. In the thresholded nuclei image holes are filled. To separate those nuclei that are incorrectly identified as one object a Euclidean distance map (EDM) is generated, followed by a greyscale erosion and finally, thresholding is reapplied. This technique identifies the nuclei seeds (the white nuclei centres in Fig.~\ref{nucleiChannel:b}). From these seeds a Voronoi tessellation image is generated (the white lines in Fig.~\ref{nucleiChannel:b}). These lines are subtracted from the \emph{nucImg2} image, when thresholding is applied to the resultant image the nuclei are separated. 
+ 
+\begin{figure}[htbp]\centering
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{104_nucImg_ECD} 
+		\caption{}
+		\label{nucleiChannel:a} 
+		\vspace{1ex}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{107a_nucImg_voronoiThreshold} 
+		\caption{}
+		\label{nucleiChannel:b} 
+		\vspace{1ex}
+	\end{subfigure} 
+	\begin{subfigure}[b]{1.1\linewidth}
+		\begin{tikzpicture}[figurename=nucleiChannel, zoomboxarray,
+			zoomboxes right,
+			zoomboxarray columns=1,
+			zoomboxarray rows=2,
+			connect zoomboxes,
+			zoombox paths/.append style={thick, dashed, gray}]
+			\node [image node] {\includegraphics[width=0.446\textwidth]{nucOverlay_001001001_Field_002}};
+			\zoombox[magnification=2.9]{0.18, 0.12}
+			\zoombox[magnification=2.9]{0.55, 0.18}
+		\end{tikzpicture}
+		\label{nucleiChannel:d} 
+	\end{subfigure}
+\caption{Image processing stages and segmentation contours for nuclei channel. Image (a) is process the Euclidean distance map (EDM) image. Nuclei seeds and Voronoi lines are shown in image (b). The final segmentation outline is overlaid in red on the original image in (c), with an example of touching nuclei split in the upper image of (d) and an example of a nucleus that would be split by the watershed algorithm in the lower image.}
+\label{nucleiChannel}
+\end{figure}
+
+To test this new approach to segmentation an image dataset was compiled from 100 images over two experiments, each with at least one close or touching nucleus. A ground truth was established by annotating the 2440 nuclei in the dataset. The number of instances where the segmentation result differed from the ground truth was recorded, this may for example be where two nuclei are not split or an unusually shaped nucleus is split. The watershed approach resulted in 64 segmentation faults whilst the new approach lead to 25 segmentation faults. 
+
+An example of this method for splitting touching nuclei is the top image in Fig.~\ref{nucleiChannel-zoom}, the two touching nuclei would by a simple thresholding approach be identified as one object. In Fig.~\ref{nucleiChannel:b} the nuclei seeds have been separated, so when the Voronoi image is generated a line is drawn equidistant between these two seed points. Subtraction of the Voronoi image from the nuclei image creates a clear line dividing the two nuclei. Thresholding of the image is then able to identify these as separate nuclei. 
+
+The final nuclei image processing step is to remove objects smaller than than \SI{30}{\micro\meter\squared}. These objects are too small to be nuclei and are most likely anomalous staining artifacts. The remaining segmented objects are identified as nuclei and their morphometric features are output as a comma separated value (CSV) results table. 
+
+\subsubsection{Weibel-Palade body segmentation}
+\label{singleCellAnalysis:wpb}
+A versatile and adjustable segmentation protocol is required to segment the variable staining from different vWF anti-bodies used to mark WPBs. Segmentation of WPBs is achieved by subtracting background illumination, thresholding the image in local regions and filtering thresholded binary particles based on morphometric criteria. 
+
+A rolling ball background subtraction~\cite{Sternberg1983} is applied to the WPB channel to remove continuous background regions from the image. The extent of this disassociated unspecific staining depends on the vWF anti-body, and the kernel size for the rolling ball algorithm can be adjusted accordingly. 
+
+After background subtraction the image is thresholded using the Bernsen algorithm~\cite{Bernsen1986}. The Bernsen thresholding is applied locally with a 5~$\times$~5 kernel, for each pixel a threshold value is obtained based on the pixel values in the surrounding neighbourhood. Typically a Bernsen parameter of 15 or 30 is set depending on the illumination intensity of the dataset. 
+
+Foreground objects in the resultant binary image are filtered depending on a set of criteria for WPB. Objects with Feret diameter less than \SI{0.4}{\micro\meter} are smaller than the smallest vWF quanta in a WPB so cannot be WPB~\cite{Ferraro2014}, in addition particles with areas greater than \SI{10}{\micro\meter\squared} are too large to be WPB. How stringent the morphometric filtering criteria are depends on how much background is in the vWF image. 
+
+The final step is to take morphometric and pixel intensity measurements for the remaining foreground objects. This comprises 23 measurements such as the area, perimeter and mean pixel value of the region. A second measurement is also taken redirected to the \emph{influence zone} image (Fig.~\ref{pmChannel:c}). This measures the pixel intensity at corresponding coordinates in the \emph{influence zone} image, giving the segmented WPB a cell identifier, thereby allowing for analysis of the dataset on a cellular level.
+
+\begin{figure}[htbp]\centering
+	\begin{tikzpicture}[figurename=wpbChannel, zoomboxarray,
+		zoomboxes right,
+		zoomboxarray columns=1,
+		zoomboxarray rows=1,
+		connect zoomboxes,
+		zoombox paths/.append style={thick, dashed, gray}]
+		\node [image node] {\includegraphics[width=0.48\linewidth]{wpbOverlay_001005001_Field_006}};
+		\zoombox[magnification=10]{0.20, 0.80}
+	\end{tikzpicture}
+\caption{Weibel-Palade bodies (WPBs) segmentation contours. Image (a) is a field of view with segmented WPBs overlaid in red, (b) is a magnification of to show the segmentation result.}
+\label{tgnwpbChannel}
+\end{figure}
+\FloatBarrier
+
+
+\subsubsection{Plasma membrane segmentation}
+An immunostained plasma membrane is necessary to accurately find endothelial cell contours. Cellular segmentation is reliant on the premise that there is one nucleus per cell, and the cell is demarcated by the plasma membrane. Accurate segmentation of nuclei and particularly the separation of close and touching nuclei is therefore particularly important for cellular segmentation. The morphometric analysis of WPBs at a cellular level is facilitated by each cell within a field of view being assigned a unique pixel value. 
+
+The first step in image processing of the plasma membrane channel is contrast enhancement, normalising the image histogram to maximise the possible range of pixel values in the image. In wheat germ agglutininin (WGA) stained images a preprocessing step is performed to remove small intense blobs. These may occur due to irregularity in the cell membrane or protrusions causing  micro-domains of intense staining. To correct for this, outliers are removed, which are pixels that deviate from their surroundings by more than a set value and replaced by the median of it's surrounding pixels.
+
+An inversion is performed so that the plasma membrane boundaries are darker than the light contiguous regions within the cell. Following the inversion, image \emph{pmImg}, referenced in Fig.~\ref{imageProcessingPipeline:WPB} is duplicated to give \emph{pmImg1} and \emph{pmImg2}. A constant value of 10 is subtracted from \emph{pmImg1}. For greyscale reconstruction image \emph{pmImg1} forms the marker image and \emph{pmImg2} the mask image. A greyscale reconstruction~\cite{Vincent1993} is performed to reconstruct an image (\emph{pmImg3} in Fig.~\ref{imageProcessingPipeline:WPB}), where the higher intensity pixel value peaks have been removed. This reduces pixel variation within the cell interior, to improve the segmentation result. 
+
+If a WPB antibody with significant endoplasmic reticulum bleed-through has been used then this image is added to the plasma membrane to provide a better marker for the cell interior.
+
+An adaptation of the evolving generalized voronoi diagram (EGVD) developed as an ImageJ plugin is used to find cell contours~\cite{Yu2010}. The segmented nuclei are used as a seed image on the processed plasma membrane channel. For the contours found by the EGVD an image is generated where each complete cell has a unique pixel value. Incomplete cells on the image edge are given a pixel value of 0, so they maybe excluded from a cell based analysis.
+
+\begin{figure}[htbp] 
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{001005001_Field_006_6_EGVDimage.jpg} 
+		\caption{} 
+		\label{pmChannel:a} 
+		\vspace{1ex}
+	\end{subfigure} 
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{influzone_001005001_Field_006} 
+		\caption{} 
+		\label{pmChannel:b} 
+		\vspace{1ex}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{001005001_Field_006_7_contours.jpg} 
+		\caption{} 
+		\label{pmChannel:c} 
+	\end{subfigure} 
+	\begin{subfigure}[b]{0.49\linewidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{rgbOverlay_001005001_Field_006}
+		\caption{} 
+		\label{pmChannel:d} 
+	\end{subfigure}
+\caption{Image processing to find cell contours on plasma membrane channel. Image (a) displays the segmented nuclei used as seed points over the plasma membrane marker. Cell segmentation contours are overlaid on the plasma membrane channel in image (b). The \emph{influence zone} image is shown in image (c). Image (d) displays the cell segmentation in red with the nucleus channel in blue, TGN channel in cyan, WPB channel in green and plasma membrane channel in yellow.}
+\label{pmChannel} 
+\end{figure}
+
+\subsection{Discussion}
+An automated segmentation and feature extraction pipeline for morphometric analyses of endothelial WPBs has been developed in ImageJ, with the aim to infer knowledge as to the underlying biological processes of WPBs. This segmentation protocol has been applied to datasets testing varying hypotheses, from the effects of different secretagogues to experiments with endothelial cells form single donors.
+
+Of principal importance in this morphometric analysis is the accuracy of image segmentation. To infer meaningful biologically significant information as to the function of WPBs, accurate segmentation of those WPBs is vital. In order to improve the outcomes of segmentation the data has to first meet a set of criteria. Images and individual cells that do not meet the specified criteria are removed from the data.
+
+To further the cellular approach to segmentation and analysis of WPBs, an assessment of the wheat germ agglutinin as compared to VE-cadherin plasma membrane markers is needed. This could be done by comparison to ground truth images. If this technique can be shown to work robustly further analysis maybe conducted, including analysis of the spatial distribution of WPBs within a cell.
+
+This approach has hinted at an interesting relationship between the numbers of WPB within a cell and the median Feret length of the WPB. This may potentially lead to a new study modelling the production of WPB at the Golgi.
+
+\subsection{Results}
+\subsubsection{Endothelial cell classification}
+
+\section{Morphometric analysis of vWF exocytic sites}
+Exocytosis is the process whereby a secretory vesicle is transported to the plasma membrane and a fusion of the vesicular membrane and plasma membrane ensues. This secretory process involves multiple different stages; including the formation of a vesicle, and the transportation to the target membrane. The vesicle must be tethered or docked at the appropriate sites and prepared for fusion. Finally a fusion pore or exocytotic exit site is formed and the vesicle contents are released. Fusion pores are crucial to exocytosis and many other cellular functions such as membrane trafficking and intracellular messenger regulation~\cite{Lindau2003}. They are continuously being formed and dispersed throughout the cell. Knowledge about fusion pores structure and dynamic processes is mainly from plasma membrane fusion pores resulting from exocytosis. Imaging and morphological analysis can yield information as to their function.
+
+Evidence obtained from biophysical and imaging studies indicates that individual secretory organelles can undergo fusion with the plasma membrane that allows the selective release or retention of granule contents~\cite{Babich2008}. These fusion events form a fluid-filled pore that has the potential to act as a molecular filter, allowing small molecules to exit while retaining larger polypeptides and proteins~\cite{MacDonald2006}.
+
+Three distinct fusion pore membrane events have been observed, termed \emph{full fusion}, \emph{kiss-and-run} and the \emph{lingering kiss}. In \emph{full fusion} of the WPB with the plasma membrane all WPB molecular contents are released, whereas in the other two fusion events only a subset of the contents are released. \emph{Kiss-and-run} fusion occurs in excitable cells where a fusion pore opens and closes rapidly, leaving the vesicle membrane largely intact or fully dilating with collapse of the vesicle membrane into the plasma membrane~\cite{Lindau2003}. The \emph{lingering kiss} is more stable, where the pore remains open for longer periods of time, before closing to retrieve the vesicle membrane or fully dilating~\cite{Fernandez-Chacon1995}.
+
+Weibel-Palade body (WPB) exocytosis from endothelial cells, plays an important role in regulating haemostasis and inflammation. WPBs secrete their von Willebrand Factor (vWF) cargo from endothelial cells, in response to stimulation via secretagogues such as thrombin~\cite{Levine1982} and histamine~\cite{Hamilton1987}. Exit sites refer to the points on the endothelial cell plasma membrane where proceeding WPB fusion with the plasma membrane protein secretion has occurred.
+
+The biophysical process of WPB fusion is not well understood. Three mechanisms have been observed for secretion of WPBs. Individual WPB can undergo exocytosis as a \emph{kiss-and-run} fusion event. WPBs can also fuse transiently to the plasma membrane in a \emph{lingering-kiss} that opens a pore large enough for their smaller cargo to diffuse. Finally, WPBs may coalesce into larger vesicles called secretory pods for multigranular exocytosis. The different mechanisms of exocytosis in WPBs may provide mechanisms for differential release of subsets of molecular cargos that occur under different physiological conditions~\cite{Valentijn2014}. Stimulation of endothelial cells from secretagogues have been found to mediate the release of vWF cargo, including thrombin~\cite{Levine1982} and histamine~\cite{Hamilton1987}.
+
+An adaptation of the WPB morphometric computational analysis tool (section~\ref{singleCellAnalysis}), has been applied to a high-throughput study of the morphometry of WPB exocytic sites. The workflow for analysis of fusion pores will be useful to gain information about vWF release, potentially more sensitive than the commonly used enzyme-linked immunosorbent assay (ELISA) method. It should also improve our understanding of the cellular mechanisms that are employed by endothelial cells in controlling vWF release.
+
+\subsection{Image acquisition}
+Images of human umbilical vein endothelial cells (HUVECs) are acquired from an Opera high-content screening (PerkinElmer) confocal microscope. Where HUVECs are cultured, fixed and stained in 96-well microtitre plates and imaged using a 40$\times$ air objective lens (numerical aperture 0.6), with 9 fields of view per acquired per well, generating datasets of 864 images and approximately 10000 complete endothelial cells.
+
+Cells are washed several times in serum-free medium, the Dako rabbit anti-vWF polyclonal antibody is added along with a secretagogue. After stimulation with a secretagogue the cells are fixed and permeabilised, a secondary sheep vWF antibody is added. An antibody conjugated to 647 fluorophore that recognises the Dako rabbit, to stain the Dako vWF that was initially fed to the cells. This vWF is visible on the cell surface. When the medim is removed before fixationthe antibody that is not bound is also removed. A further antibody conjugated to 488 fluorophore is used to see the internal vWF. Cell nuclei are immunostained either by Hoechst or DAPI (4',6-diamidino-2-phenylindole). 
+
+The resulting image data is combined as a set of images each with multiple channels, in a 16-bit TIFF format. At 40$\times$ magnification the width and height of each pixel in the obtained images corresponds to a physical width and height of 0.1615~$\mu m$. Morphometric measurements can thereby be returned corresponding to the correct physical dimensions. 
+
+\subsection{Image processing}
+Fusion pore morphometric analysis is an adaption of WPB analysis, written as an ImageJ macro~\cite{Schneider2012}. The image processing approach is comprised of three parts; segmentation of WPBs, segmentation of nuclei and segmentation of fusion pores. The segmentation of WPBs depends upon thresholding of the vWF immunostained channel, likewise segmentation of fusion pores is obtained from thresholding, whilst an estimate of cell segmentation is obtained from performing a Voronoi tessellation using nuclei as seed points.
+
+As in section~\ref{singleCellAnalysis} an iterative approach is implemented using a for loop to process each image sequentially, providing an output including overlays of segmentation contours and results tables.
+
+The flowchart in Fig.~\ref{imageProcessingPipeline:exitSites} presents each step in the image processing pipeline for the three channels, where again black arrows indicate dependencies between the channels. Unlike in section~\ref{singleCellAnalysis}, a plasma membrane stain is not present. As a result a Voronoi tessellation is used to estimate cell areas.
+
+\begin{figure}[htbp]
+	\centering
+	\includegraphics[width=0.6\linewidth]{imageProcessingPipelineES.pdf}
+	\caption[Image processing pipeline]{Image processing for morphometric analyses of fusion pores. The dark red trapeziums indicate inputs and outputs, red ellipses represent significant intermediary images in the pipeline, blue rectangles are image processing steps and blue diamonds represent image duplications.}
+	\label{imageProcessingPipeline:exitSites}
+\end{figure}
+
+\subsubsection{Nuclei segmentation}
+\label{exitSites:nuc}
+Segmentation of nuclei in this workflow is similar to that described in section~\ref{singleCellAnalysis:nuc}. In these datasets as no stain for the plasma membrane is present, there are additional steps to generate a Voronoi tessellation. This tessellated image is used as an estimate for cells, using the nuclei as seed points. Equidistant lines are drawn between each seed point, dividing the space into the largest possible areas. 
+
+\subsubsection{Weibel-Palade bodies segmentation}
+The segmentation protocol for Weibel-Palade bodies is identical to that described in section~\ref{singleCellAnalysis:wpb}. The image acquisition method is the same. Between datasets parameters may need adjusting.
+
+\subsubsection{Fusion pores segmentation}
+As fusion pores are tend to be well defined isolated objects the segmentation protocol is relatively straightforward. A rolling-ball subtraction~\cite{ Sternberg1983}, with a radius of 20 pixels removes any background from the images first. 
+
+A Moments based thresholding algorithm is used to binarise images~\cite{Tsai1985}. A suitable threshold value is found by applying the Moments thresholding algorithm to all unstimulated fusion pore images in the dataset. The obtained threshold value is then used on the whole image set including images of stimulated cells. As some images contain unstimulated cells with very few or no exit sites, the pixel intensity can be very low for the image, when the thresholding algorithm is applied it will set a threshold much lower than other images. As such we found the result was improved by setting a threshold for the whole unstimulated image set rather than image by image.
+
+The final image processing step in the fusion pore segmentation is to filter particles based on characteristics. Only particles with areas between \SIrange{0.34}{15.00}{\micro\meter\squared} are of a biologically relevant size to be fusion pores and with circularity between \SIrange{0.50}{1.00}. 
+
+\subsection{Discussion}
+The morphometric analysis of fusion pores is ongoing. Results of the number of fusion pores obtained when different secretagogues are applied correlate with the commonly used ELISA technique. A morphometric analysis however, provides a much richer data source. The fusion pore area obtained from a morphometric study for example can be used to better understand different exocytic processes and features present such as an actin ring.
+
+The complexity of the image processing problem maybe increased as the most recent datasets include a wheat-germ agglutinin (WGA) stain. This would allow for more accurate cellular segmentation and deeper analysis at a cellular level.
+\subsection{Results}
