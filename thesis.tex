@@ -1,4 +1,4 @@
-\documentclass[a4paper,twoside,PageStyleII,customMargin,10pt,charter,numbered,draft,index]{classes/PhDThesisPSnPDF}
+\documentclass[a4paper,twoside,PageStyleII,customMargin,11pt,charter,numbered,draft,index,chapter]{classes/PhDThesisPSnPDF}
 % `draft': Special draft mode with line numbers, images, and water mark with timestamp and custom text. Position of the text can also be modified.
 % `draftclassic': For draft mode without loading any images
 % `print': Use `print' for print version with appropriate margins and page layout. Leaving the options field blank will activate Online version.
@@ -28,7 +28,7 @@
 	\includeonly{declaration/declaration, abstract/abstract}
 \fi
 \ifdefineChapter
-	\includeonly{Chapter_3/chapter_3}
+	\includeonly{chapter_4/chapter_4}
 \fi
 
 \begin{document}
@@ -44,6 +44,7 @@
 \tableofcontents
 \listoffigures
 \listoftables
+\lstlistoflistings
 % \printnomenclature[space] space can be set as 2em between symbol and description
 %\printnomenclature[3em]
 \printnomenclature
@@ -52,7 +53,7 @@
 \include{chapter_2/chapter_2}
 \include{chapter_3/chapter_3}
 \include{chapter_4/chapter_4}
-\include{chapter_5/chapter_5}
+%\include{chapter_5/chapter_5}
 %\include{chapter_6/chapter_6}
 %\include{chapter_7/chapter_7}
 \backmatter
@@ -62,7 +63,7 @@
 % Bibliography style previews: http://nodonn.tipido.net/bibstyle.php
 % Reference styles: http://sites.stat.psu.edu/~surajit/present/bib.htm
 
-\bibliographystyle{apalike}
+\bibliographystyle{ieeetr}
 %\bibliographystyle{unsrt} % Use for unsorted references  
 %\bibliographystyle{plainnat} % use this to have URLs listed in References
 \cleardoublepage

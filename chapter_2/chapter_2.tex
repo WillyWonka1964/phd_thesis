@@ -2,14 +2,13 @@
 	\graphicspath{{chapter_2/figs/}}
 \fi
 \chapter{Morphometric analyses of endothelial organelles}
-Analyses of endothelial organelle morphometry were performed on confocal microscopy images acquired with separate cell organelle channels. Cell nuclei were fluorescent stained with non-antibody methods, additional organelles were stained with immunofluorescence antibody methods.
-Our capability to image the Weibel-Palade bodies (WPBs) of primary human umbilical endothelial cells (HUVECs) on a high-throughput screening confocal microscope, provides substantial data on which to study the mechanisms of WPB formation and function. A methodology previously developed to quantify images from these high-throughput WPB studies at a population level, has been used to advance the understanding of the underlying nature of endothelial processes~\cite{Ferraro2014,Stevenson2014}. This methodology was used as a basis for further development and more advanced analysis to include endothelial cell segmentation and data analysis at a cellular level. Analysis at a cellular level has allowed an even broader range of hypotheses to be investigated.
+High-throughput acquisition of endothelial organelle images from primary human umbilical vein endothelial cells (HUVECs) generates an abundance of data available for quantitative analysis. Extraction of morphometric features of the storage organelles Weibel-Palade Bodies (WPBs) is highly valuable to understanding their formation and function. Further to this mechanisms of WPB exocytosis can be studied by morphometric analysis of von-Willebrand's Factor (vWF) exocytic sites.
 
-High-throughput studies of WPBs at a population level have shown that they do not exhibit a normal distribution of lengths. It has been hypothesised that within a population of endothelial cells, subpopulations exist with distinct morphometric features and related functions. Acquiring morphometric data at a cellular and whole population level allows these kinds of hypotheses to be tested. Studies of exocytic response can also be performed, where endothelial cells are treated with different secretagogues.
+A methodology previously developed to quantify images from these high-throughput WPB studies at a population level, has been used to advance the understanding of the underlying nature of endothelial processes~\cite{Ferraro2014,Stevenson2014}. This methodology has been used as a basis for further development and more advanced analysis to include endothelial cell segmentation and data analysis at a cellular level. Analysis at a cellular level has allowed an even broader range of hypotheses to be investigated.
 
 \section{Morphometric analysis of Weibel-Palade bodies}
 \subsection{Image acquisition}
-Images are obtained from an Opera high-content screening (PerkinElmer) confocal microscope of HUVECs. The HUVECs are cultured, fixed and immunostained in 96-well microtitre plates and imaged using a 40$\times$ air objective lens (numerical aperture of 0.6). At 40$\times$ magnification the width and height of each pixel in the obtained images corresponds to a physical width and height of \SI{0.1615}{\micro\meter}. Morphometric measurements can thereby be returned corresponding to the correct physical dimensions. The resolution limit of the microscope can be calculated using Abbe's equation~\cite{Abbe1873},
+Analyses of endothelial organelle morphometry were performed on confocal microscopy images acquired with separate staining of cellular organelles. DNA in cell nuclei were fluorescent stained with non-antibody methods and additional organelles were stained with immunofluorescence antibody methods. Images are obtained from an Opera high-content screening (PerkinElmer) confocal microscope of HUVECs. The HUVECs are cultured, fixed and immunostained in 96-well microtitre plates and imaged using a 40$\times$ air objective lens (numerical aperture of 0.6). At 40$\times$ magnification the width and height of each pixel in the obtained images corresponds to a physical width and height of \SI{0.1615}{\micro\meter}. Morphometric measurements can thereby be returned corresponding to the correct physical dimensions. The resolution limit of the microscope can be calculated using Abbe's equation~\cite{Abbe1873},
 
 \begin{equation}
 R=0.61\frac{\lambda}{NA},
@@ -17,9 +16,9 @@ R=0.61\frac{\lambda}{NA},
 
 where, $R$ is the resolution limit, $\lambda$ is the wavelength and $NA$ the numerical aperture of the optical system. The available excitation wavelength range on the microscope of \SIrange{488}{640}{\nano\meter} and numerical aperture gives a minimum resolvable resolution range of \SIrange{496}{650}{\nano\meter}. The smallest resolvable structures in the images obtained are therefore between 2 and 4 pixels in length. Typically, 9 fields of view are imaged per well, generating datasets of 864 images and approximately 10000 complete endothelial cells.
 
-Cell nuclei are stained either by Hoechst or DAPI (4',6-diamidino-2-phenylindole) dyes, which bind to tightly packed AT-rich regions of DNA in chromosomes within the nucleus, making an effective nuclear stain. 
+Cell nuclei are stained either by Hoechst or DAPI (4',6-diamidino-2-phenylindole) dyes, which bind to tightly packed AT-rich regions of DNA in chromosomes within the nucleus, making an effective nuclear stain.
 
-Immunostaining of vWF within WPBs involves the use of a primary and a secondary antibody. Over multiple experiments many different antibodies have been trialled for this purpose. A Dako rabbit anti-vWF polyclonal primary antibody, is an antiserum that has many different antibodies that recognise different portions of the vWF protein, since it is produced using whole vWF isolated from human plasma to immunise the rabbit. In fixed HUVECs, the Dako antibody will bind to the vWF that is in WPBs but will also bind to the unprocessed vWF that is in the endoplasmic reticulum (ER). The ER is a mesh-like structure that extends over the interior of the cell, the ER staining may overlap with the WPB staining and make it difficult to identify WPB against the ER.
+Immunostaining of vWF within WPBs involves the use of a primary and a secondary antibody. Over multiple experiments different antibodies have been trialled for this purpose. A Dako rabbit anti-vWF polyclonal primary antibody, is an antiserum that has many different antibodies that recognise different portions of the vWF protein, since it is produced using whole vWF isolated from human plasma to immunise the rabbit. In fixed HUVECs, the Dako antibody will bind to the vWF that is in WPBs but will also bind to the unprocessed vWF that is in the endoplasmic reticulum (ER). The ER is a mesh-like structure that extends over the interior of the cell, the ER staining may overlap with the WPB staining and make it difficult to identify WPB against the ER.
 
 To overcome the ER interference problem, a secondary rabbit anti-propeptide polyclonal antibody is used. This is a rabbit antibody from rabbits that were injected with a synthetic 8 amino acid peptide sequence (SSPLSHRS) that is found at the end of the proregion of vWF after it has been processed. This sequence is not available for antibodies to bind to it in the unprocessed ER form of vWF, so as a result, the antibodies will only bind to the vWF in WPBs.
 
@@ -28,6 +27,7 @@ The cell plasma membrane is stained either by anti-VE-Cadherin antibodies or flu
 The hypothesis being tested dictates the experimental setup and the specific cell organelles that are immunostained and imaged. Invariably, vWF is immunostained and imaged as a marker for WPBs along with cell nuclei, additional staining may include the \emph{trans}-Golgi network (TGN), endoplasmic reticulum and cell plasma membrane. PerkinElmer's Opera high throughput confocal microscope allows for a maximum of 4 channels to be imaged per experiment. Along with the vWF channel, two channels are required for accurate cell segmentation, namely, the nuclei and plasma membrane channel. This leaves the last channel that can be used to stain for additional organelles or left empty.
 
 The resulting image data is combined as a set of images each with multiple channels, in a 16-bit TIFF format.
+
 \subsection{Image processing}
 An ImageJ~\cite{Schneider2012} macro has been written for image processing of WPB stained images in endothelial cells. The image processing approach is divided into three parts; segmentation of WPBs, segmentation of nuclei and segmentation of endothelial cells. The segmentation of WPBs depends upon thresholding of the vWF immunostained channel, whilst cellular segmentation uses segmented nuclei as a seed to find contours in the plasma membrane channel.
 
@@ -37,7 +37,7 @@ The flowchart in Fig.~\ref{imageProcessingPipeline:WPB} presents each step in th
 
 \begin{figure}
 	\centering
-	\includegraphics[width=0.6\textwidth]{imageProcessingPipeline.pdf}
+	\includegraphics[width=0.6\textwidth]{imageProcessingPipeline}
 	\caption[Image processing pipeline WPB]{for morphometric analyses of Weibel-Palade bodies. The dark red trapeziums indicate inputs and outputs, red ellipses represent significant intermediary images in the pipeline, blue rectangles are image processing steps and blue diamonds represent image duplications.}
 	\label{imageProcessingPipeline:WPB}
 \end{figure}
@@ -168,6 +168,297 @@ This approach has hinted at an interesting relationship between the numbers of W
 
 \subsection{Results}
 \subsubsection{Endothelial cell classification}
+An experiment was constructed to determine how well morphometric cellular features can be generalised and identified by supervised learning routines, whilst inferring the accuracy of Weibel-Palade body (WPB) segmentation on a cellular level. Morphometric cellular feature collection consists of a segmentation step and a feature measurement step, where segmentation if of the cell nuclei, WPBs, the trans-Golgi Network (TGN) and the plasma membrane. 
+
+Classification of cells in this study relies principally on accurate segmentation of WPB contours and plasma membrane contours. Segmentation was performed on immunofluorescent images of stained von-Willebrands Factor (vWF), a multimeric protein that is a large constituent of WPBs. Contours of fluorescent vWF within WPBs were identified and morphometric features measured using a macro written in ImageJ~\cite{bb}. Additionally, cell contours, nuclei contours and TGN contours were segmented and morphometric features recorded. For each cell a set of features was measured describing the cell properties, and the properties of the WPBs within the cell. 
+
+Two characteristic cell types hereby referred to as cell type 1 and cell type 2 were cultured, grown and treated, where cell type 2 was treated to significantly deplete the number of cellular WPBs. The endothelial cells were obtained from pooled donors and contain a distribution of numbers of WPBs along with a distribution of lengths. A proportion of the data 1/5 was of known cell type 1 and a further 1/5 was of known cell type 2, the remaining data consisted of three treatment groups of varying proportions of cell types 1 and 2. Cellular images of known cell types, treatment groups A and E in table~\ref{tab:cellProportions}, were acquired and segmented to be used as a supervised machine learning training data set. The model was trained for on images of known labelled cells and then used to identify cells in the general population. Samples with varying fractions of cell type 1 and cell type 2 were prepared to test the accuracy of classifying cell types on a population level.
+
+\subsubsection{Introduction}
+A dataset was prepared on a 96-well microtitre plate and imaged at 40$\times$ magnification with a confocal microscope. Endothelial cells treated with wheat germ agglutinin (WGA) on ice at 1:50 dilution for 2 minutes were fixed on ice. Four image channels were stained with immunofluorescent markers; nuclei, TGN, WPB and plasma membrane. Nuclei were stained with hoechst, TGN with anti-TGN 46, vWF with the Carter antibody and the plasma membrane with wheat germ agglutinin (WGA). Along the microtitre plate columns contained varying proportions of cell type 1 and cell type 2 as outlined in Table~\ref{tab:cellProportions}. A cell counter was used to ensure of type 1 and 2 were mixed in the correct proportions.
+
+\begin{center}
+	\footnotesize
+	\begin{tabular}{ |c|c|cc|c|} \hline
+		Group & Microtitre Columns & Cell Type 1 & Cell Type 2 & Data Type \\ \hline
+		A & 1-2  & 100\% & 0\%   & training \& testing \\ 
+		B & 3-4  & 75\%  & 25\%  & testing  \\ 
+		C & 5-6  & 50\%  & 50\%  & testing  \\ 
+		D & 7-8  & 25\%  & 75\%  & testing  \\ 
+		E & 9-10 & 0\%   & 100\% & training \& testing \\ \hline
+	\end{tabular}
+	\captionof{table}{Treatment information including the columns in the microtitre plate and cellular ratios along with machine learning data type for training or testing  data.}
+	\label{tab:cellProportions}
+\end{center}
+
+\begin{figure}[ht]\centering
+	\begin{subfigure}[b]{0.5\linewidth}
+		\centering
+		\includegraphics[width=0.97\linewidth]{001002001_Field_002-1} 
+		\caption{}
+		\label{001002001_Field_002-1} 
+		\vspace{1ex}
+	\end{subfigure}%% 
+	\hfill
+	\begin{subfigure}[b]{0.5\linewidth}
+		\centering
+		\includegraphics[width=0.98\linewidth]{001002001_Field_002-2} 
+		\caption{}
+		\label{001002001_Field_002-2} 
+		\vspace{1ex}
+	\end{subfigure} 
+	\hfill
+	\begin{subfigure}[c]{0.5\linewidth}
+		\centering
+		\includegraphics[width=0.97\linewidth]{001002001_Field_002-3} 
+		\caption{}
+		\label{001002001_Field_002-3} 
+		\vspace{1ex}
+	\end{subfigure}%% 
+	\hfill
+	\begin{subfigure}[d]{0.5\linewidth}
+		\centering
+		\includegraphics[width=0.97\linewidth]{001002001_Field_002-4} 
+		\caption{}
+		\label{001002001_Field_002-4} 
+		\vspace{1ex}
+	\end{subfigure} 
+\caption{Raw image channels from `141111\_Francesco\_ice' dataset, where channel (a) is nuclei, (b) is trans-Golgi Network, (c) is von-Willebrand Factor and (d) is plasma membrane channel. Images were contrast enhanced for clarity of viewing. }
+\label{imageChannels}
+\end{figure}
+\FloatBarrier
+After segmentation of each image channel all WPB and TGN elements were ascribed to their respective cells. Three supervised machine learning algorithms were applied to classify each cell in the testing sets based on their measured features as type 1 or type 2 cells. Treatment A and treatment E were split into testing and training data, with approximately half the cells as training and half as testing.
+
+Cell type 1 is an untreated control cell type, whilst cell type 2 has been treated with siRNA. This siRNA, mediates the reduction of vWF protein levels, reducing the number of WPBs and decreasing the length of residual WPBs. The quantum size as measured by the distance between length clusters, remains constant upon progressive reduction of vWF cell content~\cite{Ferraro2014}. In general it is therefore expected that cell type 2 should have fewer WPBs, and they should be shorter than in cell type 1.
+
+\subsubsection{Segmentation}
+An ImageJ macro was written to segment WPBs, cells and nuclei. Each WPB is associated with the appropriate cell using a cellular label, this allows for analysis of WPBs on a cellular level and a whole population level. The fluorescence brightness of this dataset was not as bright as other datasets acquired using the same process, there was also more noise as can be observed in Fig.~\ref{imageChannels}. 
+
+The noise can also be seen in Fig.\ref{histogramWPBferet}, by the high initial peak in the histogram between 0.4 and 0.6$\mu m$, in a dataset with less noise this would not be so pronounced. Despite the noisy data, five distinct treatments groups can be identified according to Feret diameter as in Fig.~\ref{ECDFwpbFeret}.
+
+Each of the treatment groups has over 1000 cells, cells on the image edge are not included. The total number of WPBs decreases from treatment A to treatment E as would be expected as the fraction of siRNA treated cells increases. Overall the number of cells increases from treatment A to Treatment E and the cell size is smaller.
+\begin{center}
+	\footnotesize
+	\begin{tabular}{|c|c|c|c|} \hline
+		Treatment & No. of WPBs & No. of Cells & Mean WPBs per Cell \\ \hline
+		A & 388089 & 1299 & 116 \\ 
+		B & 324646 & 1458 & 91  \\ 
+		C & 238988 & 1611 & 62  \\ 
+		D & 191110 & 1703 & 49  \\ 
+		E & 150074 & 1777 & 38  \\ \hline
+	\end{tabular}
+	\captionof{table}{The number of WPBs, cells and mean number of WPBs per cell for each treatment group in `141111\_Francesco\_ice' data.}
+\end{center}
+
+Segmentation of endothelial cells has been performed with two separate methods and results compared. Firstly, segmentation was approximated using the Voronoi mid-line method. The Voronoi method uses the centroid of the segmented nuclei and divides nuclei by lines equidistant to the surrounding nuclei, in this way the cells fill the maximum possible area. A second method was performed using the Evolving Generalised Voronoi Diagram (EGVD) on the plasma membrane stained image channel~\cite{Yu2010}, using the nuclei for a seed this performs iterative Voronoi and thresholding to obtain the cell boundaries. 
+
+\section{Feature selection and scaling}
+A quantitative set of cellular features was amalgamated for each cell including the characteristics of the cell and the WPBs within the cell. A description of each feature can be found in table ~\ref{cellFeaturesTable}.
+
+To standardise the range of independent variables in the data and to improve the result of the machine learning algorithms the data was normalised. This ensures that each feature contributes approximately proportionally to the final outcome.
+
+Features were scaled in the range 0 to 1 by the formula given as:
+\begin{equation}
+	x' = \frac{x-min(x)}{max(x)-min(x)}
+	\label{eq:normalisation}
+\end{equation}
+where $x$ is the original value and $x'$ the scaled value, this was applied to each column in the cell features table.
+
+\subsubsection{Principal Component Analysis (PCA)}
+The aim of Principal Component Analysis (PCA) is to reduce the dimensionality of data by combining features. Using linear combinations of features effectively projects the high-dimensional data onto a lower dimensional space. The PCA method is one of two commonly used methods to determine effective linear combinations of features for projection in a least squares sense~\cite{Duda2000}. The number of principal components is less than or equal to the number of original variables, where the principal components are ordered by their variance. An orthogonal transformation ensures that components are linearly uncorrelated. Principal component orthogonality is ensured because components are eigenvectors of the symmetric covariance matrix.
+
+Principal components are drawn based on the largest variance in feature sets, this can be meaningful in providing separation between features but not in all cases. Fig.~\ref{fig:PCAbiplot}, shows two cell types that form distinct clusters. Those points in blue are control cells that have not been treated and in red those that have been siRNA treated, so should contain fewer WPB and shorter. 
+
+\begin{figure}[!htbp]
+	\includegraphics[width=1.1\textwidth]{biplotPCA} 
+	\caption{Biplot of principal component 1 against principal component 2 for cellular features in control cells in treatment group A and siRNA treated cells in treatment group E.}
+	\label{fig:PCAbiplot} 
+\end{figure} 
+
+
+\subsubsection{Cross validation}
+A cross validation technique was applied prior to each machine learning approach to gauge how accurately the predictive model performs. A predictive model is one in which known training data is used to generate a model which can then be run on unknown data, cross-validation is used to limit problems like over-fitting and give an insight into how the predictive model will generalise to an independent data set. 
+
+To perform cross-validation the data is partitioned into complimentary subsets, where analysis is performed on one subset called the training set  and validation on another subset called the validation or testing set. Multiple rounds of cross-validation are performed on different partitions to reduce the variability, and the results are averaged.
+
+\subsubsection{k-fold cross-validation}
+One such cross validation technique which has been applied to each of the supervised machine learning techniques to test the accuracy of the predictive model is $k$-fold cross-validation. In $k$-fold cross validation the data is randomly split into $k$ equal size subsamples. Of the $k$ subsamples, a single subsample is retained as the validation data for testing the model, and the remaining $k - 1$ subsamples are used as training data. The cross-validation process is then repeated $k$ times (the folds), with each of the $k$ subsamples used exactly once as the validation data. The $k$ results from the folds can then be averaged to produce a single heuristic estimation of the performance. In this way all observations are used for both training and validation, and each observation is used for validation exactly once.
+
+\subsubsection{Machine learning methods}
+Machine learning can generally be split into supervised learning and unsupervised learning. In supervised learning a teacher provides a category label or cost for each pattern in a training set, and seeks to reduce the sum of the costs for these patterns. In this instance the category label is the cell type untreated cell type 1 or siRNA treated cell type 2. A learning algorithm establishes a solution based on this data to a given problem. Unsupervised learning or clustering has no explicit teacher, and the system forms clusters. Different clustering algorithms lead to different clusters, where the number of clusters is often hypothesized ahead of time.
+
+\subsubsection{Support Vector Machines}
+Support vector machines (SVMs) preprocess data to represent patterns in higher dimensions. Essentially SVMs look for the optimal separating hyperplane between two classes, by maximising the margin between the classes~\cite{Cortes1995}. The goal in training a SVM is to find the seperating hyperplane with the largest margin, generally, the larger the margin the better the generalisation of the classifier. 
+
+To perform SVM classification of the data the known cell types in treatment A and E were appropriately labelled and combined to form a table of training data. Five-fold cross validation was performed on this data by shuffling the data and partitioning into five sub-samples, each of which was once used as the testing data. 
+
+SVM requires two parameters, the cost and gamma functions. The cost function controls the cost of misclassification on the training data. A small cost value reduces the number of ignored data points and leads to a soft margin, a large cost value is stricter and can potentially overfit the data. The gamma function is the parameter of the Gaussian radial basis function. For each partition a generic function was used to tune the cost and gamma functions of SVM using a grid search over a supplied parameter range. The parameter range supplied for the SVM model for the gamma function was $2^{-6}$ to $2^{6}$ and $2^{0}$ to $2^{10}$ for the cost function.
+
+\subsubsection{5-fold cross validation}
+The result of the 5-fold cross validation technique for SVM gives a confusion matrix. 
+\begin{center}
+	\footnotesize
+	\begin{tabular}{|c|cc|} \hline
+			\backslashbox{pred}{real} & 0 & 1\\ \hline
+			0 & 542 & 86 \\ 
+			1 & 60 & 513 \\ \hline
+	\end{tabular}
+\end{center}
+That is to say 542 cells were true negatives, they were predicted to be untreated and were in fact untreated cells in treatment A and 513 cells were true positives that is to say were predicted as treated cells and were in fact treated cells. There were 60 false negatives, that is cells that were in fact treated but were identified according to the SVM as untreated, and a further 91 false positives that is cells that were treated but were in fact identified as untreated. 
+
+The SVM model requires two parameters, which affects the performance. These parameters were tuned in a range using a grid search method. The accuracy of the SVM method can be considered to be about 87.9$\%$, according to the 5-fold cross validation of the SVM method. That is to say 87.9$\%$ of cells were correctly identified as either type 1 or type 2 using the SVM method.
+
+\subsubsection{Classification And Regression Trees (CART)}
+Classification And Regression Trees (CART) use decision trees to build a predictive model, this was implemented in R using the recursive partitioning and regression trees (rpart) package. Classification or regression models are built in rpart using a two stage procedure and the resulting models represented as binary trees~\cite{Duda2000}.
+
+CART are built by first finding the single feature that best splits the data into two groups. The data is separated and the process applied separately to each subgroup, until no improvement can be made or the subgroups reach a minimum size. The second stage of the procedure is to prune the tree back using cross-validation techniques.
+
+In this instance the classification and regression tree in Fig.~\ref{fig:CARTtree} selected the mean Feret diameter of WPBs within the cell as the most important splitting criteria. Of the 1200 cells used to build the CART model 600 were of type 1 cells and 600 of type 2 siRNA treated cells. The model identified 586 cells as type 1 and 614 cells as type 2.
+
+\begin{figure}[!htbp]
+	\includegraphics[width=1.1\textwidth]{rpartTree} 
+	\caption{Hierarchical classification and regression tree constructed on the data from 600 cells of treatment A and 600 cells of siRNA treated treatment E. Each node gives the splitting criterion and value, where $<>$ means that cases with lower values go left and $><$ mean cases with lower values go right. In addition the leaf nodes contain a type where 0 are cells that are untreated and 1 are siRNA treated, these correspond to cell types 1 and 2 respectively.}
+	\label{fig:CARTtree} 
+\end{figure} 
+
+\subsubsection{5-fold cross validation}
+The 5-fold cross validation technique confusion matrix for the CART method is as follows: 
+\begin{center}
+	\footnotesize
+	\begin{tabular}{|c|cc|} \hline
+			\backslashbox{pred}{real} & 0 & 1\\ \hline
+			0 & 513 & 90 \\ 
+			1 & 89 & 512 \\ \hline
+	\end{tabular}
+\end{center}
+That is to say 513 cells were true negatives, they were predicted to be untreated and were in fact untreated cells in treatment A and 512 cells were true positives that is to say were predicted as treated cells and were in fact treated cells. There were 89 false negatives, that is cells that were in fact treated but were identified according to the rpart method as untreated, and a further 90 false positives that is cells that were treated but were in fact identified as untreated. 
+
+The averaged performance of the CART cross validation technique over 5-folds was 85.1$\%$.
+
+\subsubsection{Random Forest}
+The random forest algorithm is an example of another implementation of decision trees to build predictive models. Rather than growing a single tree with many branches, a random forest builds an ensemble of shallower trees where different weights are assigned to their features~\cite{Breiman2001}. Different permutations of trees are generated by using different subsets of data, this in turn leads to different classification results depending on the bias of the data subset. 
+
+The key idea of random forest implementation is that the errors in the shallow decision trees will be washed out when aggregated and lead to a more accurate prediction. Fig.~\ref{rfErrorRates} shows how the residual mean squared error rates of the random forest algorithm are reduced as the number of trees increase, above 200 trees the error rate is constant.
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=0.8\textwidth]{rfErrorRates} 
+	\caption{Mean squared residuals (MSE) error rate plotted against the number of trees generated by the random forest algorithm.}
+	\label{rfErrorRates} 
+\end{figure} 
+
+The random forest algorithm has several advantages over the SVM and CART algorithms. It is robust against over-fitting because the model is generated through randomness, so its generalisation abilities are better. It is fast running with large datasets and trees can be generated in parallel.
+
+The importance of each variable in the random forest method is computed from permuting out-of bag data. The out of bag error is a cross-validation step performed to get an unbiased estimate of the test error rate. The out of bag error is calculated by leaving out about one-third of the trees, each left out case is then used in the construction of the $k^{th}$ tree to get a classification. At the end of the run, take $j$ to be the class that got most of the votes every time case $n$ was out of bag. The proportion of times that $j$ is not equal to the true class of $n$ averaged over all cases is the out-of-bag error estimate. The Gini index is used to calculate the node impurity. The random forest and classification and regression tree algorithms both identified the mean Feret diameter to be the most important indicator of cell type. Cellular features relating to WPB features all ranked as more important than those to do with the cell.
+
+\begin{figure}[ht]
+	\includegraphics[width=\textwidth]{variableImportance} 
+	\caption{Dotchart of the importance of each variable as measured by the random forest algorirthm.}
+	\label{variableImportance} 
+\end{figure} 
+
+\subsubsection{5-fold cross validation}
+The 5-fold cross validation technique confusion matrix for the random forest method is as follows: 
+\begin{center}
+	\footnotesize
+	\begin{tabular}{|c|cc|} \hline
+			\backslashbox{pred}{real} & 0 & 1\\ \hline
+			0 & 532 & 81 \\ 
+			1 & 70  & 521 \\ \hline
+	\end{tabular}
+\end{center}
+That is to say 532 cells were true negatives, they were predicted to be untreated and were in fact untreated cells in treatment A and 521 cells were true positives that is to say were predicted as treated cells and were in fact treated cells. There were 70 false negatives, that is cells that were in fact treated but were identified according to the random forest method as untreated, and a further 81 false positives that is cells that were treated but were in fact identified as untreated. 
+
+The averaged performance of the random forest cross validation technique over 5-folds was 87.5$\%$.
+
+\subsubsection{Results and discussion}
+Each of the three SVM, CART and random forest supervised machine learning methods were applied to all treatments of the dataset, to perform binary classification of cells as either type 1 or type 2. Firstly, the cellular feature set was selected and the data normalised to reduce the variability in the classes using equation~\ref{eq:normalisation}. Cells in columns 1-2 and 9-10, treatments A and E, were of known type untreated and siRNA treated respectively. A training set was comprised of 600 cells from treatment A and a further 600 from treatment E of known cell type, from these cells the SVM, CART and random forest algorithms classification models were built. The remaining cells in treatment A and E were used for testing along with all the cells from treatments B, C and D.
+
+In addition to the biological created proportional cell type dataset, an artificial dataset was constructed from the known data of control and treated cells in proportions equal to those created biologically. This dataset consisted of 2400 cells, with each treatment having 480 cells of type 1 from treatment A and type 2 from treatment E, in fractions corresponding to that in the biological data. This was achieved by using cells from treatments A and E, after each set has been appropriately shuffled to ensure no bias was introduced in the data. Table~\ref{syntheticDataTable} shows the ratios and numbers of cells used in the artificial dataset. The SVM, CART and random forest machine learning prediction methods were then applied to these synthetic data to see whether variance can be attributed to biological causes or the machine learning algorithm.
+
+\subsubsection{Results with EGVD Segmentation}
+The results in Table~\ref{dataTable} and Fig.~\ref{mlResultsBarChart}, show that all three of the supervised machine learning algorithms were generally capable of identifying two cellular populations in the data. The increasing trend in the percentage of siRNA treated cells between treatments B, C and D is also obvious from the data of both the biological and synthetic data. The misclassification rate in treatments A and E for each of the algorithms indicates the accuracy of the algorithm. According to the 5-fold cross validation performed the random forest method gives the most accurate classification, followed by the SVM and CART.
+
+The SVM and random forest methods when applied to the biological data give similar results, whilst the CART classification tends to predict more siRNA treated cells in general. All of the results from the biological data tends to be higher than expected, suggesting that there is some bias introduced in the data, perhaps this is the result of some interaction between cells.
+
+Results from the synthetic data exhibit a greater variance around the expected values with treatment B predicting a greater proportion of siRNA treated cells and treatment D predicting fewer siRNA treated cells than expected.
+
+\begin{center}
+	\footnotesize
+	\begin{tabular}{|cc|ccc|ccc|} \hline
+& & \multicolumn{3}{ c }{Biological} & \multicolumn{3}{ |c| }{Synthetic}\\
+\hline
+			Treatment & Ratio$\%$ & SVM $\%$ & CART $\%$ & RF $\%$& SVM $\%$ & CART $\%$ & RF $\%$ \\ \hline
+			A & 0   & 9.6  & 15.4 & 11.9 (0.07) & 9.4  & 14.6 & 6.0  \\ 
+			B & 25  & 26.3 & 34.9 & 27.9 (0.04) & 27.3 & 31.2 & 26.7 \\ 
+			C & 50  & 54.5 & 62.3 & 54.5 (0.06) & 48.8 & 51.0 & 49.2 \\ 
+			D & 75  & 75.8 & 82.2 & 77.8 (0.04) & 67.1 & 68.1 & 69.4 \\ 
+			E & 100 & 86.7 & 87.7 & 87.0 (0.04) & 88.1 & 90.2 & 92.9 \\ \hline
+	\end{tabular}
+	\captionof{table}{Ratios of siRNA treated to untreated cells as predicted by support vector machines (SVM), classification and regression trees (CART) and random forest (RF) algorithms for bot the acquired biological data and the synthetic data created. Cellular segmentation was performed using the evolving generalised voronoi method. Errors for the random forest method were determined by conducting the random forest 20 times with different seed values and taking the standard error on the mean.}
+	\label{dataTable}
+\end{center}
+
+\begin{figure}[htpb] 
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{mlResultsEGVD} 
+		\caption{}
+		\label{mlResultsSynthetic} 
+	\end{subfigure}
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{mlResultsSyntheticEGVD} 
+		\caption{}
+		\label{mlResultsSynthetic} 
+	\end{subfigure} 
+        \caption{Results of machine learning algorithms applied to acquired biological data in (a) and synthetic data generated in (b). Cellular segmentation was performed using the evolving generalised voronoi method.}
+	\label{mlResultsBarChart}
+\end{figure}
+
+\subsubsection{Results with Voronoi Segmentation}
+Corresponding to the results obtained using the evolving generalised Voronoi (EGVD) a set of results were also obtained where cellular segmentation was performed using a Voronoi mid-line separation between nuclei. This data does not use the plasma membrane channel to determine the cell boundary. A result of this is that there is less variance in cell size as compared to the EGVD method.
+\begin{center}
+	\footnotesize
+	\begin{tabular}{|cc|ccc|ccc|} \hline
+& & \multicolumn{3}{ c }{Biological} & \multicolumn{3}{ |c| }{Synthetic}\\
+\hline
+			Treatment & Ratio$\%$ & SVM $\%$ & CART $\%$ & RF $\%$& SVM $\%$ & CART $\%$ & RF $\%$ \\ \hline
+			A & 0   & 6.1  & 13.1 & 9.5  & 7.9  & 11.9 & 5.0  \\ 
+			B & 25  & 27.3 & 31.1 & 29.7 & 27.1 & 31.7 & 26.2 \\ 
+			C & 50  & 59.4 & 60.3 & 60.8 & 48.3 & 49.2 & 50.6 \\ 
+			D & 75  & 78.5 & 79.7 & 80.2 & 69.2 & 69.8 & 70.2 \\ 
+			E & 100 & 90.1 & 88.8 & 89.8 & 90.8 & 89.8 & 94.6 \\ \hline
+	\end{tabular}
+	\captionof{table}{Ratios of siRNA treated to untreated cells as predicted by support vector machines (SVM), classification and regression trees (CART) and random forest (RF) algorithms for bot the acquired biological data and the synthetic data created.}
+	\label{dataTable}
+\end{center}
+
+\begin{figure}[htpb] 
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{mlResultsVoronoi} 
+		\caption{}
+		\label{mlResultsSynthetic} 
+	\end{subfigure}
+	\begin{subfigure}[b]{0.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{mlResultsSyntheticVoronoi} 
+		\caption{}
+		\label{mlResultsSynthetic} 
+	\end{subfigure} 
+        \caption{Results of machine learning algorithms applied to acquired biological data in (a) and synthetic data generated in (b). Cellular segmentation was performed using the Voronoi method.}
+	\label{mlResultsBarChart}
+\end{figure}
+
+
+\section{Conclusions}
+\begin{itemize}
+	\item siRNA cells divide faster hence bias, 2 day period
+	\item SVM and CART deterministic no error
+	\item Random forest has 500 trees
+\end{itemize}
+
 
 \section{Morphometric analysis of vWF exocytic sites}
 Exocytosis is the process whereby a secretory vesicle is transported to the plasma membrane and a fusion of the vesicular membrane and plasma membrane ensues. This secretory process involves multiple different stages; including the formation of a vesicle, and the transportation to the target membrane. The vesicle must be tethered or docked at the appropriate sites and prepared for fusion. Finally a fusion pore or exocytotic exit site is formed and the vesicle contents are released. Fusion pores are crucial to exocytosis and many other cellular functions such as membrane trafficking and intracellular messenger regulation~\cite{Lindau2003}. They are continuously being formed and dispersed throughout the cell. Knowledge about fusion pores structure and dynamic processes is mainly from plasma membrane fusion pores resulting from exocytosis. Imaging and morphological analysis can yield information as to their function.
@@ -198,7 +489,7 @@ The flowchart in Fig.~\ref{imageProcessingPipeline:exitSites} presents each step
 
 \begin{figure}[htbp]
 	\centering
-	\includegraphics[width=0.6\linewidth]{imageProcessingPipelineES.pdf}
+	\includegraphics[width=0.6\linewidth]{imageProcessingPipelineES}
 	\caption[Image processing pipeline]{Image processing for morphometric analyses of fusion pores. The dark red trapeziums indicate inputs and outputs, red ellipses represent significant intermediary images in the pipeline, blue rectangles are image processing steps and blue diamonds represent image duplications.}
 	\label{imageProcessingPipeline:exitSites}
 \end{figure}

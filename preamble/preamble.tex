@@ -1,3 +1,45 @@
+% ****************************** Code Listings *********************************
+\usepackage[final]{listings}
+\lstdefinestyle{pseudo}{
+	basicstyle=\footnotesize\ttfamily,
+	basewidth  = {.5em,0.5em},
+	tabsize=2,
+	numbers=left,
+	numbersep=8pt,
+	breaklines=true,
+	xleftmargin=15pt,
+	frame=TB
+}
+\lstdefinestyle{pseudononumber}{
+	basicstyle=\footnotesize\ttfamily,
+	basewidth  = {.5em,0.5em},
+	tabsize=2,
+	breaklines=true,
+	frame=TB
+}
+\lstdefinestyle{python}{
+	basicstyle=\footnotesize\ttfamily,
+	language=Python,
+	basewidth  = {.5em,0.5em},
+	tabsize=2,
+	numbers=left,
+	numbersep=8pt,
+	breaklines=true,
+	xleftmargin=15pt,
+	frame=TB
+}
+\lstdefinestyle{pythonnonumber}{
+	basicstyle=\footnotesize\ttfamily,
+	language=Python,
+	basewidth  = {.5em,0.5em},
+	tabsize=2,
+	breaklines=true,
+	frame=TB
+}
+
+% ****************************** Tikz zoombox **********************************
+\input{preamble/tikz_zoombox}
+
 % ****************************** Custom Margin *********************************
 
 % Add `custommargin' in the document class options to use this section Set {innerside margin / outerside margin / topmargin / bottom margin}  and other page dimensions
@@ -150,7 +192,7 @@
 % ******************************** Todo Notes **********************************
 \ifsetDraft
 	\usepackage[colorinlistoftodos]{todonotes}
-	\newcommand{\mynote}[1]{\todo[author=kks32,size=\small,inline,color=green!40]{#1}}
+	\newcommand{\mynote}[1]{\todo[author=WG,inline,size=\small,linecolor=blue,backgroundcolor=blue!25,bordercolor=blue]{#1}}
 \else
 	\newcommand{\mynote}[1]{}
 	\newcommand{\listoftodos}{}
