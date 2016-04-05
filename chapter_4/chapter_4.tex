@@ -7,6 +7,8 @@
 \nomenclature[z-THP1]{$THP-1$}{A human monocytic cell line derived from an acute monocytic leukemia patient}
 \nomenclature[z-CLAHE]{$CLAHE$}{Contrast Limited Adaptive Histogram Equalisation}
 \nomenclature[z-OpenCV]{$OpenCV$}{Open Source Computer Vision Library}
+\nomenclature[z-OpenCV]{$MOTP$}{Multiple Object Tracking Precision}
+\nomenclature[z-OpenCV]{$MOTP$}{Multiple Object Tracking Accuracy}
 
 Mechanisms of leukocyte recruitment can be studied by leukocyte endothelium flow adhesion assays \emph{in vitro}, in the presence of physiological levels of shear stress. Recruitment of leukocytes requires leukocyte interaction with vascular endothelium and consists of multiple steps in a consecutive adhesion cascade. The mechanisms of adhesion can be inferred from analysis of leukocyte endothelial interaction in flow assays, where the endothelial monolayer is in differing activation states. Interaction between the endothelial monolayer and leukocytes were recorded with a phase contrast microscope and high frame rate microscope camera. Quantification of interaction events in the acquired video sequence manually is time consuming and laborious. This chapter describes a quantitative computational method for leukocyte cell detection and tracking using a Haar-like features object detection framework. The method is capable of automatically identifying and accurately tracking multiple leukocyte trajectories \emph{in vitro} adhesion assays.
 
@@ -323,16 +325,20 @@ frame\_no & x      & y      & w      & h      & x\_centroid & y\_centroid \\
 
 \subsection{Tracking leukocytes}
 \label{leukocytes:analysis:tracking}
-The distribution of velocities of leukocytes flowing over an endothelial monolayer can be used to study interaction events associated with an inflammatory response. Determination of leukocyte velocities requires detection of leukocyte positions in each video frame (as described Section in~\ref{leukocytes:analysis:detection}), in addition to this, a method is needed to link leukocytes over multiple frames. Tracking of leukocytes over multiple consecutive video frames is used to collect trajectory data, including the instantaneous velocity and acceleration, which are essential to the study of leukocyte interaction events. The linking of leukocytes into trajectories is achieved by a particle tracking algorithm.
+The distribution of velocities of leukocytes flowing over an endothelial monolayer can be used to study interaction events associated with an inflammatory response. Determination of leukocyte velocities requires detection of leukocyte positions in each video frame (as described in section~\ref{leukocytes:analysis:detection}). In addition to this, a method is needed to link leukocytes over multiple frames. Tracking of leukocytes over multiple consecutive video frames is used to collect trajectory data, including the instantaneous velocity and acceleration, which are essential to the study of leukocyte interaction events. The linking of leukocytes into trajectories is achieved by a particle tracking algorithm.
 
-Particle tracking algorithms analyse sequential video frames and output the movement of particles or objects over those frames. This has applications in human-computer interaction, security, surveillance, traffic control and medical imaging. Two commonly used algorithms are meanshift and camshift tracking. These methods use an iterative localisation procedure based on the maximization of a similarity measure~\cite{Comaniciu2000}.
+Particle tracking algorithms analyse sequential video frames and record the movement of particles or objects over those frames. This has applications in human-computer interaction, security, surveillance, traffic control and medical imaging. Two commonly used algorithms are meanshift and camshift tracking. These methods use an iterative localisation procedure based on the maximization of a similarity measure~\cite{Comaniciu2000}.
 
-In a biological context particle tracking tends to focus on scenarios where the motion between frames is effectively Brownian. Two common packages for particle tracking of particles with a Brownian like motion are \emph{TrackMate} in ImageJ and \emph{TrackPy} in Python. These were found to be suboptimal when applied to tracking leukocytes in an interaction assay. As the motion of leukocytes between frames is in a constant direction a tracking protocol has been written to take advantage of this. The procedure for tracking of leukocytes involves a loop to iterate through every found object and apply a method to link particles between frames and a final stage of filtering trajectories.
+In a biological context particle tracking tends to focus on scenarios where the motion between frames is effectively Brownian. Two common software packages for particle tracking of particles with a Brownian like motion are \emph{TrackMate} in ImageJ and \emph{TrackPy} in Python. These were found to be suboptimal when applied to tracking leukocytes in an interaction assay.
+
+Since the motion of leukocytes is in the constant direction of fluid flow, a tracking protocol has been written to exploit this. Leukocyte tracking is a video post-processing step, following detection of leukocyte positions in each video frame, they are linked by particle ID values over multiple frames into trajectories. The procedure for linking of leukocytes involves a loop to iterate through every found leukocyte and identify the leukocyte in proceeding frames. The final stage of leukocyte tracking is the filtering of trajectories.
 
 \subsubsection{Particle linking}
-Each object detected represents one row in Table~\ref{table:particles_features}. These objects are linked using a for loop that iterates through each row and assigns corresponding objects in sequential frames the same ID. Before applying the particle linking routine, the array of found objects (Table~\ref{table:particles_features}) is sorted by the frame number and then by the $y$-coordinates of leukocytes in each frame. In the first frame of the video sequence, or the first frame with detected leukocytes present the leukocytes are assigned a sequential numerical ID depending on their $y$-coordinate value.
+Each object detected represents one row in Table~\ref{table:particles_features}. These objects are linked using a for loop that iterates through each row in Table~\ref{table:particles_features} and attempts to identify and assign corresponding objects in later frames the same ID. Particle linking works on the premise that particles move in the direction of flow, and therefore particles in later frames will be within a narrow range of $x$ values and will have $y$ values greater than the original. Particles are linked over sequential frames according to the minimal displacement in $y$ value, particle IDs are then matched to form a trajectory.
 
-From the initial setup with IDs assigned, a numerical ID is assigned to all leukocytes in the data frame, as shown in listing~\ref{listing:tracking_loop}. A for loop iterates through each row in the data frame; cases where the particle has an ID already assigned and where it does not are handled differently. In the condition that the detected object in question does not have an ID associated with it (line 3), then it is assigned the next highest ID (line 4 and 5). The particle chooser function is then used to identify any particles in the proceeding frames to which the particle can be linked by assigning the same ID. Conversely, in the condition that the ID of the particle already exists, then the particle chooser function is used to identify particles in the proceeding frames to which the particle can be linked by assigning the same ID.
+Prior to applying this particle linking routine, the array of found objects (Table~\ref{table:particles_features}) is sorted by frame number and then by the $y$-coordinates of objects in each frame. In the first frame of the video sequence with detected objects present, the objects are assigned a sequential numerical ID depending on their $y$-coordinate value. From the initial setup with IDs assigned in one frame, numerical IDs can be assigned to all other leukocytes in the data frame, as shown in listing~\ref{listing:tracking_loop}. 
+
+A for loop iterates through each row; cases where the particle has an ID already assigned and where it does not are handled differently. In the condition that the detected object in does not have an ID associated with it (line 3), then it is assigned the next highest ID (line 4 and 5). Following this candidate particles in the proceeding frames within a narrow range of $x$ values, and $y$ values greater than the original particle are searched. Of the candidate particles identified, the closest object is matched and linked by assigning the same particle ID. In the condition that the ID of the particle already exists, then candidate particles within a narrow range of $x$ values and larger $y$ values are searched in proceeding frames, to which the particle can be linked by assigning the same ID.
 
 \begin{lstlisting}[
 	style=pseudo,
@@ -342,41 +348,24 @@ From the initial setup with IDs assigned, a numerical ID is assigned to all leuk
 ASSIGN ID to objects in frame with first detected object by y value
 FOR each detected object
 	IF particle_ID == NULL
-		GET max particle_ID in df_particles
-		ASSIGN particle_ID == max(particle_ID) + 1
-		SET particle_ID with particle chooser in lookahead frame
+		GET max particle_ID in particles table
+		ASSIGN particle_ID as max(particle_ID) + 1
+		GET particles in lookahead frames within x range and larger y value
+		IF particles are found
+			ASSIGN particle_ID as max(particle_ID) + 1
 	ELSE particle_ID != NULL
-		SET particle_ID with particle chooser in lookahead frame
+		GET particles in lookahead frames within x range and larger y value
+		IF particles are found
+			ASSIGN particle_ID
 END FOR
 \end{lstlisting}
 
-So for each leukocyte if it does not have an ID assigned, it is assigned the next highest particle ID, following this a function looks in proceeding frames for leukocytes to link by assigning the same ID. If the leukocyte has an ID already assigned, then proceeding frames will be searched and leukocytes linked by their ID. In this way after iterating through all the rows in the data frame every detected leukocyte in every frame of the video has an ID assigned to it.
-
-\subsubsection{Particle chooser}
-The function that looks ahead frames and determines whether their exist leukocytes for their numerical IDs to be matched into trajectories is termed the particle chooser function. A Python function was written for this purpose in listing~\ref{listing:particle_chooser}, the premise behind this is for a selected particle to look in the proceeding frames for particles that exist within a narrow band of $x$ values and $y$ values greater than the original particles. Found particles are then linked according to their $y$ value and particle IDs matched. The function requires two input arguments, a data frame containing the detected objects (\ref{table:particles_features}), an object index and a parameter specifying how many frames to look ahead. The object index corresponds to a detected object in the detected objects data frame, the object being linked is identified in line 2.
-\begin{lstlisting}[
-	style=python,
-	label={listing:particle_chooser},
-	caption={Python method to choose particles to be linked in proceeding frames}
-	]
-def particle_chooser(df_particles, index, numberOfLookaheadFrames):
-    particle = df_particles.loc[[index]]
-    lookahead_frames = df_particles.loc[df_particles.frame_no.isin(range(int(particle.frame_no+1),int(particle.frame_no+numberOfLookaheadFrames)))]
-    candidate_particles = lookahead_frames[(lookahead_frames['x_centroid'] > int(particle.x_centroid)-xRangeCandidateParticles) & (lookahead_frames['x_centroid'] < int(particle.x_centroid)+xRangeCandidateParticles)]
-    candidate_particles = candidate_particles[(candidate_particles['y_centroid'] > int(particle.y_centroid))]
-    candidate_particles = candidate_particles.sort(['y_centroid'], ascending=[True])
-    chosen_particle = candidate_particles[:1]
-    chosen_particle['particle_ID'] = int(particle['particle_ID'])
-    if chosen_particle.shape[0]>0:
-        df_particles.loc[chosen_particle.index[0],'particle_ID'] = int(chosen_particle['particle_ID'])
-    return chosen_particle
-\end{lstlisting}
-The identified particle/object will be linked with a detected particle in the proceeding frames, where the number of frames to search ahead is dependent on the number of lookahead frames parameter. For the particle to be linked, a data frame containing candidate particles to be linked with is retrieved, in line 3. Due to the unidirectional flow along the y-axis in the leukocyte adhesion assay, particles are linked by searching the proceeding frames within a range of x-values and $y$-values greater than the original value. From the retrieved set of found objects in proceeding frames (line 3) a set of candidate particles are selected within a specified band of $x$ values (in line 4) and with a $y$-value greater than the original particle (line 5). Candidate particles are sorted according to their $y$-value (line 6), since the most likely particle to be linked have a minimal $y$ displacement between frames. The chosen particle is then selected as the first row in the sorted candidate particle data frame (line 7), and a particle\_ID assigned corresponding to the original particle, so they are associated by an ID. Finally if a particle has been found the found leukocyte data is updated in lines 9 and 10. In this way all detected particles are assigned a particle ID and data about trajectories extracted.
+In summary, for each detected object (row in Table~\ref{table:particles_features}), if it does not have an ID assigned, it is assigned the next highest particle ID, following this a function looks in proceeding frames for leukocytes to link by assigning the same ID. If the leukocyte has an ID already assigned, then proceeding frames will be searched and leukocytes linked by their ID. In this way after iterating through all the rows, every detected leukocyte in every frame of the video has an ID assigned to it. A parameter specifies how many frames to look ahead when linking particles into trajectories, typically 2 frames are searched. This means that if a particle is not detected in one frame then the trajectory is not broken.
 
 \subsubsection{Trajectories}
-Having assigned and linked particles by numerical ID trajectories can be cleaned and calculations performed and trajectory features calculated. A minimum trajectory length is specified to remove detected objects that appear in less than $n$ number of frames. This helps to remove very short trajectories that may exist as incorrectly detected false positives being linked together for example. A minimum trajectory length of 10 frames has been used to remove short trajectories. Similarly, trajectories appearing in the first and last frames of the video sequence have been removed since they are not complete and may continue beyond the duration of the recording. Following this the results are sorted according to the particle ID values and frame number column. Each video frame is annotated with coloured boxes showing a unique trajectory with a particle ID number next to the box, as in Figure.~\ref{figure:leukocyte_rolling_detected-image} and~\ref{figure:leukocyte_rolling_detected-zoom}. Displaying the trajectory number allows cross referencing with the output results table.
+Having assigned and linked particles by numerical ID, trajectories can be cleaned and calculations performed. A minimum trajectory length is specified to remove detected objects that appear in less than $n$ number of frames. This helps to remove very short trajectories that may exist as incorrectly detected false positives being linked together for example. A minimum trajectory length of 10 frames has been used to remove short trajectories. Similarly, trajectories appearing in the first and last frames of the video sequence have been removed since they are not complete and may continue beyond the duration of the recording. Following this the results are sorted according to the particle ID values and frame number column. Each video frame is annotated with coloured boxes showing a unique trajectory with a particle ID number next to the box, as in Figure.~\ref{figure:leukocyte_rolling_detected-image} and~\ref{figure:leukocyte_rolling_detected-zoom}. Displaying the trajectory number allows cross referencing with the output results table.
 
-Having linked particles into trajectories, information about the trajectories can be calculated. For a particle linked in consecutive frames the displacement of the particle in both the $x$ and $y$ directions can be used to calculate the Cartesian displacement using Pythagoras's theorem. From this and knowing the frame rate of the camera the instantaneous velocity and acceleration of the particle was be calculated.
+Following the linking of particles into trajectories, information about the trajectories was calculated. As the $x$ and $y$ displacement of a particle linked over consecutive frames is known, using Pythagoras's theorem the Cartesian displacement was calculated. From this and knowing the frame rate of the camera the instantaneous velocity and acceleration of the particle was calculated.
 
 \begin{figure}[htbp!]
 	\centering
@@ -463,6 +452,25 @@ An important parameter to optimise in Haar-like features object detection is the
 
 \subsection{Tracking}
 \label{leukocytes:validation:tracking}
+A comprehensive evaluation of leukocyte endothelial interaction assay analysis should include a systematic performance evaluation of the tracking approach. Systems tracking single objects can be evaluated with a straightforward benchmarking approach. However, for multiple object tracking systems as in leukocyte endothelial interaction assays, there is still no generally agreed upon evaluation procedure.
+
+Bernardin and Stiefelhagen~\cite{Bernardin2008} present a method to detect the basic types of errors produced by multiple object trackers. They introduce two metrics, multiple object tracking precision (MOTP) and multiple object tracking accuracy (MOTA). These metrics express the tracking procedures ability to estimate object positions and to follow objects consistently over time.
+
+The multiple object tracking precision (MOTP), was calculated as:
+\begin{equation}
+	MOTP=\frac{\sum_{i,t}d_{t}^{i}}{\sum_{t}c_{t}},
+\end{equation}
+where, $d$ is the distance between a matched pair of automatically tracked and ground truth particles. This metric represents the ability of the tracker to precisely find object positions, calculated as the average error in position between the automated classifier and a ground truth set. To calculate this 864 leukocyte positions were recorded in 200 consecutive video frames. For each matched ground truth and automated leukocyte pair the euclidean distance between the ground truth and automated position was calculated. A MOTP value of 3.5 pixels was achieved from this, showing a high degree of precision in estimating leukocyte positions.
+
+A second metric the multiple object tracking accuracy (MOTA), was calculated from:
+\begin{equation}
+	MOTA=1-\frac{\sum_{t}(m_t+fp_t+mme_t)}{\sum_{t}g_{t}},
+\end{equation}
+where, $m_t$, $fp_t$ and $mme_t$ are the number of misses, of false positives and of mismatches, respectively, for time $t$. A miss is an object that the tracking method failed to record, a false positive is an incorrectly tracked particle, that is not actually an object and a mismatch is a particle that is incorrectly reassigned a new ID whilst tracking. These three basic error types are summed to give an error ratio and the resulting tracking accuracy.
+
+To calculate a MOTA value the number of objects, misses, false positives and mismatches were counted in each frame of 200 consecutive video frames. A total of 846 objects were recorded, with 51 misses, 13 false positives and 0 mismatches and a MOTA value of 0.92 was achieved.
+
+A high MOTP and MOTA suggest that the detection and tracking methodology presented in section~\ref{leukocytes:analysis} is well suited for the task of tracking leukocytes. The MOTP and MOTA values of 3.5 pixels and 0.92 were achieved from a video of unstimulated endothelial cells. The MOTA value may be reduced in videos with more leukocyte endothelial interaction, leading to more slow particles and therefore greater probability of occlusion of leukocytes.
 
 \section{Discussion}
 \label{leukocytes:discussion}
