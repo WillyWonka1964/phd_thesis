@@ -1,4 +1,4 @@
-\documentclass[a4paper,twoside,PageStyleII,customMargin,11pt,charter,numbered,draft,index,chapter]{classes/PhDThesisPSnPDF}
+\documentclass[a4paper,twoside,PageStyleII,customMargin,11pt,charter,numbered,draft,index]{classes/PhDThesisPSnPDF}
 % `draft': Special draft mode with line numbers, images, and water mark with timestamp and custom text. Position of the text can also be modified.
 % `draftclassic': For draft mode without loading any images
 % `print': Use `print' for print version with appropriate margins and page layout. Leaving the options field blank will activate Online version.
@@ -28,7 +28,7 @@
 	\includeonly{declaration/declaration, abstract/abstract}
 \fi
 \ifdefineChapter
-	\includeonly{chapter_4/chapter_4}
+	\includeonly{notes, chapter_2/chapter_2}
 \fi
 
 \begin{document}
@@ -49,6 +49,7 @@
 %\printnomenclature[3em]
 \printnomenclature
 \mainmatter
+\include{notes}
 \include{chapter_1/chapter_1}
 \include{chapter_2/chapter_2}
 \include{chapter_3/chapter_3}
@@ -67,7 +68,7 @@
 %\bibliographystyle{unsrt} % Use for unsorted references  
 %\bibliographystyle{plainnat} % use this to have URLs listed in References
 \cleardoublepage
-\bibliography{/home/williamgrimes/Dropbox/Mendeley/BibTex/library.bib}
+\bibliography{/home/cutlerlab/Dropbox/Mendeley/BibTex/library.bib}
 
 % If you would like to use BibLaTeX for your references, pass `custombib' as
 % an option in the document class. The location of 'reference.bib' should be
