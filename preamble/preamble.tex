@@ -1,3 +1,26 @@
+% ****************************** Section breaks ********************************
+\let\stdsection\section
+\renewcommand\section{\newpage\stdsection}
+
+% ****************************** Custom Font ***********************************
+\usepackage{charter}
+\usepackage[bitstream-charter]{mathdesign}
+\ifsetCustomFont
+	\setmainfont[
+		Path              = ./libertine/opentype/,
+		Extension         = .otf,
+		UprightFont = LinLibertine_R,
+		BoldFont = LinLibertine_RZ, % Regular Semibold
+		ItalicFont = LinLibertine_RI,
+		BoldItalicFont = LinLibertine_RZI, % Regular Semibold Italic
+	]{libertine}
+	\newfontfamily\libertinesystemfont{Linux Libertine O}
+\fi
+
+\usepackage{pifont}
+\newcommand{\cmark}{\ding{51}}%
+\newcommand{\xmark}{\ding{55}}
+
 % ****************************** Code Listings *********************************
 \usepackage[final]{listings}
 \lstdefinestyle{pseudo}{
@@ -105,6 +128,8 @@
 %\widowpenalty=500
 
 %\usepackage[perpage]{footmisc} %Range of footnote options
+\usepackage{afterpage}
+\usepackage{rotating}
 
 
 % *****************************************************************************
@@ -182,7 +207,7 @@
 %\SetDraftWMPosition{bottom}
 
 % Draft Version - default is v1.0
-%\SetDraftVersion{v1.1}
+\SetDraftVersion{v2.0}
 
 % Draft Text grayscale value (should be between 0-black and 1-white)
 % Default value is 0.75
@@ -192,9 +217,15 @@
 % ******************************** Todo Notes **********************************
 \ifsetDraft
 	\usepackage[colorinlistoftodos]{todonotes}
-	\newcommand{\mynote}[1]{\todo[inline,size=\small,linecolor=blue,backgroundcolor=blue!5,bordercolor=blue]{#1}}
+	\newcommand{\mynote}[1]{\todo[author=WG,inline,size=\small,linecolor=blue,backgroundcolor=blue!5,bordercolor=blue]{#1}}
+	\newcommand{\mynoteDC}[1]{\todo[author=DC,inline,size=\small,linecolor=yellow,backgroundcolor=yellow!5,bordercolor=yellow]{#1}}
+	\newcommand{\mynoteLHK}[1]{\todo[author=LHK,inline,size=\small,linecolor=red,backgroundcolor=red!5,bordercolor=red]{#1}}
+	\newcommand{\mynoteJKV}[1]{\todo[author=JKV,inline,size=\small,linecolor=green,backgroundcolor=green!5,bordercolor=green]{#1}}
 \else
 	\newcommand{\mynote}[1]{}
+	\newcommand{\mynoteDC}[1]{}
+	\newcommand{\mynoteLHK}[1]{}
+	\newcommand{\mynoteJKV}[1]{}
 	\newcommand{\listoftodos}{}
 \fi
 

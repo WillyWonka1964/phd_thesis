@@ -1,12 +1,11 @@
 \chapter{Introduction}
 \ifpdf
-	\graphicspath{chapter_1/figs/}
+	\graphicspath{{chapter_1/figs/}}
 \fi
 
 \nomenclature[z-HUVEC]{$HUVEC$}{Human Umbilical Vein Endothelial Cell}
 \nomenclature[z-WPB]{$WPB$}{Weibel Palade Body}                                                   % first letter A is for Roman symbols
 
-%\mynote{Hey! I have a note}
 The overarching objective of this work is to advance our understanding of the cell biology of haemostasis, thrombosis and inflammation. The aim of this specific project is to develop a suite of image and video analysis approaches to quantify and aid in evaluation of data obtained from investigations into endothelial, haemostatic and inflammatory processes. Increasingly sophisticated and diverse microscopy is being used in cardiovascular experimentation. Automated, quantitative image analysis approaches are becoming increasingly necessary to harvest data from the often large image based data sets. This project aims to develop tools for extracting quantitative output from images, which will be useful not only to this research team, but more generally in the field. 
 
 An initial aim of this project was to further develop an image processing tool that has been used to quantify the morphometric features of a large population of Weibel-Palade bodies (WPBs). This computational tool, discussed in section~\ref{singleCellAnalysis}, can be applied to large scale morphometric studies of WPBs under different physiological and pathophysiological conditions to gain an understanding of underlying haemostatic processes. Data mining of WPB morphometric features at a cellular level and whole population level could then be employed along with statistical, machine learning and visualisation techniques to gain further biological insight.
@@ -20,6 +19,30 @@ The vWF strings play an important role in capture of platelets which contribute 
 Finally, a workflow is being developed (section~\ref{leukocyteRolling}) for video analysis of leukocyte extravasation. This is part of the innate immune response whereby stages in the leukocyte adhesion cascade from: capture, rolling, slow rolling and firm adhesion, can be imaged under flow in vitro as a time series. Presently, analysis from such videos involves, simply manually counting leukocytes that are slow rolling or firmly adhering. It is proposed that by accurately detecting the leukocytes in each frame and linking them between frames, information about the trajectories of each leukocyte over an endothelial cell surface could be acquired. This analytical technique will allow for a more thorough analysis of the leukocyte adhesion cascade than a manual counting approach.
 
 The development of this suite of image processing tools will help to build a multifaceted picture of the endothelial processes of haemostasis, thrombosis and inflammation. The image processing tools, together with the analysis of their output, allows for the extraction of a great deal of quantitative information to underpin significant advances in the mechanisms that are at the heart of haemostasis and of the initiation of inflammation.
+
+\section{Experimental workflow}
+A general approach to experimentation in life sciences is to investigate defined research questions or hypotheses, via quantitative analyses of experimental data. A single experiment or a series of experiments may be constructed to investigate a hypothesis. For a hypothesis to be accepted, results must be reproducible over multiple experiments and corroborated by alternative experimental methods. This approach of experimentation, interpretation and re-experimentation is effective when applied to high-throughput morphometric analyses of endothelial organelles.
+
+The experimental loop displayed in Figure~\ref{figure:endothelial_morphometry:introduction:experimental_workflow} shows typical stages in experiment design and analysis. The top row of processes deals with the biological hypothesis and experimental setup, whilst the bottom row of processes are relating to data analysis and interpretation of the results. The first step in the loop is specification of a hypothesis, followed by: defining experimental groups to test the hypothesis, assignment of samples to those groups and preparation of the specimen. The bottom row of processes converts the raw data into a form that can quantitatively address the initial hypothesis. Collection of data, aggregation of data and additional analysis allows for interpretation of the data. Typically, investigation of a hypothesis leads to investigation of further hypotheses and the loop is self-perpetuating.
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=1.0\textwidth]{experimental_workflow}
+	\caption[Experimental workflow in life science imaging]{A general experimental workflow in life science imaging. Adapted from Prodanov and Verstreken, 2012~\cite{Prodanov2012}}
+	\label{figure:endothelial_morphometry:introduction:experimental_workflow}
+\end{figure}
+
+At each step in the processing workflow in Figure~\ref{figure:endothelial_morphometry:introduction:experimental_workflow} the volume of output data is decreased, with a corresponding increase in the complexity of generated information or derived data. For example, acquired images of cells can be transformed into a set of morphometric and intensity features. Each feature has a different semantic context, such as: nucleus area or cell perimeter. In the acquired raster images of cells the biological object is only implicitly present, but in the derived data the biological object is explicitly constructed. The explicit information contained within the raster image for example about staining distribution and illumination is lost. The process of object segmentation and feature extraction is therefore accompanied by irreversible reduction of the input information. At each step in the workflow the information in the previous step is transformed into contextual data, called metadata. The information complexity increase is thereby also mapped to an increase of the complexity of the data structure~\cite{Prodanov2012}.
+
+For example the extraction of morphometric and pixel intensity measurements leads to a reduced representations of the image features of interest. These features have higher information complexity compared to the raw data, but there is an irreversible information loss by the process of measurement. To replicate the measurements from the original data, the same image processing algorithms must be applied. Therefore, measurements are only implicitly present in images~\cite{Prodanov2012}.
+
+\subsection{Morphological image processing}
+In a biological context morphology refers to the study of form and structure of an organism. The mathematical context of morphology is as a tool for extracting image components that are of use in representation of region shape. In morphological image processing the inputs are images but the outputs are attributes extracted from those images.
+
+Morphometric analyses of endothelial organelles sets out to obtain features relating to the shape and pixel intensity of organelles. A number of steps were performed in order to extract morphological features, from endothelial cell images. Typically, images may be preprocessed to reduce noise and enhance the contrast between certain features. Different segmentation approaches will be attempted and parameters optimised to subdivide the image into its constituent regions or objects. A binary mask of the relevant segmented objects can then be used to measure properties of the labeled image regions. Properties include morphometry and with reference to the original image pixel intensity information. The resulting measurements can be combined and evaluated statistically to infer biological meaning.
+
+
+
 
 \section{Endothelial Molecular Biology}
 Endothelial cells lining the cardiovascular system form the interface between plasma circulating in the blood and the surrounding tissues. At this interface the Weibel-Palade body (WPB), an endothelial specific rapid-response organelle acts as a mediator for vital physiological processes, including inflammation, haemostasis, angiogenesis and vascular tone processes.
@@ -40,8 +63,27 @@ VWF is a cofactor to Factor VIII, preventing its proteolysis within the blood st
 \subsubsection{The inflammatory cascade}
 
 \section{Microscopy}
+
+
+Visual inspection of cells under a microscope is a basic yet fundamental technique in cell biology. Traditionally, experimental data from microscopy would be measured and assessed by a trained biologist. The human visual system is adept at intuitively interpreting visual information, and endowed with the ability to filter irrelevant variations in illumination and contrast. Recent advances in optical technologies and instrumentation are providing previously unimagined capabilities. Robotic microscopy and modern immunostaining techniques have increased the speed and capacity to gather microscopic image data from experiments. This has served to amplify the utility and necessity of visual inspection and measurement of cells. Expert manual inspection and annotation is not feasible for detection of subtle cell population differences over tens or hundreds of thousands of cells. Visual analysis has therefore become a bottleneck in performing large image-based high-throughput screens. To address this, advances in bioinformatics and high-throughput computational automated analysis tools have been developed to extract quantitative information from microscopy images.
+
+Automated image analysis does provide some substantial benefits over manual scoring, including: providing unbiased highly quantitative scoring, highly reproducible, able to detect subtle population differences, is fast, eliminates tedious manual labour and is able to simultaneously collect multiple features~\cite{Jones2006}. 
+
+\subsection{Resolution}
+The resolving power or resolution limit of the optical system is defined as the minimum distance apart of two objects in order for them to be resolved as separate objects. This distance is equal to the smallest point source in the image, and is given by Abbe's equation~\cite{Abbe1873},
+\begin{equation}
+r=0.61\frac{\lambda}{NA},
+\label{equation:abbe}
+\end{equation}
+where, $r$ is the resolution limit, $\lambda$ is the wavelength and $NA$ the numerical aperture of the optical system.
+
+
 \subsection{Immunofluorescence}
 \subsection{Phase contrast}
+
+\subsection{Error sources}
+Quantitative measurements in fluorescence microscopy contain some amount of error, this may be introduced by the specimen, the microscope or the detector. To minimise sources of error, in high-throughput morphometry of endothelial organelles requires consideration of, both the image processing and experimental design. The imaging system should be configured for optimal signal detection, low background and low noise. Acquired images should be in focus over the full dynamic range of the camera whilst avoiding pixel saturation. To maintain pixel values digital files must be stored in original raw format or using lossless compression.
+
 
 \section{Image Processing}
 \subsection{Image enhancement}
@@ -54,7 +96,7 @@ VWF is a cofactor to Factor VIII, preventing its proteolysis within the blood st
 \subsection{Random Forest}
 \subsection{CART}
 
-\section{Validationn}
+\section{Validation}
 \subsection{Dice and Jaccard}
 \subsection{Hungarian algorithm}
 \subsection{Training and Validation}
