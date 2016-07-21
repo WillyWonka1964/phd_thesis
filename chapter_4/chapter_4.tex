@@ -1,5 +1,5 @@
 \chapter{Automated detection and tracking of leukocytes \emph{in vitro}}
-\label{chapter:leukocytes}
+\label{leukocytes}
 \ifpdf
     \graphicspath{{chapter_4/figs/}}
 \fi
@@ -29,12 +29,6 @@ Leukocytes migrate from circulating in the blood to the surrounding tissue, at t
 To observe mechanisms of leukocyte recruitment across human endothelial cells an \emph{in vitro}, fluid flow chamber was used. A microscope capable of phase contrast microscopy connected to a flow assay system recorded video frames of leukocytes in culture medium, flowing through the chamber, over a confluent monolayer of HUVECs. Physiological levels of shear stress were maintained by controlling the flow rate. Hypotheses could then be tested by comparing the effect of endothelial cell conditions that inhibit or promote leukocyte recruitment as compared to a control group.
 
 Phase contrast microscopy is advantageous for the study of live cells and their motility. It provides sufficient contrast for cell edge detection without exogenous dyes, using only moderate levels of light. Resulting images are free from staining artifacts and photo-damage, as are common in fluorescence microscopy~\cite{Ambuhl2012}. Phase contrast microscopy translates tiny variations in the phase of incident light from a specimen into perceptible changes in light amplitude. Phase differences in light occur due to the relative refraction index of the medium through which the light has travelled.
-
-\subsection{Biomolecular background}
-\label{leukocytes:introduction:biomolecular}
-A variety of adhesion receptors have been implicated in leukocyte endothelial interactions and are thought to play roles in recruitment, arrest, and extravasation of leukocytes. A critical role is played by the family of $\beta$2 or leukocyte integrins~\cite{Springer1990, Mayadas1993}. The genetic disease leukocyte adhesion deficiency I (LADI) is caused by a mutation of the $\beta$2 integrin gene. The increased concentration of circulating leukocytes in patients with LADI implies that $\beta$2 or leukocyte integrins play an important role in leukocyte extravasation. Patients with LADI are susceptible to frequent bacterial and fungal infections~\cite{Anderson1987}. Effective arrest of leukocytes at an inflammation site requires local activation of circulating leukocytes. The circulating leukocytes transiently interact with the activated endothelium, reducing their velocity in the direction of flow, allowing activation of their $\beta$2 integrins, leading to arrest and extravasation. This transient interaction is manifested as rolling of the leukocytes along the vessel wall in areas of inflammation~\cite{Mayadas1993, Atherton1972}.
-
-The selectins are a family of adhesion receptors that have been shown to mediate rolling of leukocytes. There are three known selectins; L-Selectin, E-Selectin and P-Selectin, which are encoded by three closely linked genes~\cite{Watson1990}. The integral membrane protein leukocyte receptor P-selectin is stored within the membrane of Weibel-Palade bodies (WPBs) of endothelial cells~\cite{Bonfanti1989, McEver1989}, from where it is delivered to the cell surface within minutes after secretagogue-triggered exocytosis~\cite{McEver2002}. P-selectin plays a key early role in the inflammatory trafficking of leukocytes, being the first receptor involved in recruiting leukocytes from flowing plasma to the endothelial surface~\cite{Larsen1989}.
 
 \subsection{Shear stress}
 \label{leukocytes:introduction:shear}
@@ -97,10 +91,10 @@ Two prominent artifacts introduced by phase contrast microscopy are halos and sh
 		zoomboxarray columns=2,
 		zoomboxarray rows=2]
 		\node [image node] {\includegraphics[width=0.49\textwidth]{160225_dish_1_10min_his-_00652}};
-		\zoombox[magnification=3,color code=red]{0.520, 0.800}
-		\zoombox[magnification=3,color code=yellow]{0.637, 0.403}
-		\zoombox[magnification=3,color code=green]{0.195, 0.472}
-		\zoombox[magnification=3,color code=blue]{0.587, 0.202}
+		\zoombox[magnification=3,color code=red, dashed]{0.520, 0.800}
+		\zoombox[magnification=3,color code=yellow, dashed]{0.637, 0.403}
+		\zoombox[magnification=3,color code=green, dashed]{0.195, 0.472}
+		\zoombox[magnification=3,color code=blue, dashed]{0.587, 0.202}
 	\end{tikzpicture}
 	\begin{tikzpicture}[figurename=figure:leukocyte_rolling_background,
 		zoomboxarray,
@@ -108,10 +102,10 @@ Two prominent artifacts introduced by phase contrast microscopy are halos and sh
 		zoomboxarray columns=2,
 		zoomboxarray rows=2]
 		\node [image node] {\includegraphics[width=0.49\textwidth]{160225_dish_1_10min_his-_00652_background}};
-		\zoombox[magnification=3,color code=red]{0.520, 0.800}
-		\zoombox[magnification=3,color code=yellow]{0.637, 0.403}
-		\zoombox[magnification=3,color code=green]{0.195, 0.472}
-		\zoombox[magnification=3,color code=blue]{0.587, 0.202}
+		\zoombox[magnification=3,color code=red, dashed]{0.520, 0.800}
+		\zoombox[magnification=3,color code=yellow, dashed]{0.637, 0.403}
+		\zoombox[magnification=3,color code=green, dashed]{0.195, 0.472}
+		\zoombox[magnification=3,color code=blue, dashed]{0.587, 0.202}
 	\end{tikzpicture}
 	\caption[Leukocyte frame and background removal]{Image (a) is a video frame obtained from a phase contrast microscope image sequence of leukocytes in an endothelial interactive adhesion assay, with four cells identified by coloured boxes in image (b). The magnified images in (b) show leukocytes rolling over the endothelial monolayer, with four cells identified in red, yellow, green and blue boxes. An adhering leukocyte is seen in the green box. Image (c) shows the same frame after performing a contrast limited adaptive histogram equalisation (CLAHE) preprocessing step and background removal via frame differencing. In image (d) the corresponding leukocytes are shown. Note the absence of the adhering leukocyte in the green box; because it has been stationary for more than $n$ frames it forms part of the background model.}
 \end{figure}
@@ -126,7 +120,7 @@ Leukocyte detection and tracking using Haar-features object detection was perfor
 \label{leukocytes:processing:preprocessing}
 A preprocessing step is performed on each frame of the video to compensate for illumination changes that may occur during the video, and any spatial illumination variation in the frame. Contrast limited adaptive histogram equalisation (CLAHE) enhances the image, and is effective even in image regions that are darker or lighter than most of the image~\cite{Ketcham1974}. The performance of leukocyte detection is also improved following CLAHE.
 
-Histogram equalisation is a well-known image enhancement method, that alters the dynamic range and contrast of an image by spreading out the most frequent intensity values. This is achieved by using a cumulative distribution function as the mapping function. Intensity levels are changed such that the peaks of the histogram are stretched and the troughs are compressed~\cite{Sasi2013}. Adaptive histogram equalisation differs from ordinary histogram equalisation in the respect that the adaptive method computes multiple histograms each corresponding to a different image region. The CLAHE algorithm works by dividing the image into smaller tiles, and applying a contrast limited local histogram equalisation. Contrast limiting equalisation minimises the amplification of noise in regions of uniform low intensity. If a histogram bin is above the specified contrast limit, pixels in that region are clipped and distributed uniformly to other bins before applying histogram equalisation. Following equalisation, artifacts in tile borders are removed by bilinear interpolation~\cite{Hummel1977}.
+Histogram equalisation is an often used image enhancement method, that alters the dynamic range and contrast of an image by spreading out the most frequent intensity values. This is achieved by using a cumulative distribution function as the mapping function. Intensity levels are changed such that the peaks of the histogram are stretched and the troughs are compressed~\cite{Sasi2013}. Adaptive histogram equalisation differs from ordinary histogram equalisation in the respect that the adaptive method computes multiple histograms each corresponding to a different image region. The CLAHE algorithm works by dividing the image into smaller tiles, and applying a contrast limited local histogram equalisation. Contrast limiting equalisation minimises the amplification of noise in regions of uniform low intensity. If a histogram bin is above the specified contrast limit, pixels in that region are clipped and distributed uniformly to other bins before applying histogram equalisation. Following equalisation, artifacts in tile borders are removed by bilinear interpolation~\cite{Hummel1977}.
 
 The CLAHE algorithm preprocessing step is applied to each frame in the video sequence to enhance the contrast between leukocytes and their background. This step helps to ensure sufficient contrast difference between leukocytes and the background for detection of leukocytes.
 
@@ -407,10 +401,10 @@ Following the linking of particles into trajectories, information about the traj
 		zoomboxarray columns=2,
 		zoomboxarray rows=2]
 		\node [image node] {\includegraphics[width=0.49\textwidth]{160225_dish_1_10min_his-_00652_detected}};
-		\zoombox[magnification=3,color code=red]{0.520, 0.800}
-		\zoombox[magnification=3,color code=yellow]{0.637, 0.403}
-		\zoombox[magnification=3,color code=green]{0.195, 0.472}
-		\zoombox[magnification=3,color code=blue]{0.587, 0.202}
+		\zoombox[magnification=3,color code=red, dashed]{0.320, 0.900}
+		\zoombox[magnification=3,color code=yellow, dashed]{0.637, 0.403}
+		\zoombox[magnification=3,color code=green, dashed]{0.195, 0.472}
+		\zoombox[magnification=3,color code=blue, dashed]{0.587, 0.202}
 	\end{tikzpicture}
 	\caption[Leukocyte tracking]{Image (a) is a video frame obtained from a phase contrast microscope image sequence of leukocytes in an endothelial interactive adhesion assay with the object detection and tracking protocol applied. The frame has been annotated with trajectories displayed in a coloured box with a number. In the magnified images in (b) leukocytes rolling over the endothelial monolayer can be seen in the red, yellow and blue boxes, an adhering leukocyte is seen in the green box.}
 \end{figure}
@@ -437,7 +431,7 @@ Having generated a gold standard reference coordinate set, the performance of th
 		zoomboxarray columns=1,
 		zoomboxarray rows=1]
 		\node [image node] {\includegraphics[width=0.49\textwidth]{160212_IL4+PMA-_03615_validation}};
-		\zoombox[magnification=3.8,color code=yellow]{0.785, 0.73}
+		\zoombox[magnification=3.8,color code=yellow, dashed]{0.785, 0.73}
 	\end{tikzpicture}
 	\caption[Object detection performance]{Image (a) is an automatically annotated video frame, showing the performance of the object detection method. With reference to the gold standard classification, objects within green rectangles are true positives, blue rectangles are false positives and red rectangles false negatives. The magnified images in (b) shows a region containing a true positive, false positive and false negative.}
 \end{figure}
@@ -503,16 +497,3 @@ where, $m_t$, $fp_t$ and $mme_t$ are the number of misses, of false positives an
 To calculate a MOTA value the number of objects, misses, false positives and mismatches were counted in each frame of 200 consecutive video frames. A total of 846 objects were recorded, with 51 misses, 13 false positives and 0 mismatches and a MOTA value of 0.92 was achieved.
 
 A high MOTP and MOTA suggest that the detection and tracking methodology presented in section~\ref{leukocytes:processing} is well suited for the task of tracking leukocytes. The MOTP and MOTA values of 3.5 pixels and 0.92 were achieved from a video of unstimulated endothelial cells. The MOTA value may be reduced in videos with more leukocyte endothelial interaction, leading to more slow particles and therefore greater probability of occlusion of leukocytes.
-
-\section{Discussion}
-\label{leukocytes:discussion}
-The leukocyte detection and tracking workflow has not been extensively tested. A first step in assessing the validity and accuracy of the technique described is to compare the numbers of slow rolling and firmly adhering leukocytes in videos quantified with the detection and tracking routine to those that have been quantified manually. If the methodology described is able to detect similar numbers of these slow rolling or firmly adhering leukocytes it would indicate that this method is able to quantify biological differences in different video sequences.
-
-The sensitivity of the Haar-like features object detection may be improved by adjusting parameters in \emph{detectMultiScale} window, such as the minimum number of neighbours. The object classification works well but has difficulty when particles are very close or overlapping, by allowing more objects in a set area may improve the detection rate.
-
-A number of improvements can also be implemented to improve the particle tracking. An easy improvement would be to remove all leukocyte trajectories that are in the first or last frame of the video, since these cannot be considered as complete trajectories. The number of frames that the tracking algorithm looks ahead could be increased. If a particle is not detected in a frame the trajectory may be preserved.
-
-An alternative method of pruning trajectories, rather than specifying a limit to the minimum number of frames for a trajectory, would be to only accept trajectories as valid if they first appear with a $y$ coordinate near the top of the image and end with a $y$ coordinate near the bottom of the image. This may prove a more valid approach to tracing trajectories.
-
-A final improvement that could be very interesting biologically and allow for much deeper analysis would be to segment the background HUVEC monolayer. A segmentation protocol could be applied to do this or it could even be done manually, as there are usually less than 100 cells to segment in an image. By doing this the role of individual endothelial cells in the leukocyte adhesion cased could be observed and quantified. 
-

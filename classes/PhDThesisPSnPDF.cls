@@ -365,7 +365,7 @@
 }
 
 % Draft Version
-\newcommand\draftVersion{v1.0}
+\newcommand\draftVersion{v3.0}
 \renewcommand\SetDraftVersion[1]{%
 	\renewcommand\draftVersion{#1}
 }
