@@ -6,26 +6,34 @@
 
 \nomenclature[z-HUVEC]{$HUVEC$}{Human Umbilical Vein Endothelial Cell}
 \nomenclature[z-WPB]{$WPB$}{Weibel Palade Body}
+\nomenclature[z-TGN]{$TGN$}{trans-Golgi network}
+\nomenclature[z-vWF]{$vWF$}{von Willebrand factor}
+\nomenclature[z-vWD]{$vWD$}{von Willebrand disease}
+\nomenclature[z-DIC]{$DIC$}{differential interference contrast}
+\nomenclature[z-SIM]{$SIM$}{structured illumination microscopy}
+\nomenclature[z-AI]{$AI$}{artificial intelligence}
+\nomenclature[z-CCD]{$CCD$}{charged-coupled device}
 
-Increasingly sophisticated and diverse microscopy is being used in cardiovascular experimentation. As a result image analysis approaches are becoming more and more necessary to harvest quantitative data from the often large and complex image based data sets. This thesis describes methods developed for extracting quantitative output from images, which will be useful not only to this research team, but more generally in the field.
+Modern biology is an increasingly quantitative science in which higher level insights are being obtained by delving deeper into the intricate mechanisms of biological processes. To infer patterns and trends that cannot be recognised intuitively, an abstract approach using statistics and modelling is required. Research is being conducted using increasingly sophisticated and diverse microscopy techniques yielding larger and more complex datasets. Advances in optical technologies and instrumentation are providing previously unimagined capabilities in image acquisition. For instance robotic microscopy and modern immunostaining methods have increased the speed and capacity by which microscopes gather image data from experiments. Automated computerised image analysis approaches have become more and more necessary to harvest data from these image based data sets. These analyses have been facilitated by the rapid advances in computer hardware and improved analytical techniques.
 
-The overarching objective of this work was to advance our understanding of the cell biology of cardiovascular processes: haemostasis, thrombosis and inflammation. Where this project specifically aimed to develop a suite of image and video analysis approaches to quantify and aid in the evaluation of data obtained from investigations into endothelial, haemostatic, and inflammatory processes.
-
-In this chapter some background to the research topic and research questions being addressed is given. A general introduction to the various facets of this interdisciplinary research area is also provided, including: an introduction to endothelial cellular biology, the state of the art in microscopy, an overview of techniques in image processing and analysis, and finally a discussion on suitable methods to evaluate and validate image processing pipelines.
+This thesis describes computerised methods developed for extracting and interpreting quantitative output from images obtained from experiments investigating endothelial, haemostatic, and inflammatory processes. The overarching objective of this work was to advance our understanding of the cell biology of cardiovascular processes, principally involving haemostasis, thrombosis, and inflammation. In this chapter a general introduction to the various facets of this interdisciplinary research is provided. Starting with an introduction to endothelial cellular biology in \autoref{introduction:endothelial_cellular_biology}, followed by a description of microscopy techniques in \autoref{introduction:microscopy}, and finally an introduction to digital imaging and techniques in image processing and analysis is described \autoref{introduction:image_processing}.
 
 \section{Endothelial cellular biology}
-\label{introduction:endothelial_cellular_biology}
-In complex organisms the circulatory system facilitates the transport of lymph and blood; where the system supporting the circulation of lymph is referred to as the lymphatic system, and the system responsible for the circulation of blood is referred to as the cardiovascular system. The blood circulating in the cardiovascular system is comprised of: plasma, red blood cells, white blood cells, and platelets. In addition to circulating blood the cardiovascular system circulates and transports nutrients, oxygen, carbon dioxide, and hormones. This network is extensive where nearly all cells in the majority of tissue of a vertebrate are located within \SIrange{50}{100}{\micro\meter} of a capillary. This extensive network is crucial to allow blood circulation for the transport of oxygen and nutrients to tissue and the removal of waste material from tissues.
+\label{introduction:endothelial_cellular_biology} 
+In complex organisms the circulatory system facilitates the transport of lymph and blood; where the system supporting the circulation of lymph is referred to as the lymphatic system, and the system responsible for the circulation of blood is referred to as the cardiovascular system. The cardiovascular system is a closed network comprised of blood, the heart, and blood vessels. It is extensive, such that nearly all cells in the majority of tissues of a vertebrate are located within \SIrange{50}{100}{\micro\meter} of a capillary~\cite{Alberts2002}. The blood circulating in the cardiovascular system is comprised of: plasma, red blood cells, white blood cells, and platelets. In addition to circulating blood the cardiovascular system circulates and transports nutrients, oxygen, carbon dioxide, and hormones. This extensive transport network is crucial to allow blood circulation for the movement of oxygen and nutrients to tissue, and the removal of waste material from tissues.
 
-Failure to maintain the physical integrity of the closed, distributed, and pressurised network forming the cardiovascular system leads to bleeding and a loss of pressure. This has a serious impact on the viability of an organism, and thus there is machinery in place for maintaining the physical integrity of the system. Repairing holes in vessel walls is an important aspect of cardiovascular function. A second factor important to cardiovascular system function is the need to allow for controlled exit through the vessel wall where repair of underlying tissue is required. This may be for example at sites of tissue damage, where leukocytes are transported from the circulature into the tissue. Repairing holes in the vessel walls and controlled exit from the vasculature are both supported by the cells lining the vasculature, called endothelial cells.
+Failure to maintain the physical integrity of the closed, distributed, and pressurised network forming the cardiovascular system leads to bleeding and a loss of pressure. These have serious impact on the viability of an organism, and thus there are mechanisms in place for maintaining the physical integrity of the system. Two principle mechanisms that maintain the physical integrity of the cardiovascular system and underpin the work for this thesis are:
+\begin{itemize}
+    \item{the systems ability to repair holes in vessel walls,}
+    \item{the ability to allow for controlled exit through the vessel wall where repair of underlying tissue is required.}
+\end{itemize}
+Controlled exit from the vasculature may be for example at sites of tissue damage, where leukocytes are transported from the circulature into the tissue. Repairing holes in the vessel walls and controlled exit from the vasculature are both actively supported by those cells lining the vasculature, called endothelial cells.
 
 \subsection{Endothelial cells}
 \label{introduction:endothelial_cellular_biology:endothelial_cells}
-Endothelial cells line the entire cardiovascular system from the heart to the smallest capillaries. Arteries and veins develop from small vessels composed only of endothelial cells and a basal lamina. Signals from endothelial cells initiate the development of connective tissue cells that form the surrounding layers of the blood-vessel wall~\cite{Alberts2002}.
+Endothelial cells line the entire cardiovascular system from the heart to the smallest capillaries. They are fundamental to the formation of the vascular network, including the formation of capillaries, arteries, and veins. Development of connective tissue surrounding a blood vessel wall is initiated by signals from endothelial cells~\cite{Alberts2002}. In this way arteries and veins can develop from small vessels composed only of endothelial cells and a basal lamina.
 
-Endothelial cells form the interface between plasma circulating in the blood and the surrounding tissues, as illustrated in \autoref{figure:introduction:endothelial_mechanisms:blood_vessel}. At this interface position the thin endothelial cell lining assumes the role of an active selective permeability barrier, controlling the movement of materials and white blood cells to and from the bloodstream~\cite{Alberts2002}. 
-
-The endothelial function as a permeable barrier is aided by its organisation into a thin layer frequently only a single cell thick. Additionally endothelial cells have a thin profile, this is demonstrated in \autoref{figure:introduction:endothelial_mechanisms:endothelial_cell}, here, the side profile is much thinner than the plan view. Vascular endothelial cells react to fluid flow by aligning and elongating in the direction of flow~\citeEskin1984}. The endothelial cells respond to physical and chemical stimuli within the circulation to regulate: haemostasis, the vasomotor tone, and the immune and inflammatory responses. Their is also a crucial role played by endothelial cells in the formation of new blood vessels, this process is termed angiogenesis~\cite{Sumpio2002}.
+As a lining to the cardiovascular system, endothelial cells form the interface between plasma circulating in the blood and the surrounding tissues as illustrated in \autoref{figure:introduction:endothelial_mechanisms:blood_vessel}. At this interface position the thin endothelial cell lining assumes the role of an active selective permeability barrier, controlling the movement of materials and white blood cells to and from the bloodstream~\cite{Alberts2002}. The endothelial function as a permeable barrier is aided by its organisation into a thin layer only a single cell thick. Cells in the endothelial  monolayer also tend to be flat with a thin profile as can be seen in \autoref{figure:introduction:endothelial_mechanisms:endothelial_cell}.
 
 \begin{figure}[htbp]\centering
 \begin{minipage}{0.49\textwidth}
@@ -53,133 +61,355 @@ The endothelial function as a permeable barrier is aided by its organisation int
 		\vspace{1ex}
 	\end{subfigure}
 \end{minipage}
-\caption[Endothelial mechanisms for cardiovascular repair]{Diagrams to elucidate the machinery for cardiovascular repair at a vascular, cellular and organelle scale. The diagram in (a) shows the endothelial lining of a blood vessel with circulating platelets and leukocytes, responsible for providing first aid in the vascular environment. Diagram (b) depicts an endothelial cell and its content of the storage organelles Weibel-Palade bodies (WPBs), where one WPB is undergoing exocytosis. Finally, diagram (c) shows the \emph{cigar} like Weibel-Palade body and two proteins: Von Willebrand factor (VWF) essential for the haemostatic response and P-selectin important in the mechanisms of inflammation and the immune response.}
+\caption[Endothelial mechanisms for cardiovascular repair at a vascular, cellular and organelle scale]{Diagrams to elucidate the machinery for cardiovascular repair at a vascular, cellular and organelle scale. The diagram in (a) shows the endothelial lining of a blood vessel with circulating platelets and leukocytes, responsible for providing \emph{first-aid} in the vascular environment. Diagram (b) depicts an endothelial cell and its content of the storage organelles Weibel-Palade bodies (WPBs), where one WPB is undergoing exocytosis. Finally, diagram (c) shows the \emph{cigar-shape} WPB and two proteins: von Willebrand factor (vWF) essential for the haemostatic response and P-selectin important in the mechanisms of inflammation and the immune response.}
 \label{figure:endothelial_mechanisms}
 \end{figure}
+Vascular endothelial cells must respond rapidly to the changing vascular environment. They respond to fluid flow by aligning and elongating in the direction of flow~\cite{Eskin1984}. Endothelial cells also respond to physical and chemical stimuli within the circulation to regulate: haemostasis, the vasomotor tone, and the immune and inflammatory responses. Endothelial cells play a crucial role in angiogenesis, the formation of new blood vessels~\cite{Sumpio2002}.
 
-The endothelial processes in haemostasis and the inflammatory response are largely supplied by the presence of a storage organelle unique to endothelial cells. Weibel-Palade bodies (WPBs) provide a rapid-response initiation of haemostasis and inflammatory responses within the dynamic and rapidly changing vascular environment.
+The endothelial contribution to processes in haemostasis and the inflammatory response are largely supported by the presence of a unique storage organelle. These organelles, called Weibel-Palade bodies (WPBs) provide a rapid-response initiation of haemostasis and inflammatory responses within the dynamic and rapidly changing vascular environment.
 
 \subsection{Weibel-Palade bodies}
 \label{introduction:endothelial_cellular_biology:wpb}
-Endothelial cells contain the storage organelles Weibel-Palade bodies (WPBs), which act as a mediator for vital physiological processes (see \autoref{figure:introduction:endothelial_mechanisms:endothelial_cell} and \autoref{figure:introduction:endothelial_mechanisms:wpb}). The endothelial specific rapid-response WPB organelles measure between \SIrange{0.1}{0.3}{\micro\meter} in diameter and \SIrange{0.5}{5.0}{\micro\meter} in length~\cite{Ferraro2014} and act as a mediator for inflammation and haemostasis.
+The WPB was first discovered in 1964 by Ewald Weibel and George Palade, it was described as a `rod-shaped cytoplasmic component, which consists of a bundle of fine tubules, enveloped by a tightly fitted membrane'~\cite{Weibel1964}. They were later shown to be secretory vesicles and to contain a set of molecular cargos that can be released in response to endothelial activation from an external stimulus. Activation initiates an exocytic response to mediate endothelial processes via cellular signalling or mechanical stress. WPB organelles measure between \SIrange{0.1}{0.3}{\micro\meter} in diameter and \SIrange{0.5}{5.0}{\micro\meter} in length~\cite{Ferraro2014}. They carry molecular cargoes that can be secreted to act as  mediators for inflammation and haemostasis.
 
-The WPB was first discovered in 1964 by Ewald Weibel and George Palade, it was described as a `rod-shaped cytoplasmic component, which consists of a bundle of fine tubules, enveloped by a tightly fitted membrane'~\cite{Weibel1964}. The secretory vesicles WPBs contain a set of molecular cargos that can be released in response to endothelial activation from an external stimulus. Activation initiates an exocytic response to mediate endothelial processes via cellular signalling or mechanical stress. An illustration of a WPB undergoing exocytosis is displayed in \autoref{figure:introduction:endothelial_mechanisms:wpb}. Two key molecules released in WPB exocytosis are von Willebrand factor (vWF) and P-selectin, which are critical for haemostasis and inflammation, respectively.
+Two key molecules released in WPB exocytosis are von Willebrand factor (vWF) and P-selectin, which are critical for haemostasis and inflammation, respectively. Tubules of vWF are stored within WPBs, giving WPBs a distinctive `cigar shape', as illustrated in the diagram in \autoref{figure:introduction:endothelial_mechanisms:wpb}. The central role of WPBs in haemostasis is provided by its content of the platelet-recruiting cargo protein vWF~\cite{Wagner1982}. Strands of vWF unfurl to capture circulating platelets and form a platelet plug, these strands of vWF can be seen in the WPB undergoing exocytosis in \autoref{figure:introduction:endothelial_mechanisms:wpb}. This mechanism is discussed further in \autoref{introduction:endothelial_cellular_biology:vwf_in_haemostasis}. As well as underpinning primary haemostasis the multimeric vWF protein acts to chaperone the blood clotting protein factor VIII.
 
-The central role of WPBs in haemostasis is provided by its content of the platelet-recruiting cargo protein vWF~\cite{Wagner1982}. The multimeric vWF protein underpins primary haemostasis as well as acting to chaperone the blood clotting protein factor VIII. Tubules of vWF are stored within WPBs, giving WPBs a distinctive `cigar-shape', as illustrated in the diagram in \autoref{figure:introduction:endothelial_mechanisms:wpb}.
+It was discovered in 1989 that WPBs also contain, the leukocyte adhesion receptor P-selectin in their limiting membrane~\cite{Bonfanti1989,McEver1989}. This discovery revealed a second role of WPBs in the recruitment of leukocytes to the site of injury during inflammation (see \autoref{introduction:endothelial_cellular_biology:p-selectin_inflammatory_cascade}). The combination of the haemostatic response provided by vWF and the inflammatory response provided by P-selectin makes WPBs in Denisa Wagner's words `the perfect first aid kit after an insult to the vasculature'~\cite{Weibel2012}.
 
-It was discovered in 1989 that WPB also contain in their membrane, the leukocyte adhesion receptor P-selectin~\cite{Bonfanti1989,McEver1989}. This discovery revealed a second role of WPBs for the recruitment of leukocytes to the site of injury during inflammation. The combination of the haemostatic response provided by vWF and the inflammatory response provided by P-selectin makes WPBs in Denisa Wagner's words `the perfect first aid kit after an insult to the vasculature'~\cite{Weibel2012}.
+\subsection{The role of Von Willebrand Factor in haemostasis}
+\label{introduction:endothelial_cellular_biology:vwf_in_haemostasis}
+The physiological response at the site of blood vessel injury that reduces and stops bleeding by creating a barrier to blood loss is called haemostasis. A haemostatic equilibrium is integral to the circulatory system, where an imbalance can lead to morbidity and mortality~\cite{Rasche2001}. Secretion of vWF from endothelial cells initiates haemostasis after injury and provides several essential functions:
+\begin{itemize}
+\item to bind and transport blood clotting protein factor VIII,
+\item to mediate platelet adhesion to reactive surfaces, and
+\item to mediate platelet aggregation and thrombus growth~\cite{Ruggeri2007}.
+\end{itemize}
+
+
+\subsubsection{Haemostasis}
+The process of haemostasis involves multiple contributions from the vascular system, the coagulation system, the fibrinolytic system, from platelets, the kinin system, from serine protease inhibitors, and from the complement system~\cite{Boon1993}. This complex interconnected process is orchestrated via a sequence of three events:
+\begin{enumerate}
+\item vascular constriction,
+\item the formation of a platelet plug, and
+\item the formation of a blood clot as a result of blood coagulation~\cite{Hall2011}.
+\end{enumerate}
+
+The first event triggered following vessel injury is vascular constriction or vasoconstriction. This is a localised response by the smooth muscle surrounding the endothelium that causes the vessel to narrow, reducing the diameter of the lumen and the flow of blood to the wounded area, thereby reducing the loss of blood via the wound. To prevent further extensive blood loss additional haemostatic mechanisms are initiated leading to the formation of a blood clot.
+
+Within seconds after vascular injury platelets interact with each other and with the injured vessel. They start to adhere to and accumulate at the site of the damage to form a primary haemostatic plug. Endothelial cells surrounding the vessel injury initiate the capture of platelets by releasing their vWF molecular cargo. In order to recruit circulating platelets strands of vWF are anchored to the plasma membrane of the endothelial cell, and to exposed subendothelial matrix. The accumulated platelet plug acts to temporarily arrest bleeding, it can however easily be broken or dislodged from the vessel wall. Therefore a secondary haemostatic response is required.
+
+Secondary haemostasis is the third part of the haemostatic mechanism, involving the strengthening and stabilising of the primary haemostatic plug. This is achieved by the addition of insoluble strands of fibrin, occuring at approximately \SIrange{15}{20}{\second} after severe injury or \SIrange{1}{2}{\minute} after minor injuries~\cite{Hall2011}. The fibrin is produced through a series of biochemical reactions involving coagulation factors associating with the platelet plug and injured vessel. The addition of fibrin to the primary haemostatic plug creates the secondary haemostatic clot~\cite{Pocock2013}. The secondary haemostatic platelet clot stabilised by strands of fibrin can be seen in \autoref{figure:introduction:endothelial_mechanisms:blood_vessel}. This secure secondary haemostatic clot remains until the vessel injury has healed, upon which it is degraded and removed by further components of the haemostatic system, in a process known as fibrinolysis.
+
+The cardiovascular system inhibits clot formation in the absence of injury by maintaining a nonreactive environment for the components of the haemostatic system. This is achieved by modulating functions that form and prevent blood clots. In the absence of vessel injury, electrostatic repulsion exists between the surface of the endothelial cell and proteins or platelets. Following an endothelial injury however, high shear flow conditions occur, due to perturbed flow, endothelial cells are activated, and platelets come in contact with subendothelial collagen and vWF. This causes platelet adhesion and initiates the process of primary haemostasis.
+
+The production and processing of vWF is therefore one of the primary thrombogenic functions of endothelial cells. During vessel injury, vWF is secreted into the plasma from the luminal side of the endothelium. vWF plays an important role in the initial stage of clot formation by binding to collagen fibers in the extracellular matrix and supporting the binding of platelets, as well as recruiting platelets through long-range contacts extending from the endothelial surface into the plasma.
 
 \subsubsection{Von Willebrand Factor}
-\label{introduction:endothelial_cellular_biology:vwf}
-The large multimeric, multi-domain glycoprotein vWF is expressed by endothelial cells and platelets. VWF is involved in the initiation of primary and secondary haemostasis~\cite{Metcalf2008}. In primary haemostasis where coagulation has not yet developed, vWF acts to form a loose platelet plug to control bleeding. Following this, secondary haemostasis occurs through an enzymatic coagulation cascade resulting in the formation of cross linked fibrin monomers, stabilising the loose platelet plug to form a clot.
+The large, multimeric, multi-domain glycoprotein vWF is expressed by endothelial cells and platelets. In endothelial cells the vWF is produced as ultra-large vWF in WPBs, in platelets vWF is present in $\alpha$-granules, and it is also present in  subendothelial connective tissue, following basolateral constitutive secretion from the adjacent endotheium~\cite{Sadler1998}. It has been established that synthesis of vWF is a prerequisite for WPB formation, this is demonstrated by the absence of WPBs in endothelial cells from vWF deficient animals~\cite{Serpe2008}. In the bloodstream, vWF is a cofactor to factor VIII, preventing its proteolysis, when vWF is depleted, factor VIII is rapidly removed from the blood stream~\cite{Sadler1998}.
 
-VWF is a cofactor to Factor VIII, preventing its proteolysis within the blood stream~\cite{Sadler1998}. Von Willebrand's disease (vWD) is a condition arising from quantitative or qualitative abnormalities in vWF. Four hereditary types of vWD exist, the current classification of vWD distinguishes disorders arising from partial type I or complete type III deficiencies and from qualitative defects type II and platelet-vWD or pseudo-vWD. Type II vWD is subdivided into into subtypes A, B, N, and M, each with distinct classes of functional abnormalities~\cite{Ewenstein1997}. Platelet-type vWD or pseudo-vWD is an autosomal dominant genetic defect of the platelets. The vWF is qualitatively normal and genetic testing of the von Willebrand gene and vWF protein reveals no mutational alteration. The defect lies in the qualitatively altered glycoprotein1 (GP1) receptor on the platelet membrane which increases its affinity to bind to the von Willebrand factor.
+In endothelial cells vWF is synthesised at the endoplasmic reticulum as a monomer known as a \emph{pre-pro-VWF}. Further processing along the secretory pathway occurs including its arrangement into dimers in the endoplasmic reticulum. At the trans-Golgi network (TGN) the vWF is folded into helical tubules~\cite{Ewenstein1987}, that then co-associate to drive the formation of recognisable as WPBs. At this time, cleavage of the pro-peptide and the formation of VWF concatamers of up to 50 dimers long begins to occur, and comtinues from early formation to full maturity.
 
-\subsubsection{P-selectin}
-\label{introduction:endothelial_cellular_biology:p-selectin}
-Additional components of WPBs have been identified giving further indication as to the organelle's cellular function. Of particular importance are P-selectin~\cite{Bonfanti1989,McEver1989}, Rab27a~\cite{Hannah2003} and CD63~\cite{Vischer1993}. P-selectin is a leukocyte receptor and plays an essential role in the initial recruitment of leukocytes to the site of injury during inflammation. P-selectin is found on the apical surface of endothelial cells and recruits leukocytes when it is exposed to blood via WPB exocytosis, binding the glycoprotein ligand (PSGL)-1 onto the leukocyte surface. The suggested function of Rab27a is to prevent exocytosis of immature WPBs by anchoring them to the actin cytoskeleton~\cite{Nightingale2009}. The tetraspanin CD63 is known to be a component of WPBs, however no endothelial specific function has yet been assigned to this protein. The synthesis and storage of the various WPB protein components is dynamic and can alter rapidly under different cellular conditions.
+\subsection{The role of P-selectin in the inflammatory response}
+\label{introduction:endothelial_cellular_biology:p-selectin_inflammatory_cascade}
+A number of physiological changes occur following tissue injury, where tissue injury may occur from traumatic injury, infection or cellular necrosis for example. These physiological changes can include local vasodilation, increased permeability of the capillaries to plasma proteins, and infiltration of the damaged tissues by leukocytes~\cite{Hall2011}. This set of changes constitutes the inflammatory response, where the primary objective is to localise and eradicate the irritant and repair the surrounding tissue. The infiltration of leukocytes to damaged tissue is facilitated largely by the endothelial cells in a process known as extravasation, which is begun via the leukocyte adhesion cascade. Specifically the leukocyte receptor P-selectin present on WPBs initiates the primary step of leukocyte capture in the inflammatory response.
 
-\subsection{Haemostasis}
-Hemostasis is the process by which a barrier to blood loss is created at the site of blood vessel injury. Hemostasis most commonly occurs in the smallest veins and arteries, the venules and arterioles, as well as in capillaries. 
-
-Primary hemostasis is the first phase in the hemostatic process. Here, platelets interact among themselves and with the injured blood vessel to create the primary hemostatic plug. This plug temporarily arrests bleeding. However, it is fragile and can be dislodged with ease from the vessel wall.
-
-Secondary Hemostasis
-During secondary hemostasis, the primary hemostatic plug is strengthened and stabilized by the deposition of insoluble strands of fibrin. Fibrin is produced through a series of complex biochemical reactions when soluble plasma proteins, known as coagulation factors, associate with the platelet plug and the injured vessel. The addition of fibrin to the primary hemostatic plug creates the secondary hemostatic plug.
-
-When the vessel injury has healed, the secondary hemostatic plug, no longer needed, is broken down and removed by additional components of the hemostatic system in a process known as fibrinolysis.
-
-Hemostasis is initiated by damaged blood vessels. One early response to injury is to constrict or narrow the lumen of the arterioles, thereby minimizing both the flow of blood to the wounded area and the loss of blood from the wound. This initial vasoconstriction occurs and is balanced by a complementary process of vasodilation. 
-
-Hemostasis inhibits clot formation in the absence of injury by maintaining a nonreactive environment for the components of the hemostatic system. Endothelial cells are responsible for modulating functions that both form and prevent blood clots. In the absence of vessel injury, the negatively charged surface of the endothelial cell repels negatively charged circulating proteins and platelets. However, when injury to the endothelium occurs, and under the high shear flow conditions that occur at the site of vessel injury, platelets come in contact with subendothelial collagen and vWF, causing platelet adhesion and initiating the process of primary hemostasis. 
-
-One of the primary thrombogenic functions of the endothelium is therefore production and processing of vWF. During vessel injury, vWF is secreted into the subendothelial tissue and into the plasma from the luminal side of the endothelium. vWF plays an important role in the initial stage of clot formation by binding to collagen fibers in the extracellular matrix and supporting the binding of platelets, as well as recruiting platelets through long-range contacts extending from the endothelial surface into the plasma.
-
-
-
-
-\subsection{Inflammation}
-
-A variety of adhesion receptors have been implicated in leukocyte endothelial interactions and are thought to play roles in recruitment, arrest, and extravasation of leukocytes. A critical role is played by the family of $\beta$2 or leukocyte integrins~\cite{Springer1990, Mayadas1993}. The genetic disease leukocyte adhesion deficiency I (LADI) is caused by a mutation of the $\beta$2 integrin gene. The increased concentration of circulating leukocytes in patients with LADI implies that $\beta$2 or leukocyte integrins play an important role in leukocyte extravasation. Patients with LADI are susceptible to frequent bacterial and fungal infections~\cite{Anderson1987}. Effective arrest of leukocytes at an inflammation site requires local activation of circulating leukocytes. The circulating leukocytes transiently interact with the activated endothelium, reducing their velocity in the direction of flow, allowing activation of their $\beta$2 integrins, leading to arrest and extravasation. This transient interaction is manifested as rolling of the leukocytes along the vessel wall in areas of inflammation~\cite{Mayadas1993, Atherton1972}.
-
-The selectins are a family of adhesion receptors that have been shown to mediate rolling of leukocytes. There are three known selectins; L-Selectin, E-Selectin and P-Selectin, which are encoded by three closely linked genes~\cite{Watson1990}. The integral membrane protein leukocyte receptor P-selectin is stored within the membrane of Weibel-Palade bodies (WPBs) of endothelial cells~\cite{Bonfanti1989, McEver1989}, from where it is delivered to the cell surface within minutes after secretagogue-triggered exocytosis~\cite{McEver2002}. P-selectin plays a key early role in the inflammatory trafficking of leukocytes, being the first receptor involved in recruiting leukocytes from flowing plasma to the endothelial surface~\cite{Larsen1989}.
-
-
-\section{Microscopy}
-
-
-Visual inspection of cells under a microscope is a basic yet fundamental technique in cell biology. Traditionally, experimental data from microscopy would be measured and assessed by a trained biologist. The human visual system is adept at intuitively interpreting visual information, and endowed with the ability to filter irrelevant variations in illumination and contrast. Recent advances in optical technologies and instrumentation are providing previously unimagined capabilities. Robotic microscopy and modern immunostaining techniques have increased the speed and capacity to gather microscopic image data from experiments. This has served to amplify the utility and necessity of visual inspection and measurement of cells. Expert manual inspection and annotation is not feasible for detection of subtle cell population differences over tens or hundreds of thousands of cells. Visual analysis has therefore become a bottleneck in performing large image-based high-throughput screens. To address this, advances in bioinformatics and high-throughput computational automated analysis tools have been developed to extract quantitative information from microscopy images.
-
-Automated image analysis does provide some substantial benefits over manual scoring, including: providing unbiased highly quantitative scoring, highly reproducible, able to detect subtle population differences, is fast, eliminates tedious manual labour and is able to simultaneously collect multiple features~\cite{Jones2006}. 
-
-\subsection{Resolution}
-The resolving power or resolution limit of the optical system is defined as the minimum distance apart of two objects in order for them to be resolved as separate objects. This distance is equal to the smallest point source in the image, and is given by Abbe's equation~\cite{Abbe1873},
-\begin{equation}
-r=0.61\frac{\lambda}{NA},
-\label{equation:abbe}
-\end{equation}
-where, $r$ is the resolution limit, $\lambda$ is the wavelength and $NA$ the numerical aperture of the optical system.
-
-
-\subsection{Immunofluorescence}
-\subsection{Phase contrast}
-
-\subsection{Error sources}
-Quantitative measurements in fluorescence microscopy contain some amount of error, this may be introduced by the specimen, the microscope or the detector. To minimise sources of error, in high-throughput morphometry of endothelial organelles requires consideration of, both the image processing and experimental design. The imaging system should be configured for optimal signal detection, low background and low noise. Acquired images should be in focus over the full dynamic range of the camera whilst avoiding pixel saturation. To maintain pixel values digital files must be stored in original raw format or using lossless compression.
-
-
-\section{Image Processing}
-A general approach to experimentation in life sciences is to investigate defined research questions or hypotheses, via quantitative analyses of experimental data. A single experiment or a series of experiments may be constructed to investigate a hypothesis. For a hypothesis to be accepted, results must be reproducible over multiple experiments and corroborated by alternative experimental methods. This approach of experimentation, interpretation and re-experimentation is effective when applied to high-throughput morphometric analyses of endothelial organelles.
-
-The experimental loop displayed in Figure~\ref{figure:endothelial_morphometry:introduction:experimental_workflow} shows typical stages in experiment design and analysis. The top row of processes deals with the biological hypothesis and experimental setup, whilst the bottom row of processes are relating to data analysis and interpretation of the results. The first step in the loop is specification of a hypothesis, followed by: defining experimental groups to test the hypothesis, assignment of samples to those groups and preparation of the specimen. The bottom row of processes converts the raw data into a form that can quantitatively address the initial hypothesis. Collection of data, aggregation of data and additional analysis allows for interpretation of the data. Typically, investigation of a hypothesis leads to investigation of further hypotheses and the loop is self-perpetuating.
+\subsubsection{Inflammatory response}
+Leukocytes migrate from circulating in the blood to the surrounding tissue, at the site of tissue damage or inflammation. This transfer of leukocytes out of the vasculature is known as leukocyte extravasation, and forms part of the innate immune response. The arrest of circulating leukocytes and their exit from the vasculature relies on appropriate expression and coordination of cell surface adhesion receptors on the leukocytes and endothelium~\cite{Mayadas1993}. The series of adhesion and activation events from the arrest of leukocytes leading to their extravasation is known as the leukocyte adhesion cascade and is shown in \autoref{figure:leukocyte_adhesion_cascade}. A sequence of five steps have been identified in this process. From the capture of the leukocyte, to rolling, slow rolling, adhesion strengthening and paracellular or transcellular migration. The leukocytes are then able to migrate through the basement membrane to the site of damage~\cite{Ley2007}.
 
 \begin{figure}[htbp!]
 	\centering
-	\includegraphics[width=1.0\textwidth]{experimental_workflow}
-	\caption[Experimental workflow in life science imaging]{A general experimental workflow in life science imaging. Adapted from Prodanov and Verstreken, 2012~\cite{Prodanov2012}}
+	\includegraphics[width=1.0\textwidth]{drawing:leukocyte_adhesion_cascade}
+	\caption[The leukocyte adhesion cascade]{An illustration of the key stages in the leukocyte adhesion cascade, along with an approximate timeline for the involvement of selectins and integrins in leukocyte adhesion. Transmigration maybe paracellular or transcellular, here the paracellular case is shown. Adapted from Ley et al., 2007~\cite{Ley2007}} 
+	\label{figure:leukocyte_adhesion_cascade}
+\end{figure}
+
+\subsubsection{P-selectin}
+A variety of adhesion receptors have been implicated in leukocyte endothelial interactions and are thought to play roles in recruitment, arrest, and extravasation of leukocytes. These can broadly be split into selectins and integrins, where selectins tend to be involved in the earlier stages of the leukocyte adhesion cascade and integrins in later stages (see \autoref{figure:leukocyte_adhesion_cascade}).
+
+The selectins are a family of adhesion receptors that have been shown to mediate rolling of leukocytes. There are three known selectins; L-Selectin, E-Selectin and P-Selectin, which are encoded by three closely linked genes~\cite{Watson1990}. The integral membrane protein leukocyte receptor P-selectin is stored within the membrane of WPBs of endothelial cells~\cite{Bonfanti1989, McEver1989}, from where it is delivered to the cell surface within minutes after secretagogue-triggered exocytosis~\cite{McEver2002}. P-selectin plays a key early role in the inflammatory trafficking of leukocytes, being the first receptor involved in recruiting leukocytes from flowing plasma to the endothelial surface~\cite{Larsen1989}. In \autoref{leukocytes} the role of P-selectin in leukocyte extravasation and the inflammatory response is investigated via a novel approach to quantitative analysis in fluid flow assays.
+
+At later stages in leukocyte extravasation important roles are played by the family of $\beta$2 or leukocyte integrins~\cite{Springer1990, Mayadas1993}. The genetic disease leukocyte adhesion deficiency I (LADI) is caused by a mutation of the $\beta$2 integrin gene. The increased concentration of circulating leukocytes in patients with LADI implies that $\beta$2 or leukocyte integrins play an important role in leukocyte extravasation. Patients with LADI are susceptible to frequent bacterial and fungal infections~\cite{Anderson1987}. Effective arrest of leukocytes at an inflammation site requires local activation of circulating leukocytes. The circulating leukocytes transiently interact with the activated endothelium, reducing their velocity in the direction of flow, allowing activation of their $\beta$2 integrins, leading to arrest and extravasation. This transient interaction is manifested as rolling of the leukocytes along the vessel wall in areas of inflammation~\cite{Mayadas1993, Atherton1972}.
+
+\section{Microscopy}
+\label{introduction:microscopy}
+There are broadly three categories of microscopy: light microscopy, electron microscopy, and scanning probe microscopy. The oldest being light microscopy, which uses a series of lenses to create a magnified image of an object via the diffraction, reflection, or refraction of electromagnetic waves in the visible light spectrum. Developments in light microscopy since the 17th century have lead to the plethora of diverse and sophisticated instruments available today~\cite{Spector2006}. More recent alternatives to light microscopy are electron microscopy, and scanning probe microscopy. Electron microscopy images a sample by the interaction of an accelerated beam of electrons with the sample. An accelerated electron beam gives a higher resolving power than that available with visible light microscopy. This higher resolution can be achieved because excited electrons can have a shorter wavelength than visible light. The third microscopy technique is scanning probe microscopy, this diverse family of methods scans the specimen to study the surface properties via a physical probe. Scanning tunnelling microscopes (STMs) and atomic force microscopes (AFMs) are two prominent types of scanning probe microscopes.
+
+Light microscopy is a key tool in cell biology because: the resolution is well suited to imaging cellular structures, light is relatively nonperturbing meaning that living cells can be imaged over time, and a variety of fluorescent probes can mark proteins and organelles~\cite{Thorn2016}. There are generally two categories of light microscopy: bright-field and fluorescence microscopy.
+
+Bright-field is the most elementary microscopy technique where a sample is illuminated and imaged by its effect on the light incident on it as it absorbs, scatters, or diffracts the light. The extent of absorbance of transmitted light by the sample gives rise to varying contrast in the image. Since cells tend to be thin and transparent they often transmit light well, resulting in subtle phase differences and contrast differences. Additional optics may be added to amplify the phase shift of light induced by the cells to see extra detail in the sample. Two common techniques used to amplify this phase shift are phase contrast microscopy or differential interference contrast (DIC) microscopy.
+
+The second class of light microscopy called fluorescence microscopy uses a different method method to illuminate the sample. Fluorescence microscopy makes use of the property of chemical compounds called fluorophores. These fluorophores absorb light at a certain wavelength and emit light at another longer wavelength. Fluorophores can be introduced by the experimenter and used to fluorescently label certain proteins, cellular structures or organelles. The fluorophores may be introduced either by genetically encoding a fluorescent protein or by binding a fluorescently labeled antibody~\cite{Thorn2016}. Fluorescence techniques are especially powerful because multiple fluorescent labels can be applied to simultaneously label specific structures and by changing the wavelength of incident light different labelled structures can be imaged. Fluorophores are also detectable with a very low abundance~\cite{Ljosa2009}.
+
+Images acquired by light microscopy methods form the basis for image processing and analysis in this thesis. Although electron microscopy was also used to image specimens at higher resolutions the resulting images were used in a more qualitative sense. In \autoref{endothelial_morphometry} endothelial cells were imaged by a confocal high-throughput microscopy approach. A structured illumination microscopy technique to obtain high resolution images of platelets was used in \autoref{platelets}. Videos of leukocytes interacting with the endothelium in \autoref{leukocytes} were acquired via a phase contrast microscopy method. A large determinant in choosing the appropriate microscopy technique was to obtain images with a resolution appropriate to the smallest structures to be imaged.
+
+\subsection{Resolution}
+\label{introduction:microscopy:resolution}
+The foundation of modern optics in light microscopy were established by Ernst Abbe a century ago~\cite{Pawley2006}. Of particular utility was Abbe's contribution to formulating an equation to calculate the minimum resolving power, or resolution limit of an imaging system. This is defined as the minimum distance apart of two objects in order for them to be resolved as separate objects~\cite{Abbe1873}. All optical systems have a resolution limit from diffraction occurring at the objective lens aperture. This diffraction causes infinitely small points within a sample to be seen as Airy disks in the image. These Airy disks are observed as bright disks surrounded by concentric rings~\cite{Spector2006}. The Airy disk phenomenon limits resolution in light microscopy according to the radius  of the disk ($r_{Airy}$), which is given by:
+\begin{equation}
+r_{Airy}=0.61\frac{\lambda}{NA_{obj}},
+\label{equation:abbe}
+\end{equation}
+where, ($\lambda$) is the wavelength and ($NA_{obj}$) the numerical aperture of the objective lens. The distance ($r_{Airy}$) is equal to the smallest observable point source in the image. Imaging at an appropriate resolution is a large determining factor when choosing the optical setup for an experiment, crucially the minimum resolution should be smaller than the smallest samples being measured.
+
+\subsection{Confocal microscopy}
+\label{introduction:microscopy:confocal}
+In 1957 Marvin Minsky patented the concept for a stage-scanning confocal optical system~\cite{Minsky1988}. A confocal microscope offers several key advantages over conventional wide-field microscopy, including: the ability to control the depth of field, eliminating out of focus image degrading light, and being able to collect sequential optical sections enabling the reconstruction of three-dimensional structures.
+
+Viewing a sample with a conventional wide-field fluorescence microscope floods the sample evenly in light. All fluorophores in the specimen are excited and the resulting fluorescence is detected at the microscope camera. This gives a plane of in focus light, as well as degrading contributions from out of focus planes over the depth of field. A confocal microscope on the other hand only images light in focus, this is achieved using point illumination of the sample and a pinhole aperture in a conjugate plane in front of the detector. The pinhole is positioned in a plane conjugate to the focal point of the lens thus it is a confocal pinhole.
+
+As can be seen in \autoref{figure:confocal_schematic} the ray paths that are not from the in-focus focal plane do not pass through the detector pinhole aperture so are not imaged. Only light from fluorescence axially close to the focal plane is detected. Confocal microscopes have an image resolution in the axial depth plane much finer than a wide-field microscope. Since a pinhole aperture blocks much of the light from reaching the detector longer exposures are often required to obtain images with a suitable signal to noise ratio. Additionally, to increase the signal intensity the confocal optical setup often includes a photomultiplier tube before the light detector to amplify the light signal (see \autoref{figure:confocal_schematic}).
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=1.0\textwidth]{drawing:confocal_schematic}
+	\caption[Schematic of confocal microscopy optics]{Schematic to illustrate the optics of an epi-fluorescence confocal microscope, with a fluorophore that absorbs blue wavelength light and emits in the green wavelength. Pinhole apertures at the light source and detector allow the focus of light rays only at the point in focus on the specimen to pass to the detector. The dashed grey paths show light that is not in the focal plane of the image so does not not travel through the pinhole aperture to the detector and is thereby eliminated in the final image.}
+	\label{figure:confocal_schematic}
+\end{figure}
+
+An important feature of confocal microscopes is the dichroic or dichromatic mirror. In order to excite the fluorophores in the sample in \autoref{figure:confocal_schematic} the light incident on the sample needs to be blue, a longer wavelength green light is then emitted by the fluorophores. A dichroic mirror reflects light shorter than a certain wavelength, and only transmits light longer than that wavelength. In this way at the detector only the emitted green light is observed and not the scattered blue light.
+
+The schematic in \autoref{figure:confocal_schematic} is capable of imaging a single point source, but in order to obtain a full image from point illumination the sample is scanned in a regular raster. Two methods were originally proposed for obtaining this raster image, either by moving the sample or using a system of oscillating scanning mirrors~\cite{Minsky1988}. The oscillating mirrors are the more common method since they allow for more precise control in the horizontal plane and do not disturb the sample. A series of 2D rasters can also be acquired at sequential focal depths and reconstructed into a 3D \emph{z-stack}, or displayed as a maximum intensity projection. The obtainable resolution in the vertical direction will usually be less than that in the horizontal plane and will depend on he wavelength of the light and the numerical aperture of the lens.
+
+The development of lasers and the first confocal laser scanning microscope~ \cite{Sheppard1977},  along with steady improvements in raster scanning has made the confocal microscopy a hugely practical and widespread technique in the life sciences. In this body of work confocal microscopy has been used extensively with an automated high-content screening approach as described \autoref{endothelial_morphometry}.
+
+\subsection{Structured illumination microscopy}
+\label{introduction:microscopy:structured_illumination_microscopy}
+The family of technically innovative methods of increasing the limits of optical resolution by at least a factor of two are collectively known as super-resolution microscopy techniques. Super-resolution microscopy is a form of light microscopy that allows samples to be imaged at resolutions higher than the resolution limit as stated by Ernst Abbe in 1873~\cite{Abbe1873} (see \autoref{equation:abbe}). These techniques have increased the maximum attainable resolution from light microscopy from $\sim$\SI{250}{\nano\meter} to $\sim$\SI{10}{\nano\meter}~\cite{Galbraith2011}. Advances in super-resolution technologies are either based on tailored illumination, nonlinear fluorophore responses, or the precise localisation of single molecules~\cite{Schermelleh2010}. A commonly used method in super-resolution microscopy is structured illumination microscopy (SIM).
+
+The super-resolution technique SIM images a sample using a series of sinusoidal or striped illumination patterns~\cite{Gustafsson2000}. Typically the striped illumination is produced by a laser passing through a grating and projected by the objective lens onto the sample. When illuminated with this patterned light an interference pattern called a Moir\'e fringe is produced, which shifts high spatial frequency information to lower frequencies that are detectable by the microscope. \autoref{figure:introduction:sim:moire} shows a Moir\'e fringe arising from two superimposed patterns, in the area of overlap between the two patterns a lower frequency coarse pattern can be observed. By illuminating a sample with patterned light in this way high frequency information beyond the resolution limit of the objective lens is shifted to lower frequencies.
+
+\begin{figure}[htbp!]\centering
+\hspace*{\fill}
+	\begin{subfigure}[b]{0.33\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{drawing:moire_fringe}
+		\caption{}
+		\label{figure:introduction:sim:moire}
+	\end{subfigure}
+	\hfill
+	\begin{subfigure}[b]{0.33\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{platelet}
+		\caption{}
+		\label{figure:introduction:sim:platelet}
+	\end{subfigure}
+\hspace*{\fill}
+\caption[Structured illumination microscopy]{In image (a) the Moir\'e effect can be seen from two sets of striped lines rotated and offset, this is a key concept behind structured illumination microscopy. The image in (b) shows a platelet imaged both under conventional wide-field light microscopy method in the upper left region and a structured illumination microscopy technique in the lower right region, adapted from Westmoreland et al., 2016~\cite{Westmoreland2016}. Scale bar: \SI{1}{\micro\meter}}
+\label{figure:sim}
+\end{figure}
+
+To construct an image using the high frequency information contained in Moir\'e fringes a series of images with different Moir\'e fringes are acquired. This is achieved by rotating and translating the grating and therefore illumination pattern. Since the illumination pattern is known and can be mathematically described, it can be deconvolved from the Moir\'e pattern to observe higher frequency information that is otherwise irresolvable. A high-resolution of the underlying structure can be acquired by using algorithms to deconvolve and combine the acquired images.
+
+In this work SIM has been used to image platelets and their dense granules to form the foundation of a new tool for diagnosis of patients with dense granule disorders. The increased resolution offered by SIM was necessary to image dense granules beneath the resolution limit in conventional light microscopy. The maximum obtainable resolution by SIM is limited to a two-fold increase on that available by conventional microscopy since the periodicity of the illumination pattern is created by diffraction~\cite{Gustafsson2000}. SIM increases the image resolution to $\sim$\SI{100}{\nano\meter}~\cite{Huang2010}. This increased resolution was necessary to image platelet dense granules for that cannot easily be resolved through conventional light microscopy (see \autoref{figure:introduction:sim:platelet}).
+
+\subsection{Phase contrast microscopy}
+\label{introduction:microscopy:phase_contrast_microscopy}
+In cell biology many specimens are highly transparent with little natural pigmentation. The differences in light absorption between different cellular structures are minimal, and much of the contrast and detail between structures is difficult to detect by conventional microscopy. Although the various cellular organelles tend not to be good light absorbers they can have considerable variations in refractive index~\cite{Murphy2012}. Light travelling through these structures with different refractive indices is slowed by differing amounts, this can be measured as a phase shift in the light waveform.
+
+The interaction of light travelling through a medium causes changes in the amplitude and phase of the wave dependent on properties of the medium. The amplitude changes occur from scattering and absorption of light, which is visible as the brightness of the light. Phase changes in the light are not visible without specialised equipment. Phase contrast microscopes feature an optical system that transforms differences in the phase of non-diffracted light, and light diffracted by a specimen into contrast differences in the image (see \autoref{figure:phase_contrast_schematic}). In this way transparent structures that may be otherwise unobservable are visible as if they had been optically stained. A phase contrast microscopes measures the phase shift or retardation caused by the specimen in the optical path relative to background light. The velocity ($v$) of light in a medium is given by  $v=c/n$, where $c$ is the speed of light in a vacuum, and $n$ the refractive index of the medium. Light waves traveling through an object travel slower and emerge phase shifted relative to the background rays.
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[height=0.7\textheight]{drawing:phase_contrast_schematic}
+	\caption[Schematic of phase contrast microscopy optics]{Schematic to illustrate the optics of a phase contrast microscope. The light paths for diffracted and non-diffracted light through the condenser annulus and phase plate are shown, a plan view of the phase annulus and phase ring is also shown.}
+	\label{figure:phase_contrast_schematic}
+\end{figure}
+
+The specialised phase contrast microscope has a phase annulus that generates a hollow cone of non-diffracted illumination. This hollow cone of light is projected onto the back focal plane of the objective (see \autoref{figure:phase_contrast_schematic}). The phase plate in the objective of the phase contrast microscope performs two functions: it phase shifts the light by a quarter wavelength ($\lambda/4$), and it attenuates or absorbs the non-diffracted light by \SIrange{70}{80}{\percent}~\cite{Spector2006}. The light is focused on the image plane. In regions where the specimen is present constructive interference occurs between the non-diffracted and diffracted light, this results in an increase in contrast compared to regions not containing the specimen.
+
+Phase contrast microscopes are well suited to imaging thin specimens (\textless \SI{5}{\micro\meter}), for thicker specimens the \emph{halo-effect} can reduce the image quality~\cite{Spector2006}. The formation of halos around objects can arise due to refractive gradients passing the non-diffracted light outside the phase contrast ring and makes it difficult to determine the edges of cell structures~\cite{Otaki2000}.
+
+In this work phase contrast microscopy has been used to acquire multiple frames in a video sequence of leukocytes flowing over an endothelial monolayer. Interactions of the leukocytes with the monolayer were quantified and used to infer biological function, for this live cell assay phase contrast microscopy was well suited, this is described further in \autoref{leukocytes}.
+
+\section{Digital image processing}
+\label{introduction:image_processing}
+The earliest discovered fossilised eyes date from the lower Cambrian period approximately 540 million years ago~\cite{Parker2011}. From this patch of photoreceptors the visual system has evolved into a complex and essential sensory system. The human visual system is adept at intuitively perceiving and interpreting visual information to understand a scene. It has the ability to seamlessly filter irrelevant information such as noise or illumination variations within a scene. Computer vision uses techniques from fields such as image processing, pattern recognition and machine learning to replicate functions of the human visual system. In computer vision images are stored in computer memory as digital raster images, which contain a fixed number of rows and columns of pixels (picture elements).
+
+Computer vision and image processing are becoming increasingly relevant in biological tasks such as in measurement, evaluation and interpretation of optical microscopy images. These computerised approaches further biological insight by performing image processing, segmentation, recognition, and interpretation. Manual approaches to image interpretation are becoming increasingly antiquated as modern biology shifts towards experiments involving large highly quantitative datasets. In such experiments an expert visual inspection and annotation is not feasible. Furthermore human inspection is not suited to detecting subtle population differences over tens, or hundreds of thousands of images.
+
+Nascent computerised image processing and analysis have become a vital part of the experimental workflow. Where an automated or semi-automated computational approach to image processing is able to process large datasets in a fraction of the time it would take to perform the analysis manually. Further additional benefits to computerised image analysis over a manual visual inspection include:
+\begin{itemize}
+\item providing unbiased highly quantitative scoring,
+\item being highly reproducible,
+\item being able to handle large datasets,
+\item being able to detect subtle population differences,
+\item eliminating tedious manual labour, and
+\item being able to extract and simultaneously collect multiple features~\cite{Jones2006}.
+\end{itemize}
+
+The detection and measurement of cellular structures in microscopy images is essential to cell biology. Segmentation and feature extraction are also important topics in computer vision and image processing. Thus developing algorithms to automatically identify and measure structures of interest within biological images provides the basis for many productive collaborations between biologists and computational image processing algorithm developers. As yet general purpose image analysis methods have not been established due to the diversity of microscopy techniques and image acquisition methods employed in cell biology. Image analysis approaches remain tailored to the specific experimental setup, however as artificial intelligence (AI) and machine learning methods continue to develop more generic methods could become viable.
+
+A general approach to experimentation in life sciences is to investigate defined research questions or hypotheses via quantitative analyses of experimental data. A single experiment or a series of experiments may be constructed to investigate a hypothesis. For a hypothesis to be accepted results must be reproducible over multiple experiments and corroborated by alternative experimental methods.
+
+\begin{figure}[htbp!]
+	\centering
+	\includegraphics[width=1.0\textwidth]{drawing:experimental_workflow}
+	\caption[Experimental workflow in life science imaging]{A conceptual loop depicting an experimental workflow in life sciences involving microscopy imaging. The inverse correlation between data volume and information complexity is shown. Adapted from Prodanov and Verstreken, 2012~\cite{Prodanov2012}.}
 	\label{figure:endothelial_morphometry:introduction:experimental_workflow}
 \end{figure}
 
-At each step in the processing workflow in Figure~\ref{figure:endothelial_morphometry:introduction:experimental_workflow} the volume of output data is decreased, with a corresponding increase in the complexity of generated information or derived data. For example, acquired images of cells can be transformed into a set of morphometric and intensity features. Each feature has a different semantic context, such as: nucleus area or cell perimeter. In the acquired raster images of cells the biological object is only implicitly present, but in the derived data the biological object is explicitly constructed. The explicit information contained within the raster image for example about staining distribution and illumination is lost. The process of object segmentation and feature extraction is therefore accompanied by irreversible reduction of the input information. At each step in the workflow the information in the previous step is transformed into contextual data, called metadata. The information complexity increase is thereby also mapped to an increase of the complexity of the data structure~\cite{Prodanov2012}.
+The experimental loop displayed in \autoref{figure:endothelial_morphometry:introduction:experimental_workflow} shows typical stages in experiment design and analysis. The top row of processes deals with the biological hypothesis and experimental setup, and the bottom row of processes are relating to image analysis and interpretation of the results. The bottom row of processes comprises the image analysis workflow, which converts the raw data into a form that can quantitatively address the initial hypothesis. Collection of data, aggregation of data and additional analysis allows for interpretation of the data. The loop is self-perpetuating since often the investigation of a hypothesis leads to investigation of further hypotheses.
 
-For example the extraction of morphometric and pixel intensity measurements leads to a reduced representations of the image features of interest. These features have higher information complexity compared to the raw data, but there is an irreversible information loss by the process of measurement. To replicate the measurements from the original data, the same image processing algorithms must be applied. Therefore, measurements are only implicitly present in images~\cite{Prodanov2012}.
+This section gives some background to digital images, pre-processing, segmentation, morphological processing, tracking and feature extraction methods that have been developed in this work. These methods and their applications are described in more detail in \autoref{endothelial_morphometry}, \autoref{platelets}, and \autoref{leukocytes}.
 
-\subsection{Morphological image processing}
-In a biological context morphology refers to the study of form and structure of an organism. The mathematical context of morphology is as a tool for extracting image components that are of use in representation of region shape. In morphological image processing the inputs are images but the outputs are attributes extracted from those images.
+\subsection{Image acquisition and digitisation}
+\label{introduction:image_processing:image_acquisition}
+Digital images are acquired by the conversion of information often transmitted as electromagnetic radiation into electrical signals which are then stored as values in a digital format. Incident electromagnetic radiation in the form of photons are converted at photosensitive detectors on a charged-coupled device (CCD) into electrons and a voltage. The voltage can be measured and stored as a number indicating the intensity of incident light.
 
-Morphometric analyses of endothelial organelles sets out to obtain features relating to the shape and pixel intensity of organelles. A number of steps were performed in order to extract morphological features, from endothelial cell images. Typically, images may be preprocessed to reduce noise and enhance the contrast between certain features. Different segmentation approaches will be attempted and parameters optimised to subdivide the image into its constituent regions or objects. A binary mask of the relevant segmented objects can then be used to measure properties of the labeled image regions. Properties include morphometry and with reference to the original image pixel intensity information. The resulting measurements can be combined and evaluated statistically to infer biological meaning.
+The intensity values measured by the CCD are stored as a matrix of values in a digital image, this can be processed by a computer and displayed. The formation of a digital image requires careful consideration and optimisation of the image acquisition approach and digitisation. This ensures the greatest efficacy of subsequent image processing and data analysis; image analysis can rarely extract good data from poor quality images. Often the image acquisition can be optimised for further processing improving the quality of data obtained~\cite{Roeder2012}.
 
+An important factor in image digitisation is to consider the sampling, where sampling is the process of converting a continuous analogue signal into a discretised finite set of values. Spatial sampling is given by the image resolution, whilst amplitude or intensity sampling is given by the image bit-depth and is known as quantisation. The effects of spatial and intensity sampling are illustrated in \autoref{figure:introduction:sampling}.
 
+\begin{figure}[htbp!]\centering
+	\begin{subfigure}[b]{0.32\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{nucleus_res128}
+		\caption{}
+		\label{figure:introduction:sampling:res128}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.32\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{nucleus_res64}
+		\caption{}
+		\label{figure:introduction:sampling:res64}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.32\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{nucleus_res32}
+		\caption{}
+		\label{figure:introduction:sampling:res32}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.32\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{nucleus_bit16}
+		\caption{}
+		\label{figure:introduction:sampling:bit16}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.32\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{nucleus_bit4}
+		\caption{}
+		\label{figure:introduction:sampling:bit4}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.32\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{nucleus_bit2}
+		\caption{}
+		\label{figure:introduction:sampling:bit2}
+	\end{subfigure}
+\caption[Sampling in digitisation]{A depiction of the effects of sampling spatially and by amplitude in digitisation of images. The top row of images show the effect of down-sampling the spatial resolution, where image resolutions are: (a) $128 \times 128$, (b) $64 \times 64$, and (c) $32 \times 32$. Images have been resized to illustrate the loss of detail. The bottom row of images show the impact of quantisation where the number of intensity levels are: (a) 16, (b) 4, and (c) 2.}
+\label{figure:introduction:sampling}
+\end{figure}
 
+Image resolution depends on the number of pixels recorded, the optics of the system, and the electronic properties of the CCD. The image resolution may be limited by the microscope optics (see \autoref{introduction:microscopy:resolution}) or by the spatial sampling rate. The higher the image resolution the truer the digital representation is to the original continuous signal. A low resolution image can distort the real observations. In the context of microscopy, resolution is the conversion of physical space into a set of equally spaced grid points on an image~\cite{Russ2006}. The finer the two dimensional grid the greater the detail that can be observed in the image.
 
+Image quantisation determines the set of allowed numbers to represent intensity values of pixels in an image~\cite{Pawley2006}. The quantisation level is expressed as bit-depth, where the greater the bit-depth the more allowed light intensity values there are. Having more allowed intensity values allows for the representation of more shades and colours in the image. The most frequently used bit-depths are 8-bit and 16-bit, where 8-bit allows for $2^{8}$ or 256 intensity values and 16-bit allows for $2^{16}$ or 65536 intensities. Some microscopes also use 12-bits per channel, giving $2^{8}$ or 4096 possible gray values. The number of quantisation levels should be high enough for human perception of fine shading details in the image.
 
-\subsection{Image enhancement}
+The process of digitisation leads to noise in images manifest as variance in the intensity values above and below the true intensity values of the signal~\cite{Waters2009}. Noise adds a level of uncertainty to the accuracy of measurements due to imprecision in measurements of pixel intensity values. Poisson noise or shot noise arises in an image from the fact that intensity values are obtained from measurements of photons arriving at a CCD. These events have an intrinsic uncertainty as they are stochastic quantum events limited by Poisson statistics~\cite{Pawley2000}. Poisson noise cannot be reduced or eliminated, however its effect can be minimised by increasing the number of signal photons counted, the Poisson noise then becomes a smaller fraction of the signal. As the signal increases relative to the noise level, measurements of the signal become increasingly more precise. The precision of quantitative microscopy measurements is therefore limited by the signal-to-noise ratio (SNR) of the digital image.
+
+\subsection{Image pre-processing}
+\label{introduction:image_processing:image_preprocessing}
+Pre-processing of images occurs at the lowest level of abstraction where both thee input and output are intensity images~\cite{Sonka2007}. The necessity of this stage in the image analysis workflow is dependent on the quality of images from acquisition. Where possible it is preferable to improve image acquisition rather than create elaborate pre-processing pipelines. Nonetheless pre-processing of images is often useful to suppress information that is not relevant to the particular image analysis.
+
+The aim of pre-processing is to improve the image data by enhancing certain image features, or to correct for defects in acquired images. These defects may arise due to imperfect detectors, limitations on microscopy optics, or non-uniform illumination for example. There are four basic types of image pre-processing methods: pixel brightness transformations, geometric transformations, local neighbourhood pre-processing and image restoration. This categorisation is based on the size of the pixel neighbourhood from a single pixel in pixel brightness transformations to the whole image in image restoration. In this work pixel brightness transformations and local pre-processing were mainly used so are described further.
+
+\paragraph{Pixel brightness transformations} A brightness transform modifies pixel values depending on the properties of the pixel itself. A useful grey-scale transform for contrast enhancement can be achieved using the \emph{histogram equalisation} technique. The aim of this is to distribute brightness levels over the intensity range of the image. Also in this group of brightness transformations are the adaptive histogram enhancement, and contrast limited adaptive histogram enhancement. Global histogram enhancements have limited use in image processing but are of use when viewing an image.
+
+\paragraph{Filtering} Local pre-processing operations by filtering use a neighbourhood of surrounding pixels in a kernel to transform the intensity of pixels within an image. This kernel or convolution mask usually comprises a rectangular neighbourhood with an odd number of pixels in rows and columns thus enabling specification of a central pixel in the kernel. The size and the shape of kernel will depend on the objects in the image to be processes, if the objects are large relative to noise as is the case in \autoref{figure:introduction:sampling} then a small kernel will not degrade the large structures.
+
+Filtering methods using a kernel  may be used for smoothing, where the principle use of image smoothing kernels is to suppress image noise. This is often achieved by calculating an average brightness value of a neighbourhood. The median filter for example considers the neighboring pixels, sorts them to find the one with the median value and assigns that value to the pixel of interest. A similar operation called the mean filter average the values of neighbourhood pixels and assigns that to the pixel of interest. The Gaussian filter is also useful for smoothing images using a Gaussian kernel. Smoothing methods that can reduce noise while preserving texture patterns and edges in an image are often more useful in improving the outcomes of object detection and segmentation~\cite{Sonka2007}. These smoothing methods may blur sharp edges in an image but edge-preserving methods also exist.
+
 \subsection{Segmentation}
+\label{introduction:image_processing:segmentation}
+Image segmentation is an important prerequisite step prior to feature extraction and analysis in most image analysis workflows. The goal of segmentation is to partition an image into multiple homogeneous segments, or sets of pixels. Thereby changing the representation of an image into a more meaningful form. It is often used to identify certain features within an image, for example nuclei or cells. This is achieved by way of assigning a label to every pixel within an image such that pixels with the same label share certain characteristics. In the most simplistic case these labels can distinguish between foreground and background pixels~\cite{Russ2006}. There are many approaches to segmentation, which are being constantly developed and improved upon.
+
+\paragraph{Thresholding} The simplest segmentation process is gray-level thresholding, where an intensity value or threshold is determined to segment objects and background. Thresholding is computationally inexpensive and fast to compute~\cite{Sonka2007}. A threshold can be calculated and applied globally or locally to an image, where local thresholding can account for differences in the intensities of pixels in different regions of the image. A number of algorithms have been developed for automatic selection of a threshold value. Histogram shape analysis is typically used to determine a threshold value. The mode method for thresholding bi-modal histograms finds the highest local maxima and then detects the minimum between two maxima. The choice of method will depend on the specific image analysis workflow and can usually be found through a trial and error process.
+
+\paragraph{Watershed} A watershed transform is a method for segmentation based conceptually on a hydrological watershed. In a hydrological sense a watershed is the line dividing adjacent catchment basins. An image may also be interpreted as a topographic surface, where the gradient image represents altitudes. Peaks and ridges in the gradient image correspond to high watersheds and low-gradient regions are catchment basins. Watershed segmentation works to identify and label catchment basins in an image, there are multiple algorithms that have been developed to achieve this~\cite{Roerdink2000}. A one dimensional example of watershed segmentation is shown in \autoref{figure:introduction:watershed}
+
+\begin{figure}[htbp!]\centering
+	\begin{subfigure}[b]{0.48\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{drawing:watershed_1}
+		\caption{}
+		\label{figure:introduction:watershed_1}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.48\linewidth}
+		\centering
+		\includegraphics[width=0.9\linewidth]{drawing:watershed_2}
+		\caption{}
+		\label{figure:introduction:watershed_2}
+	\end{subfigure}
+\caption[Watershed]{An example of a watershed segmentation in one-dimension. The plot in (a) is a greylevel intensity profile of image data. In image (b) watershed segmentation has been performed showing the local minima catchment basins and the watershed lines.}
+\label{figure:introduction:watershed}
+\end{figure}
+
+There are two basic approaches to performing a watershed transform. The original computationally intensive method for each pixel finds a downstream path to a local minimum of image topology. The catchment basin is then the set of pixels for which the downstream paths all end up in the same altitude minimum. A second approach considers the flooding of the relief and imagines the progressive filling of the valleys, but to a point that the flooding does not spill into the next valley. The flooded regions are labelled as a specific segmented object in the relief. An efficient algorithm was presented to perform this based on sorting pixels in increasing order of value, followed by a flooding with a breadth-first scanning of all pixels in their sorted order~\cite{Vincent1991}.
+
 \subsection{Morphological processing}
-\subsection{Object detection}
+\label{introduction:image_processing:morphological_processing}
+In image processing morphological processing is a theory and group of techniques for performing transformations on geometrical structures, based on set theory, lattice theory, topology, and random functions. These techniques involve changing the shape of objects in binary or greyscale images using morphological rules from mathematical set theory. Morphological operations on an image are relations of two sets; the image and a structuring element.
 
-\section{Machine Learning}
-\subsection{SVM}
-\subsection{Random Forest}
-\subsection{CART}
+Morphological techniques manipulate an image with a kernel or template called a structuring element. The structuring element is positioned at each pixel location within an image and operations performed on the neighbourhood. An output image is generated from the interaction of the structuring element with the image. There are many morphological operations examples include: dilation, erosion, opening, closing, skeletonisation and distance transforms.
 
-\section{Validation}
-The evaluation of image segmentation is a necessary and often overlooked stage of image analysis.
-\subsection{Dice and Jaccard}
-\subsection{Hungarian algorithm}
-\subsection{Training and Validation}
+\paragraph{Binary dilation and erosion}
+The fundamental binary morphological operations are dilation and erosion. These operate on binary images, which are comprised of black and white pixels. In binary images one class of pixels is considered foreground and the other background. From the basic morphological operations of dilation and erosion further more complicated operations arise such as opening, closing, and shape decomposition.
 
-\section{Overview}
-\label{introduction:background}
+\begin{figure}[htbp!]\centering
+	\begin{subfigure}[b]{0.32\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{nucleus_binary}
+		\caption{}
+		\label{figure:introduction:nucleus_binary}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.32\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{nucleus_binary_dilated}
+		\caption{}
+		\label{figure:introduction:nucleus_dilated}
+	\end{subfigure}
+	\begin{subfigure}[b]{0.32\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{nucleus_binary_eroded}
+		\caption{}
+		\label{figure:introduction:nucleus_erosion}
+	\end{subfigure}
+\caption[Binary dilation and erosion]{An example of binary dilation and erosion performed on a thresholded image of nuclei. Image (a) shows the thresholded nuclei, image (b) shows the result after performing binary dilation, and image (c) shows the image after binary erosion.}
+\label{figure:introduction:nucleus_dilation_and_erosion}
+\end{figure}
+
+A dilation is an isotropic expansion that can be used to fill small holes or join objects together resulting in an increased object size. Conversely an erosion acts is an isotropic shrinking that reduces the size of objects in the image or if sufficiently small removes them. These operations are demonstrated in \autoref{figure:introduction:nucleus_dilation_and_erosion}. Erosion and dilation are not inverse transforms meaning that if an image is eroded and then dilated the resulting image differs from the original image, instead a simplified version of the original image is obtained with less detail. The process of erosion followed by dilation is called opening and is useful is useful to eliminate specific image details smaller than the structuring element whilst maintaining the general shape of the objects in the image. The process of dilation followed by erosion is known as closing. This is useful to connect objects that are close to each other and fill small holes in objects.
+
+\subsection{Region description and features}
+\label{introduction:image_processing:morphological_processing}
+Segmentation and morphological processing are important steps to constructing homogeneous image regions. The extraction of semantic information from these regions is important in understanding the image data. This requires a description of that region, which can be achieved by generating a numeric feature vector. This numeric vector may contain features relevant to shape, location or intensity that describe the region. There are many shape descriptors however no generally accepted method methodology of shape description. In this work a range of shape descriptors have been used, these are described further in \autoref{endothelial_morphometry:morphometric_measurements} and \autoref{platelets:morphometric_measurements}.
+
+The description of a region is first dependent on its identification, a useful method for region identification is to label each region with a unique integer pixel value. This process is known as labelling or colouring, in which the largest integer number also gives the number of regions in the image. For each labelled region a numeric vector of multiple features can be measured.
+
+Region based shape descriptors for a region can be from simple geometric descriptions such as area, eccentricity, and direction. Other shape descriptors such as statistical moments interpret a greyscale image function as a probability density of a 2D random variable, the properties of which can be described by moments. Shapes can also be described by regional decomposition into simpler shapes, for example by thinning to obtain a skeleton.
+
+\subsection{Segmentation performance evaluation}
+\label{introduction:image_processing:performance_evaluation}
+The evaluation of image segmentation is an important and often overlooked stage of image analysis. Despite there being many algorithms and significant literature about image segmentation techniques, there is no universal agreement on evaluation of image segmentation algorithms~\cite{Benes2015}. For any given segmentation problem their are multiple possible segmentation algorithms that could be used, finding the optimal method and parameter choice requires a choice of evaluation metrics suitable for the data use.
+
+A helpful starting point to assess the performance of a segmentation algorithm is to review by eye the segmentation contours overlaid on the raw image. This human evaluation is tedious and limits the number of comparisons to a small sample size~\cite{Zhang2008}. Often more thorough quantitative assessment is required to detect subtle differences between segmentation methods. In image processing and computer vision a comparison to a gold standard or reference segmentation data set is a commonly used and instructive method of performance evaluation.
+
+The term gold standard refers to a benchmark that is available under reasonable conditions. A gold standard is not an objectively perfect set, but merely the best available~\cite{Cardoso2014}. In this case a gold standard is acquired from the most accurate segmentation procedure, generated by manually hand-labelling or semi-automatic labelling images. In some instances even by hand segmentation the objective perfect segmentation cannot be established. In this case a ground truth would be required, which is a set of measures that is known to be more accurate than the measurements of the system being tested. This could for example be obtained from higher resolution and higher magnification microscopy.
+
+Image segmentation is often an ill defined problem, meaning there may not be a single gold standard segmentation. It is therefore useful to compare against multiple perceptually consistent interpretations of an image. These might be for example hand segmented by several experts in the field. Hand segmentation of a gold standard is however a labour intensive process and this is often not feasible~\cite{Unnikrishnan2005}. The evaluation of a segmentation algorithms performance and generation of a gold standard data is also complicated by inconsistent data, since images of microscope samples vary in quality and character.
+
+Overlap ratio measures are particularly useful for evaluating the performance of segmented objects. In \autoref{endothelial_morphometry} the Dice coefficient and Jaccard index have been used extensively for evaluation.
+
+\section{Thesis overview}
+\label{introduction:overview}
 An initial aim of this project was to further develop an image processing tool that has been used to quantify the morphometric features of a large population of the endothelial organelles Weibel-Palade bodies (WPBs). This computational tool, discussed in \autoref{endothelial_morphometry}, can be applied to large scale morphometric studies of WPBs under different physiological and pathophysiological conditions to gain an understanding of underlying haemostatic processes. Data mining of WPB morphometric features at a cellular level and whole population level could then be employed along with statistical, machine learning and visualisation techniques to gain further biological insight.
 
-An adaptation of the WPB morphometric computational analysis tool, discussed in \autoref{endothelial_morphometry:image_processing:exit_sites}, has been applied to a high-throughput study of the morphometry of WPB exocytic exit sites. A WPB exocytic exit site is observed on the endothelial plasma membrane as a fusion pore, by immunofluorescent labelling of endothelial cells with vWF internally and externally. Through counting absolute numbers of exit sites, the number of exit sites per cell and the areas of exit sites, this analysis can be used to garner information about von Willebrand Factor (vWF) release that is complementary to and potentially more sensitive than the commonly used enzyme-linked immunosorbent assay (ELISA) method. This study is also proving to be useful in understanding the cellular mechanisms that are employed by endothelial cells in controlling vWF release.
+An adaptation of the WPB morphometric computational analysis tool, discussed in \autoref{endothelial_morphometry}, has been applied to a high-throughput study of the morphometry of WPB exocytic exit sites. A WPB exocytic exit site is observed on the endothelial plasma membrane as a fusion pore, by immunofluorescent labelling of endothelial cells with vWF internally and externally. Through counting absolute numbers of exit sites, the number of exit sites per cell and the areas of exit sites, this analysis can be used to garner information about von Willebrand Factor (vWF) release that is complementary to and potentially more sensitive than the commonly used enzyme-linked immunosorbent assay (ELISA) method. This study is also proving to be useful in understanding the cellular mechanisms that are employed by endothelial cells in controlling vWF release.
 
 The release of vWF into the blood stream occurs when WPBs fuse with the plasma membrane, the vWF unfurls to form long platelet-capturing strings. These platelet-decorated strings perform a vital role in primary haemostasis. An unbiased image analysis workflow has been developed to segment and quantify flourescent stained images of nuclei, vWF strings and platelets under flow from human umbilical vein endothelial cells (HUVECs). A description of this automated image processing workflow is given in section. Currently, published analyses of strings have focused on their number, and how this changes in different physiological conditions. Our new workflow will capture both number and length and we have begun to uncover how this also changes in response to endothelial physiology. 
 
 The vWF strings play an important role in capture of platelets which contribute to haemostasis. Within platelets are granules containing bioactive pro-haemostatic molecules.  Genetic mutations can reduce the number or capacity of platelet granules affecting their functional ability. Genetic abnormalities such as in Hermansky-Pudlak syndrome (HPS) lead to abnormalities in numbers or capacity of platelet granules resulting in bleeding disorders. Diagnostic imaging of platelets to count their dense granules has traditionally required electron microscopy, due to the small size of the platelet granules. Dense granules are approximately \SI{150}{\nano\metre} wide and light microscopy has historically been limited to resolutions of  \SIrange{200}{300}{\nano\metre} depending on the technique. However, developments in super-resolution microscopy now allow sufficient resolution in light microscopy to effectively image platelet granules. An automated image analysis pipeline (section~\autoref{platelets}) that provides a quantitative, unbiased, rapidly acquired dataset forms the basis for a platelet dense granule disorder diagnostic tool. Using the antigen CD63 as a marker, granules are segmented and assigned to their respective platelets. A proof-of-principle dataset with seven healthy controls and three patients with platelet granule abnormalities caused by HPS, has shown the effectiveness of this technique, and this first dataset is being prepared for publication.
 
-Finally, a workflow is being developed (\autoref{leukocytes}) for video analysis of leukocyte extravasation. This is part of the innate immune response whereby stages in the leukocyte adhesion cascade from: capture, rolling, slow rolling and firm adhesion, can be imaged under flow in vitro as a time series. Presently, analysis from such videos involves, simply manually counting leukocytes that are slow rolling or firmly adhering. It is proposed that by accurately detecting the leukocytes in each frame and linking them between frames, information about the trajectories of each leukocyte over an endothelial cell surface could be acquired. This analytical technique will allow for a more thorough analysis of the leukocyte adhesion cascade than a manual counting approach.
+Finally, a workflow has been developed (\autoref{leukocytes}) for video analysis of leukocyte extravasation. This is part of the innate immune response whereby stages in the leukocyte adhesion cascade from: capture, rolling, slow rolling and firm adhesion, can be imaged under flow in vitro as a time series. Presently, analysis from such videos involves, simply manually counting leukocytes that are slow rolling or firmly adhering. It is proposed that by accurately detecting the leukocytes in each frame and linking them between frames, information about the trajectories of each leukocyte over an endothelial cell surface could be acquired. This analytical technique will allow for a more thorough analysis of the leukocyte adhesion cascade than a manual counting approach.
 
-The development of this suite of image processing tools will help to build a multifaceted picture of the endothelial processes of haemostasis, thrombosis and inflammation. The image processing tools, together with the analysis of their output, allows for the extraction of a great deal of quantitative information to underpin significant advances in the mechanisms that are at the heart of haemostasis and of the initiation of inflammation.
-
+The development of this suite of image processing tools has helped to build a multifaceted picture of the endothelial processes of haemostasis, thrombosis and inflammation. The image processing tools, together with the analysis of their output, allows for the extraction of a great deal of quantitative information to underpin significant advances in the mechanisms that are at the heart of haemostasis and of the initiation of inflammation.
