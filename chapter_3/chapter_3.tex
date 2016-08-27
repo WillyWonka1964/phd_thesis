@@ -6,13 +6,12 @@
 
 \nomenclature[z-WPB]{$HPS$}{Hermansky-Pudlak syndrome}
 \nomenclature[z-CHS]{$CHS$}{Chediak-Higashi syndrome}
-\nomenclature[z-ADP]{$ADP$}{Adenosine diphosphate}
-\nomenclature[z-ATP]{$ATP$}{Adenosine-5'-triphosphate}
-\nomenclature[z-SIM]{$SIM$}{structured illumination microscopy}
+\nomenclature[z-ADP]{$ADP$}{adenosine diphosphate}
+\nomenclature[z-ATP]{$ATP$}{adenosine-5'-triphosphate}
 
 Platelets contain granules that when activated secrete bioactive molecules. The secretion of bioactive molecules from platelet granules is important for many platelet functions. Depletion or deficiencies in these granules are associated with bleeding disorders. A commonly applied approach to diagnose patients with certain bleeding disorders is to image a sample of their platelets with an electron microscope and count the number of dense granules. This approach requires specialised equipment and techniques, it is also laborious and difficult to automate in a clinical setting. Developments in super-resolution microscopy have provided advantageous alternative imaging techniques that can be used to image platelet dense granules. Imaging of platelets and their dense granules via super-resolution microscopy provides the basis of a novel diagnostic tool to identify patients with bleeding disorders.
 
-This chapter describes the development of image analysis techniques aiming to automatically count, and measure the morphometry of platelet dense granules in platelet images obtained from super-resolution microscopy. A proof of principle dataset was acquired and an image processing workflow constructed to assess the viability of super-resolution microscopy imaging for diagnosing dense granule deficiency disorders. The combination of imaging and analysis provides a novel method to diagnose patients with dense granule deficiency disorders. This chapter is based on work contributing to the published article Westmoreland et al., 2016: `Super-resolution microscopy as a potential approach to platelet granule disorder diagnosis'~\cite{Westmoreland2016}.
+This chapter describes the development of image analysis techniques aiming to automatically count, and measure the morphometry of platelet dense granules in platelet images obtained from super-resolution microscopy. A proof of principle data set was acquired and an image processing workflow constructed to assess the viability of super-resolution microscopy imaging for diagnosing dense granule deficiency disorders. This chapter is based on work contributing to the published article Westmoreland et al., 2016: `Super-resolution microscopy as a potential approach to platelet granule disorder diagnosis'~\cite{Westmoreland2016}.
 
 \section{Introduction}
 \label{platelets:introduction}
@@ -22,7 +21,7 @@ In case of vascular injury platelets rapidly adhere to the subendothelium at the
 
 Haemostasis is dependent on platelet granule integrity, deficiencies in these organelles can result in excessive bleeding~\cite{Nurden2014}. Hermansky-Pudlak Syndrome (HPS) and Chediak-Higashi syndrome (CHS) are genetic disorders that can be diagnosed based on a lack of platelet dense granules. A host of symptoms can manifest in patients with HPS and CHS including; eye and skin albinism, visual impairment, bleeding disorders, inflammatory bowel disease and lung fibrosis~\cite{Wei2006}. Bleeding disorders arise because a lack of dense granules increases the time for effective clot formation at the site of an injury to occur~\cite{Seward2013}.
 
-Techniques for diagnosing platelet granule disorders have been limited to either counting dense granules in electron microscopy images, measuring levels of ADP/ATP, or assessing aggregation response to agonists. The most reliable tool presently for diagnostics involves counting granules in electron microscopy images. This requires specialised equipment, is highly laborious, and even amongst experts there can be disagreement about how to identify these dense granules. Figure~\ref{figure:introduction:em_platelet} shows an example of platelets imaged via electron microscopy, where dense granules can be observed in Figure~\ref{figure:introduction:em_platelet_a} as black spots. Similarly Figure~\ref{figure:image_acquisition:sim_platelets} is an example of platelet images acquired for this study via super-resolution microscopy, where CD63 was used to characterise dense granules. The relative absence of CD63 seen in magenta can be observed in HPS patients in Figure~\ref{figure:image_acquisition:sim_platelets:hps_1}, \ref{figure:image_acquisition:sim_platelets:hps_2} and~\ref{figure:image_acquisition:sim_platelets:hps_3} as compared to platelets from a healthy volunteer in Figure~\ref{figure:image_acquisition:sim_platelets:control}. Dense granules in platelets have a diameter of approximately \SIrange{150}{400}{\nano\meter}, before the rise of sub-diffraction limit imaging the only viable way to image platelet dense granules was via electron microscopy~\cite{Rumbaut2010}.
+Techniques for diagnosing platelet granule disorders have been limited to either counting dense granules in electron microscopy images, measuring levels of ADP/ATP, or assessing aggregation response to agonists. The most reliable tool presently for diagnostics involves counting granules in electron microscopy images. This requires specialised equipment, is highly laborious, and even amongst experts there can be disagreement about how to identify these dense granules. \autoref{figure:introduction:em_platelet} shows an example of platelets imaged via electron microscopy, where dense granules can be observed in \autoref{figure:introduction:em_platelet_a} as black spots. Similarly \autoref{figure:image_acquisition:sim_platelets} is an example of platelet images acquired for this study via super-resolution microscopy, where CD63 was used to characterise dense granules. The relative absence of CD63 seen in magenta can be observed in HPS patients in \autoref{figure:image_acquisition:sim_platelets:hps_1}, \autoref{figure:image_acquisition:sim_platelets:hps_2} and \autoref{figure:image_acquisition:sim_platelets:hps_3} as compared to platelets from a healthy volunteer in Figure~\autoref{figure:image_acquisition:sim_platelets:control}. Dense granules in platelets have a diameter of approximately \SIrange{150}{400}{\nano\meter}, before the rise of sub-diffraction limit imaging the only viable way to image platelet dense granules was via electron microscopy~\cite{Rumbaut2010}.
 
 \begin{figure}[htbp]\centering
 	\begin{subfigure}[b]{0.245\linewidth}
@@ -59,9 +58,9 @@ Techniques for diagnosing platelet granule disorders have been limited to either
 
 In this study super-resolution microscopy techniques have been used to image CD63 characterising platelet dense granules. The antigen CD63 is an itinerant integral membrane protein that traffics between post-Golgi organelles~\cite{Pols2009}. Super-resolution microscopy techniques increase the attainable resolution from light microscopy by circumventing the diffraction barrier, such that dense granules characterised by CD63 can be imaged via light microscopy. A multitude of techniques have been developed to overcome the diffraction limit.
 
-Structured illumination microscopy (SIM) is a super-resolution technique that exploits Moir\'e effect to overcome the diffraction limit~\cite{Gustafsson2005}. SIM illuminates a sample with patterned light and measures the fringes in the Moir\'e pattern. SIM imaging of platelets allows for a new immunohistochemical approach to diagnosis of platelet granule disorders, since SIM can discriminate positive marker specific $\alpha$-granules that are \SIrange{200}{400}{\nano\meter} across and dense granules approximately \SI{150}{\nano\meter} within a \SIrange{2}{3}{\micro\meter} platelet.
+Structured illumination microscopy (SIM) is a super-resolution technique that exploits Moir\'e effect to overcome the diffraction limit~\cite{Gustafsson2005}. SIM illuminates a sample with patterned light and measures the fringes in the Moir\'e pattern (see \autoref{introduction:microscopy:structured_illumination_microscopy}). SIM imaging of platelets allows for a new immunohistochemical approach to diagnosis of platelet granule disorders, since SIM can discriminate positive marker specific $\alpha$-granules that are \SIrange{200}{400}{\nano\meter} across and dense granules approximately \SI{150}{\nano\meter} within a \SIrange{2}{3}{\micro\meter} platelet.
 
-This new platelet dense granule imaging approach required a robust image analysis and quantification protocol to differentiate SIM platelet images of healthy control patients to patients with dense granule abnormalities caused by Hermansky-Pudlak syndrome (HPS). Using CD63 as a marker an image analysis workflow has been developed (see section~\ref{platelets:image_processing}) and applied to a proof of principle dataset with seven healthy controls and three patients with HPS.
+This new platelet dense granule imaging approach required a robust image analysis and quantification protocol to differentiate SIM platelet images of healthy control patients to patients with dense granule abnormalities caused by Hermansky-Pudlak syndrome (HPS). Using CD63 as a marker an image analysis workflow has been developed (see \autoref{platelets:image_processing}) and applied to a proof of principle data set with seven healthy controls and three patients with HPS.
 
 \section{Image acquisition}
 \label{platelets:image_acquisition}
@@ -100,15 +99,15 @@ Each super-resolution image was reconstructed from a sequence of nine images acq
 	\label{figure:image_acquisition:sim_platelets}
 \end{figure}
 
-Examples of acquired SIM images from the three HPS patients and a healthy control can be seen in Figure~\ref{figure:image_acquisition:sim_platelets}, where the absence of dense granules characterised by CD63 can be observed in Figures~\ref{figure:image_acquisition:sim_platelets:hps_1},~\ref{figure:image_acquisition:sim_platelets:hps_2}, and~\ref{figure:image_acquisition:sim_platelets:hps_3}, as compared to the granules present in healthy control platelets in Figure~\ref{figure:image_acquisition:sim_platelets:control}.
+Examples of acquired SIM images from the three HPS patients and a healthy control can be seen in \autoref{figure:image_acquisition:sim_platelets}, where the absence of dense granules characterised by CD63 can be observed in \autoref{figure:image_acquisition:sim_platelets:hps_1}, \autoref{figure:image_acquisition:sim_platelets:hps_2}, and \autoref{figure:image_acquisition:sim_platelets:hps_3}, as compared to the granules present in healthy control platelets in \autoref{figure:image_acquisition:sim_platelets:control}.
 
 \section{Image processing}
 \label{platelets:image_processing}
-An image processing pipeline was developed to segment CD63 positive-granules and platelets in SIM images. The image processing pipeline in this proof of principle study was developed as an ImageJ~\cite{Schneider2012} macro. The ImageJ was particularly convenient for prototyping image processes, because each image filter applied is shown visually. In this pipeline platelets were identified by their tubulin labelled structures, and dense granules were characterised by the presence of CD63. The approach to segmentation of platelets is described in section~\ref{platelets:image_processing:platelet}, and the segmentation of CD63 positive structures is described in section~\ref{platelets:image_processing:granules}. An additional analysis of the radial distribution of CD63 positive-granules is described in section~\ref{platelets:image_processing:radial}.
+An image processing pipeline was developed to segment CD63 positive-granules and platelets in SIM images. The image processing pipeline in this proof of principle study was developed as an ImageJ~\cite{Schneider2012} macro. The use of ImageJ was particularly convenient for prototyping image processes, because each image filter applied was shown visually. In this pipeline platelets were identified by their tubulin labelled structures, and dense granules were characterised by the presence of CD63. The approach to segmentation of platelets is described in \autoref{platelets:image_processing:platelet}, and the segmentation of CD63 positive structures is described in ~\autoref{platelets:image_processing:granules}. An additional analysis of the radial distribution of CD63 positive-granules is described in \autoref{platelets:image_processing:radial}.
 
 In each image morphometric features were extracted from segmented platelets and each CD63 positive structure. Importantly, the number of CD63 positive-granules per platelet was also counted, from this the mean number of CD63 positive-granules per group could be calculated. The mean number of dense granules provides the primary method of diagnosis of HPS. Accurate segmentation of both CD63 positive-granules and their constituent platelets was required to get a measure of the number of granules per platelet.
 
-Each of the 194 images in the acquired proof of principle dataset was processed sequentially and a series of outputs generated. These included images showing image segmentation contour overlays and morphological results tables. An overlay of segmentation contours allows the segmentation result to be checked visually to ensure it is accurate. The flowchart in Figure~\ref{figure:platelets:image_processing:flowchart} presents each step in the image processing pipeline for segmentation and feature extraction of CD63 positive structures within platelets.
+Each of the 194 images in the acquired proof of principle data set was processed sequentially and a series of outputs generated. These included images showing image segmentation contour overlays and morphological results tables. An overlay of segmentation contours allows the segmentation result to be checked visually to ensure it is accurate. The flowchart in \autoref{figure:platelets:image_processing:flowchart} presents each step in the image processing pipeline for segmentation and feature extraction of CD63 positive structures within platelets.
 
 \begin{figure}[htbp]
 	\centering
@@ -119,9 +118,7 @@ Each of the 194 images in the acquired proof of principle dataset was processed 
 
 \subsection{Region properties}
 \label{platelets:morphometric_measurements}
-The ImageJ measure command was used to measure morphometric and pixel intensity features for each segmented foreground area. By redirecting from the binary mask image to a pixel intensity image measurements of pixel intensities could be taken. Pixel intensity and morphometric properties were measured for every segmented CD63 positive structure and segmented tubulin labelled platelet. All the measured attributes along with a description for each are displayed in Table~\ref{table:platelets:region_properties}. The patient with which the image relates was also obtained from a label in the filename using regular expressions.
-
-The available attributes differ slightly from those used in chapter~\ref{endothelial_morphometry} and described in Table~\ref{table:endothelial_morphometry:region_properties}. There is some duplication, a Python implementation allows for many more attributes to be measured.
+The ImageJ measure command was used to measure morphometric and pixel intensity features for each segmented foreground area. By redirecting from the binary mask image to a pixel intensity image measurements of pixel intensities could be taken. Pixel intensity and morphometric properties were measured for every segmented CD63 positive structure and segmented tubulin labelled platelet. All the measured attributes along with a description for each are displayed in \autoref{table:platelets:region_properties}. The patient with which the image relates was also obtained from a label in the filename using regular expressions.
 
 \begin{table}[htbp]
 \caption[Platelets segmented region attributes and properties]{Terminology and descriptions, of segmented object attributes in platelet image processing. Comprised of meta-data to identify the object, morphometric measurements and intensity measurements.}
@@ -148,7 +145,7 @@ The available attributes differ slightly from those used in chapter~\ref{endothe
 	minimum Feret & The minimum caliper diameter is the minmum Feret. \\
 	Feret coordinates & The starting coordinates of the Feret's diametera. \\
 	integrated density & The sum of the values of the pixels in the selection or image. \\
-	raw integrated density & Raw integrated density returns the product of area and mean gray values. \\
+	raw integrated density & Raw integrated density returns the product of area and mean grey values. \\
 	median & The median value of the pixels in the image or selection. \\
 	aspect ratio & The aspect ratio of the selections fitted ellipse, calculated as the major axis divided by the minor axis. \\
 	roundness & $roundness=4\pi \times \frac{[area]}{[major axis]^2}$ of the fitted ellipse is the inverse of the aspect ratio. \\
@@ -159,7 +156,7 @@ The available attributes differ slightly from those used in chapter~\ref{endothe
 
 \subsection{Platelet segmentation}
 \label{platelets:image_processing:platelet}
-The segmentation of platelets was the first step in the image processing pipeline for platelet dense granule deficiency diagnostics. Only features from CD63 labelled structures within segmented platelets could be extracted so ensuring accurate segmentation of platelets was important in this study. Segmented CD63 positive structures can then be assigned to their respective platelets. This was achieved by assigning each platelet in an image a unique pixel value identifier, as seen in Figure~\ref{figure:image_processing:platelet:tub_11}. The pixel value at the coordinates of the CD63 segmented particle on the labelled image was measured to assign it to an appropriate platelet.
+The segmentation of platelets was the first step in the image processing pipeline for platelet dense granule deficiency diagnostics. Only features from CD63 labelled structures within segmented platelets could be extracted so ensuring accurate segmentation of platelets was important in this study. Segmented CD63 positive structures can then be assigned to their respective platelets. This was achieved by assigning each platelet in an image a unique pixel value identifier, as seen in \autoref{figure:image_processing:platelet:tub_11}. The pixel value at the coordinates of the CD63 segmented particle on the labelled image was measured to assign it to an appropriate platelet.
 
 \begin{figure}[htbp]\centering
 	\begin{subfigure}[b]{0.32\linewidth}
@@ -247,28 +244,28 @@ The segmentation of platelets was the first step in the image processing pipelin
 \end{figure}
 
 \subsubsection{Element-wise maxima (A.0)}
-Segmentation and labelling of platelets was performed using a composite image combining the acquired tubulin image with the CD63 channel image. This was done because CD63 is localised within platelets, therefore to maximise the foreground regions segmented within platelets the two channels combined. This improves the segmentation result especially at the platelet edge. The element-wise maxima of the tubulin and CD63 images provides a more distinct platelet marker by choosing the maximum pixel value at any location from both images. To this combined image a series of pre-processing steps were performed to enhance features of the image.
+Segmentation and labelling of platelets was performed using a composite image combining the acquired tubulin image with the CD63 channel image. This was done because CD63 is localised within platelets, so foreground regions segmented could be maximised by combining the two channels. This improves the segmentation result especially at the platelet edge. The element-wise maxima of the tubulin and CD63 images provides a more distinct platelet marker by choosing the maximum pixel value at any location from both images. To this combined image a series of pre-processing steps were performed to enhance features of the image.
 
 \subsubsection{Pre-processing (A.1, A.2 and A.3)}
 A \emph{rolling ball} background subtraction removes smooth continuous background illumination from the image~\cite{Sternberg1983}. This was implemented using the \emph{sliding paraboloid} algorithm, which is a development on the \emph{rolling ball} algorithm also available in ImageJ. This can be conceptualised by imagining that the greyscale image has a height dimension, corresponding to the pixel value at every point in the image. A ball is rolled over the image and the hull of the volume reachable is the background. Using the sliding paraboloid algorithm replaces the ball with a sliding paraboloid of the same curvature at its apex as a ball of a given radius.
 
-The \emph{rolling ball} was followed by a Gaussian blurring with a sigma value of 3 pixels (not impacting the image resolution), and finally a contrast enhancement. This stage of the image processing pipeline, following the addition of the CD63 channel and pre-processing steps is shown in Figure~\ref{figure:image_processing:platelet:tub_4}.
+The \emph{rolling ball} was followed by a Gaussian blurring with a sigma value of 3 pixels (not impacting the image resolution), and finally a contrast enhancement. This stage of the image processing pipeline, following the addition of the CD63 channel and pre-processing steps is shown in \autoref{figure:image_processing:platelet:tub_4}.
 
 \subsubsection{Threshold (A.4)}
-Segmentation of platelets was achieved using a minimum error threshold~\cite{Kittler1986}, where the three patient data threshold values were set according to control data that were acquired on the same day. The minimum error threshold sets a low threshold value to increase the probability of full segmentation of the platelet structure. Thresholding a full platelet tubulin ring was essential to retain the platelet in this image processing pipeline. A minimum error threshold was likely to capture the full platelet structure, however has the side effect of segmenting some background noise. Figure~\ref{figure:image_processing:platelet:tub_5} shows an image following a minimum error threshold, where image segmented platelets are present as well as noise segmented as small white blobs.
+Segmentation of platelets was achieved using a minimum error threshold~\cite{Kittler1986}, where the three patient data threshold values were set according to control data that were acquired on the same day. The minimum error threshold sets a low threshold value to increase the probability of full segmentation of the platelet structure. Thresholding a full platelet tubulin ring was essential to retain the platelet in this image processing pipeline. A minimum error threshold was likely to capture the full platelet structure, however has the side effect of segmenting some background noise. \autoref{figure:image_processing:platelet:tub_5} shows an image following a minimum error threshold, where image segmented platelets are present as well as noise segmented as small white blobs.
 
 \subsubsection{Binary hole fill and watershed (A.5 and A.6)}
-The segmented structures in the binary image were filled with a binary hole filling algorithm, as shown in Figure~\ref{figure:image_processing:platelet:tub_6}. A watershed transform was then performed to separate any touching platelets~\cite{Vincent1991}, this is demonstrated in Figure~\ref{figure:image_processing:platelet:tub_7}.
+The segmented structures in the binary image were filled with a binary hole filling algorithm, as shown in \autoref{figure:image_processing:platelet:tub_6}. A watershed transform was then performed to separate any touching platelets~\cite{Vincent1991}, this is demonstrated in \autoref{figure:image_processing:platelet:tub_7}.
 
 \subsubsection{Binary erosion (A.7)}
-The binary image shown in Figure~\ref{figure:image_processing:platelet:tub_6} was eroded by 10 pixels in order to shrink the area of each platelet to within the tubulin ring. An erosion removes pixels from the edges of objects, and was used to avoid any contribution of CD63 found at the platelet surface. An erosion was necessary as the minimum error threshold sets a low threshold value where the segmented platelet structures tended to extend beyond the tubulin ring. To compensate for this binary erosion was used to reduce the size of segmented platelets. The effect of a binary erosion can be seen in Figure~\ref{figure:image_processing:platelet:tub_8}, where the platelet size is reduced and much of the image noise also removed as a consequence of the binary erosion.
+The binary image shown in \autoref{figure:image_processing:platelet:tub_6} was eroded by 10 pixels in order to shrink the area of each platelet to within the tubulin ring. An erosion removes pixels from the edges of objects, and was used to avoid any contribution of CD63 found at the platelet surface. An erosion was necessary as the minimum error threshold sets a low threshold value where the segmented platelet structures tended to extend beyond the tubulin ring. To compensate for this binary erosion was used to reduce the size of segmented platelets. The effect of a binary erosion can be seen in \autoref{figure:image_processing:platelet:tub_8}, where the platelet size is reduced and much of the image noise also removed as a consequence of the binary erosion.
 
 \subsubsection{Morphological filter (A.8)}
-The final stage in segmentation of platelets was to remove foreground objects with an area of less than \SI{2.0}{\micro\meter\squared} or circularity less than \SI{0.7}. The reported diameter of platelets varies from \SIrange{2}{5}{\micro\meter\squared} and in this set of individuals our tubulin ring measurements gave areas ranging from \SIrange{2.3}{3.1}{\micro\meter\squared}. The circularity constraint removed debris or non-platelet objects from the image since the minimum circularity of platelets has been reported to be 0.7~\cite{Kraus2013}. The final segmented platelets overlay contours image is shown in Figure~\ref{figure:image_processing:platelet:tub_9}, with the segmentation overlaid on the original image in Figure~\ref{figure:image_processing:platelet:tub_11}. A labelled image used to assign CD63 positive structures to their respective platelet is shown in Figure~\ref{figure:image_processing:platelet:tub_10}.
+The final stage in segmentation of platelets was to remove foreground objects with an area of less than \SI{2.0}{\micro\meter\squared} or circularity less than \SI{0.7}. The reported diameter of platelets varies from \SIrange{2}{5}{\micro\meter\squared} and in this set of individuals our tubulin ring measurements gave areas ranging from \SIrange{2.3}{3.1}{\micro\meter\squared}. The circularity constraint removed debris or non-platelet objects from the image since the minimum circularity of platelets has been reported to be 0.7~\cite{Kraus2013}. The final segmented platelets overlay contours image is shown in \autoref{figure:image_processing:platelet:tub_9}, with the segmentation overlaid on the original image in \autoref{figure:image_processing:platelet:tub_11}. A labelled image used to assign CD63 positive structures to their respective platelet is shown in \autoref{figure:image_processing:platelet:tub_10}.
 
 \subsection{CD63 positive-granule segmentation}
 \label{platelets:image_processing:granules}
-Segmentation of CD63 positive structures marking granules was the second step in the image processing pipeline for platelet dense granule deficiency diagnostics. The image processing steps for CD63 segmentation and assignment of granules to platelets are shown in Figure~\ref{figure:platelets:image_processing:flowchart}, where labelled CD63 granules appear as small round blobs as in Figure~\ref{figure:image_processing:granules}.
+Segmentation of CD63 positive structures marking granules was the second step in the image processing pipeline for platelet dense granule deficiency diagnostics. The image processing steps for CD63 segmentation and assignment of granules to platelets are shown in \autoref{figure:platelets:image_processing:flowchart}, where labelled CD63 granules appear as small round blobs as in \autoref{figure:image_processing:granules}.
 
 \begin{figure}[htbp]\centering
 	\begin{subfigure}[b]{0.45\linewidth}
@@ -316,14 +313,14 @@ Segmentation of CD63 positive structures marking granules was the second step in
 \end{figure}
 
 \subsubsection{Threshold (B.0)}
-The segmentation of CD63 positive-granules was performed according to a threshold value obtained from Moment-preserving thresholding~\cite{Tsai1985}. The threshold was calculated based on all images in each of the seven control CD63 image data sets. The three patient data threshold values were then set according to their corresponding control data that was processed on the same day. An example of a CD63 channel image following thresholding is shown in Figure~\ref{figure:platelets:image_processing:CD63_1}.
+The segmentation of CD63 positive-granules was performed according to a threshold value obtained from Moment-preserving thresholding~\cite{Tsai1985}. The threshold was calculated based on all images in each of the seven control CD63 image data sets. The three patient data threshold values were then set according to their corresponding control data that was processed on the same day. An example of a CD63 channel image following thresholding is shown in \autoref{figure:platelets:image_processing:CD63_1}.
 
 \subsubsection{Watershed and remove small objects (B.1 and B.2)}
-A watershed transform was then performed to separate any touching CD63 positive-granules~\cite{Vincent1991}, this is demonstrated in Figure~\ref{figure:platelets:image_processing:CD63_3}. Areas smaller than \SI{0.01}{\micro\meter\squared} were removed, these are less than the minimum resolution of the microscope. A set of morphometric features was measured for each identified CD63 granule according to Table~\ref{table:platelets:region_properties}. Each measured feature sample is assigned to a platelet based on the $x$ and $y$ coordinates of the object and the corresponding pixel value in the labelled platelet image.
+A watershed transform was then performed to separate any touching CD63 positive-granules~\cite{Vincent1991}, this is demonstrated in \autoref{figure:platelets:image_processing:CD63_3}. Areas smaller than \SI{0.01}{\micro\meter\squared} were removed, these are less than the minimum resolution of the microscope. A set of morphometric features was measured for each identified CD63 granule according to \autoref{table:platelets:region_properties}. Each measured feature sample is assigned to a platelet based on the $x$ and $y$ coordinates of the object and the corresponding pixel value in the labelled platelet image.
 
 \section{CD63 radial distribution analysis}
 \label{platelets:image_processing:radial}
-A distinctive characteristic of cells defective in machinery that forms lysosome-related secretory organelles such as platelet granules is that defects in targeting of proteins to those granules leads to an abnormal accumulation on the cell surface~\cite{DellAngelica1999}. In the case of HPS patients this is observed as as increase in CD63 on their platelet surface. A radial distribution analysis was used to investigate and quantify the extent to which there was an increased accumulation of CD63 at the cell surface in HPS patients. The radial profile of HPS patients was compared to radial profiles of platelets obtained from volunteers without bleeding disorders. Examples of CD63 distribution in patients with HPS and healthy volunteers can be seen in Figure~\ref{figure:platelets:radial:radial_overlay}, the increase in accumulation of CD63 at the cell surface can be seen comparing the platelet of a healthy volunteer in Figure~\ref{figure:platelets:radial:CD63_overlay:control-zoom} to the platelet from a HPS patient in Figure~\ref{figure:platelets:radial:CD63_overlay:patient-zoom}.
+A distinctive characteristic of cells defective in machinery that forms lysosome-related secretory organelles such as platelet granules is that defects in targeting of proteins to those granules leads to an abnormal accumulation on the cell surface~\cite{DellAngelica1999}. In the case of HPS patients this is observed as as increase in CD63 on their platelet surface. A radial distribution analysis was used to investigate and quantify the extent to which there was an increased accumulation of CD63 at the cell surface in HPS patients. The radial profile of HPS patients was compared to radial profiles of platelets obtained from volunteers without bleeding disorders. Examples of CD63 distribution in patients with HPS and healthy volunteers can be seen in \autoref{figure:platelets:radial:radial_overlay}, the increase in accumulation of CD63 at the cell surface can be seen comparing the platelet of a healthy volunteer in \autoref{figure:platelets:radial:CD63_overlay:control-zoom} to the platelet from a HPS patient in \autoref{figure:platelets:radial:CD63_overlay:patient-zoom}.
 
 \begin{figure}[htbp!]
 	\centering
@@ -337,7 +334,7 @@ A distinctive characteristic of cells defective in machinery that forms lysosome
 			zoomboxes right,
 			zoomboxarray columns=1,
 			zoomboxarray rows=1]
-			\node [image node] {\includegraphics[width=0.32\textwidth]{cd63Overlay_control_1_patientx_WLR_SIM_MIP_15}};
+			\node [image node] {\includegraphics[width=0.32\textwidth]{cd63Overlay_control_1_patientx_WLR_SIM_MIP_15_radial}};
 			\zoombox[magnification=9,color code=yellow, dashed]{0.332, 0.890}
 		\end{tikzpicture}
 	\newline
@@ -351,64 +348,53 @@ A distinctive characteristic of cells defective in machinery that forms lysosome
 			zoomboxes right,
 			zoomboxarray columns=1,
 			zoomboxarray rows=1]
-			\node [image node] {\includegraphics[width=0.32\textwidth]{cd63Overlay_patient_1_patientc_WLR_SIM_MIP_16}};
+			\node [image node] {\includegraphics[width=0.32\textwidth]{cd63Overlay_patient_1_patientc_WLR_SIM_MIP_16_radial}};
 			\zoombox[magnification=9,color code=yellow, dashed]{0.632, 0.760}
 		\end{tikzpicture}
-	\caption[Surface accumulation of CD63 in Hermansky-Pudlak syndrome patients]{Examples showing the CD63 at the platelet surface in Hermansky-Pudlak syndrome (HPS) platelets. A representative image with tubulin (red) and CD63 (green) staining is shown from the controls in image (a), the CD63 stain of this is shown in (b), and a representative platelet magnified from the image in (c). Similarly a representative image from a Hermansky-Pudlak syndrome (HPS) patient is shown in image (d), the CD63 stain of this is shown in (e), and a representative platelet magnified from the image in (f). The accumulation of CD63 at the platelet surface can be seen in the patient images. The white rings indicate the outer ring in the concentric radial profile analysis, only platelets with a white ring were segmented and analysed in the radial profile analysis.}
+	\caption[Surface accumulation of CD63 in Hermansky-Pudlak syndrome patients]{Examples showing the CD63 at the platelet surface in Hermansky-Pudlak syndrome (HPS) platelets. A representative image with tubulin (red) and CD63 (green) staining is shown from the controls in image (a), the CD63 stain of this is shown in (b), and a representative platelet with concentric rings magnified from the image in (c). Similarly a representative image from a Hermansky-Pudlak syndrome (HPS) patient is shown in image (d), the CD63 stain of this is shown in (e), and a representative platelet with concentric rings magnified from the image in (f). The accumulation of CD63 at the platelet surface can be seen in the patient images. In these images all platelet with white rings indicate the outer ring in the concentric radial profile analysis, only platelets with a white ring were segmented and analysed in the radial profile analysis.}
 	\label{figure:platelets:radial:radial_overlay}
 \end{figure}
 
-The ImageJ radial profile plot plugin was used in this analysis to measure the radial profile of each platelet\footnote{P. Baggethun, Radial Profile Plot ImageJ Plugin, \url{http://imagej.nih.gov/ij/plugins/radial-profile.html}, accessed 2015-07-15}. The plugin creates concentric rings from a central point and in each ring calculates the normalised integrated density. The normalised integrated density is the sum of pixel values in that ring divided by the number of pixels in the ring. The radial profile measures the radial distance from the center against the normalised integrated density.
+The ImageJ radial profile plot plugin was used in this analysis to measure the radial profile of each platelet\footnote{P. Baggethun, Radial Profile Plot ImageJ Plugin, \url{http://imagej.nih.gov/ij/plugins/radial-profile.html}, accessed 2015-07-15}. The plugin creates concentric rings from a central point and in each ring calculates the normalised integrated density. The normalised integrated density is the sum of pixel values in that ring divided by the number of pixels in the ring. The radial profile measures the radial distance from the center against the normalised integrated density. This is illustrated by the concentric rings in \autoref{figure:platelets:radial:CD63_overlay:control-zoom} and \autoref{figure:platelets:radial:CD63_overlay:patient-zoom}.
 
-The radial profile analysis was performed following morphometric analysis of the platelets dataset. The coordinates of the centroid of each found platelet in the platelets dataset was used as the center point for each radial profile. It was assumed that each platelet was a perfect circle in this analysis, where the maximum radius, $r$, was calculated from the area, $A$, as: $r=\sqrt{A/\pi}$. Since the area of each platelet was known the maximum radial distance was calculated, the radial profile plugin was applied at each platelet centroid with an appropriate area circle. The white circles in Figure~\ref{figure:platelets:radial:radial_overlay} show the areas for which the radial profile analysis was performed.
+The radial profile analysis was performed following morphometric analysis of the platelets data set. The coordinates of the centroid of each found platelet in the platelets data set was used as the center point for each radial profile. It was assumed that each platelet was a perfect circle in this analysis, where the maximum radius, $r$, was calculated from the area, $A$, as: $r=\sqrt{A/\pi}$. Since the area of each platelet was known the maximum radial distance was calculated, the radial profile plugin was applied at each platelet centroid with an appropriate area circle. The white circles in \autoref{figure:platelets:radial:radial_overlay} show the areas for which the radial profile analysis was performed.
 
 From the total population of 2812 segmented and measured platelets, a subset of 1549 of highly circular platelets (with circularity \textgreater\SI{0.85}) were selected for radial analysis. Radial integrated density measurements were taken for each platelet in the CD63 and the tubulin channels. The maximum integrated density concentric ring in the tubulin channel for each platelet was used to determine the location of the tubulin ring. This was used to define the plasma membrane, and measurements beyond this were excluded.
 
-The data from each platelet was normalised to allow aggregation into groups independent of size and image intensity. Both the radial distance and pixel intensity values were normalised by dividing by the maximum, giving a scale from 0 to 1.
-
-\section{Performance evaluation}
-\label{platelets:performance_evaluation}
-
-\begin{figure}[htbp]\centering
-	\begin{tikzpicture}[figurename=plateletSegmentation, zoomboxarray,
-		zoomboxes right,
-		zoomboxarray columns=1,
-		zoomboxarray rows=1,
-		connect zoomboxes,
-		zoombox paths/.append style={thick, dashed, gray}]
-		\node [image node] {\includegraphics[width=0.48\linewidth]{rgbOverlay_control_1_patientx_WLR_SIM_MIP_20}};
-		\zoombox[magnification=8]{0.315, 0.75}
-	\end{tikzpicture}
-\caption{\small{Segmentation contours of platelet and CD63 positive-granules. The CD63 channel is in green with white contours and tubulin red also with white contours. Image (a) is a single image and (b) is a single platelet.}}
-\label{plateletSegmentation}
-\end{figure}
-
-
+The data from each platelet was normalised to allow aggregation into groups independent of size and image intensity. Both the radial distance and pixel intensity values were normalised by dividing by the maximum, giving a scale from 0 to 1. This allowed each HPS patient and volunteer to be compared on normalised scales to see differences in CD63 radial distribution.
 
 \section{Results}
 \label{platelets:results}
-The SIM immunohistochemical approach was used in parallel with whole-mount electron microscopy for comparison in this study. The itinerant integral membrane protein CD63, that traffics between post-Golgi organelles was used to characterise platelet granules. CD63 positive objects were co-stained with tubulin to demarcate platelet perimeters, allowing segmented granules to be allocated to the appropriate platelet.
+Platelet samples from three HPS patients and seven healthy volunteers were obtained and both the electron microscopy and SIM methods used to differentiate between the patients and the volunteers. Results given here were obtained from SIM microscopy for which the image processing workflow described in \autoref{platelets:image_processing} was developed.
 
-Platelet samples from three HPS patients and seven healthy volunteers were obtained and both the electron microscopy and SIM methods used to differentiate between the patient and the volunteers. The number of CD63-positive objects in SIM or dense granules in electron microscopy per platelet were counted. Figure~\ref{figure:platelets:results} shows the HPS patients have fewer CD63 positive structures per platelet than the controls. The mean number of granules per platelet provides a striking diagnostic indicator, across the controls the mean number of CD63 positive structures per platelet is 6.8$\pm$0.1, compared to 2.4$\pm$0.1 in patients.
+In each of the 194 images in this proof of principle dataset segmentation of platelets and CD63-positive structures was performed. The number of CD63-positive objects was counted fore each platelet, a host of additional features were also collected. The number of CD63-positive structures can be used to distinguish patients with dense granule deficiencies.
 
-A super-resolution optical imaging approach is effective and rapid in differentiating between healthy controls and patients with a platelet bleeding disorder. The automated unbiased SIM workflow requires less than \SI{5}{\percent} of the time that subjective manual interpretation of electron microscopy images requires.  The image analysis workflow is fully automated and reproducible, it can be applied to multiple datasets as an automatic thresholding value set by the Moments algorithm in ImageJ~\cite{Schneider2012} defines the CD63 structures.
-
-The methodology presented here could be applied at relatively low cost to a high-throughput microscopy platform with automated data analysis that would present the results to a clinician for interpretation.
-
-The radial analysis quantification in Figure~\ref{figure:platelets:results:radial_analysis} shows a significant increase in plasma membrane-located CD63 in HPS patients, in line with the expected result. The novel ability to both count CD63 positive-granules and perform a radial distribution analysis strengthens the overall conclusions and shows how this simple sample preparation imaged by a super-resolution microscope can provide two independent fully quantitative measures of this particular disease.
+\autoref{figure:platelets:results:count_ecdf} shows the ability of the SIM method to distinguish between platelets of healthy volunteers and HPS patients. The cumulative frequency distribution plot shows the three HPS patients shifted left of the healthy controls. All of the HPS patients had fewer CD63-dense granules than the healthy volunteers. The mean number of granules per platelet provides a striking diagnostic indicator, across the controls the mean number of CD63 positive structures per platelet is 6.8$\pm$0.1, compared to 2.4$\pm$0.1 in patients with HPS.
 
 \begin{figure}[htbp]{}
 	\centering
-	\begin{subfigure}[b]{0.72\linewidth}
-		\includegraphics[width=0.9\linewidth]{150603_David_SIM_MIP_Platelet_ECDFcd63CellCount}
-		\caption{}
-		\label{figure:platelets:results:count_ecdf}
-	\end{subfigure}
-	\begin{subfigure}[b]{0.74\linewidth}
-		\includegraphics[width=0.9\linewidth]{150603_David_SIM_MIP_Platelet_radial_analysis}
-		\caption{}
-		\label{figure:platelets:results:radial_analysis}
-	\end{subfigure}
-\caption[Platelets results]{Empirical cumulative distribution function for controls and patients of number of CD63 positive-granules per platelet. Image(b) Normalised integrated density radial profile of control group platelets and Hermansky-Pudlak syndrome patient platelets with \SI{95}{\percent} confidence interval. The radial distance is measured from the platelet centroid, where 0 is the centroid and 1 the maximum of the tubulin ring.}
-\label{figure:platelets:results}
+	\includegraphics[width=0.7\linewidth]{150603_David_SIM_MIP_Platelet_ECDFcd63CellCount}
+\caption[Platelet CD63-positive structures empirical cumulative frequency]{Empirical cumulative distribution function of the number of CD63-positive structures per platelet for controls (healthy volunteers) and patients.}
+\label{figure:platelets:results:count_ecdf}
 \end{figure}
+
+Results from the CD63 radial distribution analysis described in \autoref{platelets:image_processing:radial} are displayed in \autoref{figure:platelets:results:radial_analysis}. There is a striking difference in the distribution of CD63 in HPS patients and healthy controls. In HPS patients there is a significant increase in CD63 located at the plasma membrane, this is in line with the expected result.
+
+\begin{figure}[htbp]{}
+	\centering
+	\includegraphics[width=0.7\linewidth]{150603_David_SIM_MIP_Platelet_radial_analysis}
+\caption[Normalised radial profile of CD63 distribution in platelets]{Normalised integrated density radial profile of control group platelets and Hermansky-Pudlak syndrome patient platelets with \SI{95}{\percent} confidence interval. The radial distance is measured from the platelet centroid, where 0 is the centroid and 1 the maximum of the tubulin ring.}
+	\label{figure:platelets:results:radial_analysis}
+\end{figure}
+
+
+\section{Summary}
+\label{platelets:summary}
+This chapter described the use of image analysis in the application of super-resolution microscopy as a potential new approach to diagnosing platelet dense granule deficiency disorders. In \autoref{platelets:introduction} the work is introduced and in \autoref{platelets:image_acquisition} the sample preparation and image acquisition described.
+
+In this study the SIM immunohistochemical approach was used in parallel with whole-mount electron microscopy for comparison. The itinerant integral membrane protein CD63, that traffics between post-Golgi organelles was used to characterise platelet granules. CD63 positive objects were co-stained with tubulin to demarcate platelet perimeters. An image processing workflow described in \autoref{platelets:image_processing} was used to segment granules and count the number of granules per platelet.
+
+A super-resolution optical imaging approach was found to be effective and rapid in differentiating between healthy controls and patients with a platelet bleeding disorder. The automated unbiased SIM workflow requires less than \SI{5}{\percent} of the time that subjective manual interpretation of electron microscopy images requires. A fully automated image analysis workflow provides reproducible results and could be applied to multiple data sets as an automatic thresholding value set by the Moments algorithm in ImageJ~\cite{Schneider2012} defines the CD63 structures. The methodology presented here could be applied at relatively low cost to a high-throughput microscopy platform with automated data analysis that would present the results to a clinician for interpretation.
+
+This radial analysis described in \autoref{platelets:image_processing:radial} is a novel approach to quantifying CD63 distribution in platelets. The combination of CD63-positive granule counting and radial analysis provides two independent fully quantitative measures of the HPS disease, and these quantitative analytical methods could be applied to other dense granule deficiency disorders in future.
+

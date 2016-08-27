@@ -842,7 +842,7 @@ wish to left align your text}
 \newcommand{\advisorrole}[1]{\renewcommand{\@advisorrole}{#1}}
 
 % Submission Text
-\newcommand{\submissiontext}{This dissertation is submitted for the degree of }
+\newcommand{\submissiontext}{This thesis is submitted for the degree of }
 
 % keywords (These keywords will appear in the PDF meta-information
 % called `pdfkeywords`.)
@@ -1025,7 +1025,7 @@ wish to left align your text}
 \renewcommand{\nomgroup}[1]{%
 \ifthenelse{\equal{#1}{A}}{\item[\textbf{Roman Symbols}]}{%
 \ifthenelse{\equal{#1}{G}}{\item[\textbf{Greek Symbols}]}{%
-\ifthenelse{\equal{#1}{Z}}{\item[\textbf{Acronyms / Abbreviations}]}{%
+\ifthenelse{\equal{#1}{Z}}{}{%
 \ifthenelse{\equal{#1}{R}}{\item[\textbf{Superscripts}]}{%
 \ifthenelse{\equal{#1}{S}}{\item[\textbf{Subscripts}]}{%
 \ifthenelse{\equal{#1}{X}}{\item[\textbf{Other Symbols}]}
@@ -1038,6 +1038,7 @@ wish to left align your text}
 }% matches Roman Symbols				> A
 
 % To add nomenclature in the header
+\renewcommand{\nomname}{List of abbreviations}
 \renewcommand{\nompreamble}{\markboth{\nomname}{\nomname}}
 
 % Add nomenclature to contents and print out nomenclature
