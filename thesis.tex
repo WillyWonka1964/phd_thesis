@@ -28,7 +28,7 @@
 	\includeonly{declaration/declaration, abstract/abstract}
 \fi
 \ifdefineChapter
-	\includeonly{chapter_5/chapter_5, notes}
+	\includeonly{chapter_2/chapter_2, notes}
 \fi
 
 \begin{document}
@@ -48,7 +48,11 @@
 \listofmyequations
 \cleardoublepage
 \phantomsection\addcontentsline{toc}{chapter}{\protect\lstlistlistingname}
+\hypersetup{bookmarksdepth=-2}
 \lstlistoflistings
+\hypersetup{bookmarksdepth}%back to tocdepth
+
+
 % \printnomenclature[space] space can be set as 2em between symbol and description
 \printnomenclature[6em]
 %\printnomenclature
