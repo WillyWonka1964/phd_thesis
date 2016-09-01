@@ -13,7 +13,7 @@ Large volumes of imaging data are generated in high-throughput microscopic surve
 
 This chapter describes methods of image segmentation and feature extraction employed for the large-scale quantitative morphometric analyses of endothelial organelles. Additionally, described here are methods of data analysis and interpretation of the resulting large and rich quantitative feature sets. Requiring multiple techniques drawn from fields within the broad areas of mathematics, statistics, and computer science. These techniques include but are not limited to: computer programming, data engineering, data mining, machine learning, predictive analytics, and pattern recognition. Data visualisation was also of particular importance to communicate the insights and findings from each high-throughput microscopic survey in a clear, efficient, and meaningful manner.
 
-Image data for use in this chapter was acquired by: Jess McCormack, Kim Harrison-Lavoie, David Westmoreland, Francesco Ferraro, Mafalda Pinto Baptista Lopes Da Silva and Francesca Patella.
+Image data for use in this chapter was acquired by: Jess McCormack, Kim Harrison-Lavoie, Francesco Ferraro, Mafalda Pinto Baptista Lopes Da Silva and Francesca Patella.
 
 \section{Introduction}
 \label{endothelial_morphometry:introduction}
@@ -36,7 +36,7 @@ In our high-throughput analysis of endothelial organelle morphometry, image acqu
 
 Following image acquisition, a custom made image segmentation protocol was used to threshold organelle pixels within each channel of each image in the data set. Features were extracted from segmented organelles, and if a plasma membrane stain was present then organelles features were linked to their relevant cell. A range of features were collected allowing population level analysis. Aggregation of data on a per-cell basis, also gave further richness and insight to the data. Data analysis and interpretation of endothelial organelle results can be performed at a population or on a per-cell basis, depending on the biological question being addressed.
 
-Since a priori it was not known which measurements would be most useful or interesting, for each survey and each organelle group the same feature set was collected. Collection of a large number of features provided the most freedom in data analysis. Analyses of large feature sets obtained from images of fluorescently labelled organelles also provided large sensitivty at detecting subtle phenotypes in populations at both a cellular or population level.
+Since a priori it was not known which measurements would be most useful or interesting, for each survey and each organelle group the same feature set was collected. Collection of a large number of features provided the most freedom in data analysis. Analyses of large feature sets obtained from images of fluorescently labelled organelles also provided large sensitivity at detecting subtle phenotypes in populations at both a cellular or population level.
 
 To ensure optimal data, careful consideration of the experimental phase, acquisition phase, and image processing approach was required. An optimal experimental workflow was achieved through multiple trials with various anti-bodies, microscope settings, and image segmentation techniques. This chapter details the developments of image segmentation and analysis methods for high-throughput morphometric analyses of endothelial organelles.
 
@@ -44,7 +44,7 @@ To ensure optimal data, careful consideration of the experimental phase, acquisi
 \label{endothelial_morphometry:image_acquisition}
 Analyses of endothelial organelle morphometry were performed on images acquired from confocal microscopy, with separate channels for different stained cellular organelles. DNA in cell nuclei were fluorescent stained and additional organelles were stained with immunofluorescence antibody methods.
 
-Human umbilical vein endothelial cells (HUVECs) were imaged on an Opera high-content screening (PerkinElmer) confocal microscope. The HUVECs were cultured, fixed and immunostained in 96-well microtitre plates  (Nunc MaxiSorp) and imaged using a 40$\times$ air objective lens (numerical aperture of 0.6). Various drug and secretagogue treatments were applied to different groups on the microtitre plate, as shown in the schematic in \autoref{figure:endothelial_morphometry:image_acquisition:microtitre_plate}.
+Human umbilical vein endothelial cells (HUVECs) were imaged on an Opera LX high-content screening (PerkinElmer) confocal microscope. The HUVECs were cultured, fixed and immunostained in 96-well microtitre plates  (Nunc MaxiSorp) and imaged using a 40$\times$ air objective lens (numerical aperture of 0.6). Various drug and secretagogue treatments were applied to different groups on the microtitre plate, as shown in the schematic in \autoref{figure:endothelial_morphometry:image_acquisition:microtitre_plate}.
 
 \begin{figure}[htbp!]
 	\centering
@@ -53,11 +53,11 @@ Human umbilical vein endothelial cells (HUVECs) were imaged on an Opera high-con
 	\label{figure:endothelial_morphometry:image_acquisition:microtitre_plate}
 \end{figure}
 
-In a typical high-throughput survey, 9 fields of view were imaged per microtitre well, generating data sets of 864 images and $\sim$10000 complete endothelial cells in a plate. This provides a suitably large volume of data to test most biological hypothesis, but for certain studies the volume of data collected was scaled up by imaging more fields of view per well, without requiring more labour intensive laboratory work. At 40$\times$ magnification the width and height of each pixel in the obtained images corresponds to a physical width and height of \SI{0.1612}{\micro\meter} without camera binning. Morphometric measurements could thus be converted from pixel sizes to dimensions in micrometers.
+In a typical high-throughput survey, 9 fields of view were imaged per microtitre well, generating data sets of 864 images and $\sim$10000 complete endothelial cells in a plate. This provides a suitably large volume of data to test most biological hypothesis, but for certain studies the volume of data collected was scaled up by imaging more fields of view per well, without requiring more labour intensive laboratory work. At 40$\times$ magnification the length of each pixel in the obtained images corresponds to a physical length of \SI{0.1612}{\micro\meter} without camera binning. Morphometric measurements could thus be converted from pixel sizes to dimensions in micrometers.
 
 The Opera confocal microscope has an available excitation wavelength range from \SIrange{488}{640}{\nano\meter}, with a numerical aperture of 0.6, this gives a minimum resolvable resolution range from \SIrange{496}{650}{\nano\meter}, calculated with Abbe's equation (see \autoref{equation:abbe}). The smallest resolvable structures in the images obtained are therefore between 2 and 4 pixels in length, depending on the channel being imaged.
 
-In high-throughput analyses the endothelial organelles that are frequently stained are nuclei, plasma membrane, vWF internal to WPBs, and external vWF (see \autoref{figure:image_acquisition}). The hypothesis being tested dictates the experimental setup and the specific cell organelles that are immunostained and imaged. Invariably, vWF is immunostained and imaged as a marker for exocytic sites or for internal WPBs. Cell nuclei and additional plasma membrane staining allow for analysis on a per-cell basis. The PerkinElmer Opera high-throughput confocal microscope at the Laboratory for Molecular Cell Biology allows for a maximum of 4 channels to be imaged per experiment. Along with the vWF channel, two channels were required for accurate cell segmentation, namely, the nuclei and plasma membrane channel. This leaves the last channel that can be used to stain for additional organelles or left empty. The resulting 12-bit image data was combined as a set of images each with multiple channels in a TIFF format.
+In high-throughput analyses the endothelial organelles that are frequently stained are nuclei, plasma membrane, vWF internal to WPBs, and external vWF (see \autoref{figure:image_acquisition}). The hypothesis being tested dictates the experimental setup and the specific cell organelles that are immunostained and imaged. Invariably, vWF is immunostained and imaged as a marker for exocytic sites or for internal WPBs. Cell nuclei and additional plasma membrane staining allow for analysis on a per-cell basis. The PerkinElmer Opera high-throughput confocal microscope at the Laboratory for Molecular Cell Biology allows for a maximum of 3 confocal channels to be imaged and an ultraviolet (UV) channel per experiment. Along with the vWF channel, two channels were required for accurate cell segmentation, namely, the nuclei (UV channel) and plasma membrane channel. This leaves the last channel that can be used to stain for additional organelles or left empty. The resulting 12-bit image data was combined as a set of images each with multiple channels in a TIFF format.
 
 \begin{figure}[htbp]\centering
 	\begin{subfigure}[b]{0.49\linewidth} %001001001.tif from 160413_Jess_SPA_Morph
@@ -92,7 +92,7 @@ In high-throughput analyses the endothelial organelles that are frequently stain
 		\caption{}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Image acquisition examples]{Examples of confocal microscopy images acquired in a high-throughput study of endothelial cells, acquired with four labelled organelles and four channels. Image (a) is the nuclei stained channel, image (b) are stained plasma membrane, image (c) are Weibel-Palade bodies (WPB) stained, and image (d) is stained for exocytosed von Willebrand factor (vWF).}
+\caption[Endothelial cells image acquisition examples]{Examples of confocal microscopy images acquired in a high-throughput study of endothelial cells, acquired with four labelled organelles and four channels. Image (a) is the nuclei stained channel, image (b) are stained plasma membrane, image (c) are Weibel-Palade bodies (WPB) stained, and image (d) is stained for exocytosed von Willebrand factor (vWF).}
 \label{figure:image_acquisition}
 \end{figure}
 
@@ -111,7 +111,7 @@ The cell plasma membrane was stained either by anti-VE-Cadherin antibodies or fl
 \label{endothelial_morphometry:image_processing}
 An image processing pipeline was developed for the segmentation and extraction of endothelial organelle morphometric features. The image processing pipeline was developed in Python with extensive use of the scikit-image~\cite{VanderWalt2014} and scikit-learn~\cite{Pedregosa2011} libraries. A generalised image processing approach was created that is customisable to the specific experimental setup. Functionality was therefore included to allow selection of the appropriate segmentation method depending on the channels imaged and their configuration. If a plasma membrane and nuclei stain were present then cell segmentation could be performed and analysis automatically includes a cell assignment step, thereby facilitating single cell analysis.
 
-The flowchart in \autoref{figure:image_processing:flowchart} presents each step in the image processing pipeline for segmentation and feature extraction of four image channels. There are some dependencies between channels, for example the plasma membrane channel is dependent on an input from the nucleus channel as the nucleus acts as a seed for the cell. The WPB channel is dependent on an input form the plasma membrane channel to assign a WPB to it's constituent cell. Channels are processed in an order relative to these dependencies, such that the nucleus channel is processed first, followed by the plasma membrane channel and then other cell organelles, and finally organelles are assigned to their respective cells.
+The flowchart in \autoref{figure:image_processing:flowchart} presents each step in the image processing pipeline for segmentation and feature extraction of four image channels. There are some dependencies between channels, for example the plasma membrane channel is dependent on an input from the nucleus channel as the nucleus acts as a seed for the cell. The WPB channel is dependent on an input form the plasma membrane channel to assign a WPB to it's constituent cell. Channels are processed in an order relative to these dependencies, such that the nucleus channel is processed first, followed by the plasma membrane channel and then other cell organelles, and finally organelles are assigned to their respective cells. These intra-channel dependencies are facilitated by co-localisation in the Opera confocal microscope achieved with beads for skewcrop and flatfield correction.
 
 \afterpage{
 	\begin{landscape}
@@ -184,7 +184,7 @@ Prior to performing image processing of a data set a step was performed to ident
 		\label{figure:image_processing:quality_control_2}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Examples of images excluded from high-throughput analysis]{Examples of images that are unusable and have been excluded from further processing, by a visual inspection of images with high and low mean pixel values. Image (a) is occluded by debris or dirt, and image (b) is symptomatic a laser malfunction on the microscope.}
+\caption[Examples of images excluded from high-throughput analysis]{Examples of images that are unusable and have been excluded from further processing, by a visual inspection of images with high and low mean pixel values. Image (a) could be due to non-flatfield correction or occlusion by debris or dirt, and image (b) is symptomatic a laser malfunction on the microscope.}
 \label{figure:image_processing:quality_control}
 \end{figure}
 
@@ -471,7 +471,7 @@ A feature identified of particular importance that was not available natively in
 \begin{lstlisting}[
 	style=python,
 	label={listing:feret_function},
-	caption={Python function for calculation of the Feret diameter}
+	caption={Function for calculation of the Feret diameter}
 	]
 def calculateFeret(coordinates):
     feret = np.nanmax(squareform(pdist(coordinates)))
@@ -488,7 +488,7 @@ Analysis of morphometry of endothelial organelles is a valuable outcome from hig
 \begin{lstlisting}[
 	style=python,
 	label={listing:cell_assignment},
-	caption={Python function to determine in which cell a segmented organelle is located}
+	caption={Function to determine in which cell a segmented organelle is located}
 	]
 def assignCell(label_image, intensity_image, features):
     properties = measure.regionprops(label_image, intensity_image)
@@ -518,7 +518,7 @@ Finally, an approach for testing the degree of spatial randomness was arrived at
 \begin{lstlisting}[
 	style=python,
 	label={listing:synthetic_coordinates},
-	caption={Python function to generate a set of synthetic coordinates for each organelle}
+	caption={Function to generate a set of synthetic coordinates for each organelle}
 	]
 def syntheticCoordinates(cell_labels, features, number):
     properties = measure.regionprops(cell_labels)
@@ -547,7 +547,7 @@ The \autoref{listing:create_composite} details the python code written to creati
 \begin{lstlisting}[
 	style=python,
 	label={listing:create_composite},
-	caption={Python function to create a colour composite segmentation overlay image}
+	caption={Function to create a colour composite segmentation overlay image}
 	]
 def create_composite(image_dict, contours):
     contours = sum(contours_dict.values())*255
@@ -680,7 +680,7 @@ A sample of 517 cells were hand annotated, demarcating cell boundaries, to give 
 		\label{figure:performance_evaluation:cell_intersectionUnionCell}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Example cell pixel sets gold standard, automated segmentation, and union and intersection]{An example cell manually segmented to give a gold standard in (a), and the corresponding contours for the cell generated by an automated segmentation method in (b). Image (c) shows the union and intersection of the cell, where the intersection are the white foreground pixels and the union are the grey pixels in the background.}
+\caption[Cell: gold standard contours, automated contours, and union and intersection]{An example cell manually segmented to give a gold standard in (a), and the corresponding contours for the cell generated by an automated segmentation method in (b). Image (c) shows the union and intersection of the cell, where the intersection are the white foreground pixels and the union are the grey pixels in the background.}
 \label{figure:performance_evaluation:cell}
 \end{figure}
 
@@ -809,7 +809,7 @@ Classifier prediction of endothelial cell type (0 or 1) requires a set of cellul
 		\label{figure:cell_classification:ggbiplot}
 %		\vspace{1ex}
 	\end{subfigure}
-	\caption[Correlation matrix cellular features plot and biplot of PCA]{Plot (a) is a correlation matrix showing the degree of correlation between cellular features, where large circles are more highly correlated, blue colours are positively correlated and red colours negative. The biplot in (b) plots the two highest principle components of groups A and E, which are cell types 1 and 2 respectively. A normal contour line ellipse is drawn for showing the 68~$\%$ probability for each group.}
+	\caption[Correlation matrix cellular features plot and biplot of PCA]{Plot (a) is a correlation matrix showing the degree of correlation between cellular features, where large circles are more highly correlated, blue colours are positively correlated and red colours negative. The biplot in (b) plots the two greatest variance principle components (PC1 and PC2) of groups A and E. A normal contour line ellipse is drawn for showing the 68~$\%$ probability for each group.}
 	\label{figure:cell_classification:feature_selection_and_PCA}
 \end{figure}
 
