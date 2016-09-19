@@ -619,10 +619,10 @@
 		breaklinks=true,
 		linktocpage,
 		colorlinks=true,
-		linkcolor=blue,
-		urlcolor=blue,
-		citecolor=blue,
-		anchorcolor=green
+		linkcolor=black,
+		urlcolor=black,
+		citecolor=black,
+		anchorcolor=black
 	}
 
 	\ifsetCustomMargin

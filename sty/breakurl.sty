@@ -47,7 +47,7 @@
   You are using breakurl while processing via pdflatex.\MessageBreak
   \string\burl\space will be just a synonym of \string\url.\MessageBreak}
   \DeclareRobustCommand{\burl}{\url}
-  \DeclareRobustCommand*{\burlalt}{\hyper@normalise\burl@alt}
+  \DeclareRobustCommand*{\burlalt}{\hyper@normalize\burl@alt}
   \def\burl@alt#1#2{\hyper@linkurl{\Hurl{#1}}{#2}}
   \expandafter\endinput
 \fi
@@ -76,8 +76,8 @@
 
 \bgroup
   \catcode`\&=12\relax
-  \hyper@normalise\burl@addtocharlistbefore{%}
-  \hyper@normalise\burl@addtocharlistafter{:/.?#&_,;!}
+  \hyper@normalize\burl@addtocharlistbefore{%}
+  \hyper@normalize\burl@addtocharlistafter{:/.?#&_,;!}
 \egroup
 
 \def\burl@growmif#1#2{%
@@ -123,7 +123,7 @@
 \DeclareOptionX{hyphenbreaks}{%
   \bgroup
     \catcode`\&=12\relax
-    \hyper@normalise\burl@addtocharlistafter{-}%
+    \hyper@normalize\burl@addtocharlistafter{-}%
   \egroup
 }
 \DeclareOptionX{anythingbreaks}{%
@@ -173,14 +173,14 @@
   \begingroup
   \let\hyper@linkurl=\burl@hyper@linkurl
   \catcode`\&=12\relax
-  \hyper@normalise\burl@
+  \hyper@normalize\burl@
 }
 
 \DeclareRobustCommand*{\burlalt}{%
   \begingroup
   \let\hyper@linkurl=\burl@hyper@linkurl
   \catcode`\&=12\relax
-  \hyper@normalise\burl@alt
+  \hyper@normalize\burl@alt
 }
 
 \newif\if@burl@breakbefore
@@ -197,7 +197,7 @@
 
 \gdef\burl@alt#1{%
   \def\burl@url{#1}%
-  \hyper@normalise\burl@@alt
+  \hyper@normalize\burl@@alt
 }
 \gdef\burl@@alt#1{%
   \def\burl@urltext{#1}%
