@@ -9,7 +9,7 @@
 \nomenclature[z-SVM]{$SVM$}{support vector machine}
 \nomenclature[z-CSR]{$CSR$}{complete spatial randomness}
 
-Large volumes of imaging data are generated in high-throughput microscopic surveys of fluorescently labelled endothelial organelles. With such large-scale image data sets an automated computational approach was the only viable method extracting biologically relevant quantitative features. The extraction of quantitative features then allows for the analysis and interpretation of each experiment.
+Large volumes of imaging data are generated in high-throughput microscopic surveys of fluorescently labelled endothelial organelles. With such large-scale image data sets an automated computational approach was the only viable method of extracting biologically relevant quantitative features. The extraction of quantitative features then allows for the analysis and interpretation of each experiment.
 
 This chapter describes methods of image segmentation and feature extraction employed for the large-scale quantitative morphometric analyses of endothelial organelles. Additionally, described here are methods of data analysis and interpretation of the resulting large and rich quantitative feature sets. These data analyses require multiple techniques drawn from fields within the broad areas of mathematics, statistics, and computer science including but not limited to: computer programming, data engineering, data mining, machine learning, predictive analytics, and pattern recognition. Data visualisation is also of particular importance to communicate the insights and findings from each high-throughput microscopic survey in a clear, efficient, and meaningful manner.
 
@@ -28,7 +28,8 @@ High-throughput microscopic surveys of endothelial organelles from primary human
 	\item high-throughput techniques can be used to test hypothesis from low-throughput data.
 \end{itemize}
 
-Of particular importance in studies of inflammatory and haemostatic processes are the endothelial storage organelles Weibel-Palade bodies (WPBs). These WPB storage organelles carry a large multimeric protein called von Willebrand Factor (vWF), which plays a critical role in haemostasis and inflammation. To study the biological functions of intracellular WPBs, we can monitor them by fluorescently labelling and then imaging their vWF molecular cargo. Biological function and processes can be inferred by imaging cells and comparing groups under altered cellular conditions. The cellular conditions can be manipulated with secretagogue and drug treatments. Analysis of phenotypic differences between groups offers insight into the function of WPBs, and the machinery involved in their formation, which again impacts on their functioning. Phenotypic changes can include increases or decreases in the number and distribution of WPB, as well as changes in morphology.
+Of particular importance in studies of inflammatory and haemostatic processes are the endothelial storage organelles Weibel-Palade bodies (WPBs). These WPB storage organelles carry a large multimeric protein called von Willebrand Factor (vWF), which plays a critical role in haemostasis and inflammation. To study the biological functions of intracellular WPBs, we can monitor them by fluorescently labelling and then imaging their vWF molecular cargo. Biological function and processes can be inferred by imaging cells and comparing groups under altered cellular conditions. The cellular conditions can be manipulated with secretagogue and drug treatments. Analysis of phenotypic differences between groups offers insight into the function of WPBs, and the machinery involved in their formation, which again impacts on their functioning. Phenotypic changes can include increases or decreases in the numbers of WPB, as well as changes in morphology.
+
 
 The study of intracellular WPBs was extended to investigate mechanisms of WPB exocytosis by fluorescently labelling and imaging vWF at the external endothelial cell surface. Other proteins marking additional endothelial organelles relevant to haemostasis and inflammation could also be labelled thus including markers for other organelles. Additional labels could be for example the Golgi apparatus, and the endoplasmic reticulum. This chapter does not explicitly describe methods of image processing for these organelles, since they have not yet been extensively tested.
 
@@ -75,7 +76,7 @@ In high-throughput analyses the endothelial organelles that are frequently stain
 		\vspace{1ex}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.49\linewidth} %001005004.tif from 151113_Jess_TC_CCE_Rep2
-		\begin{tikzpicture}[spy using outlines={circle,yellow,magnification=3,size=3cm, connect spies}]
+		\begin{tikzpicture}[spy using outlines={rectangle,yellow,magnification=3,size=3cm, connect spies}]
 		\node[anchor=south west,inner sep=0]  at (0,0) {\includegraphics[width=\textwidth]{image_acquisition_wpb}};
 		\spy [every spy on node/.append style={ultra thick}] on (4.7,4.0) in node [left] at (3.3,5.4);
 		\end{tikzpicture}
@@ -84,7 +85,7 @@ In high-throughput analyses the endothelial organelles that are frequently stain
 		\vspace{1ex}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.49\linewidth} %001005004.tif from 151113_Jess_TC_CCE_Rep2
-		\begin{tikzpicture}[spy using outlines={circle,yellow,magnification=3,size=3cm, connect spies}]
+		\begin{tikzpicture}[spy using outlines={rectangle,yellow,magnification=3,size=3cm, connect spies}]
 		\node[anchor=south west,inner sep=0]  at (0,0) {\includegraphics[width=\textwidth]{image_acquisition_exit_sites}};
 		\spy [every spy on node/.append style={ultra thick}] on (2.7,4.0) in node [left] at (7.4,5.4);
 		\end{tikzpicture}
@@ -92,7 +93,7 @@ In high-throughput analyses the endothelial organelles that are frequently stain
 		\caption{}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Endothelial cells image acquisition examples]{Examples of confocal microscopy images acquired in a high-throughput study of endothelial cells, acquired with four labelled organelles and four channels. Image (a) is the nuclei stained channel, image (b) are stained plasma membrane, image (c) is of Weibel-Palade bodies (WPB) stained, and image (d) is stained for exocytosed von Willebrand factor (vWF).}
+\caption[Endothelial cells image acquisition examples]{Examples of confocal microscopy images acquired in a high-throughput study of endothelial cells, acquired with four labelled organelles and four channels. Image (a) is the nuclei stained channel, image (b) are stained plasma membrane, image (c) is of Weibel-Palade bodies (WPB) stained, and image (d) is stained for exocytosed von Willebrand factor (vWF). Scale bars: \SI{10.0}{\micro\meter}; magnified regions: \SI{25.0\times25.0}{\micro\meter}.}
 \label{figure:image_acquisition}
 \end{figure}
 
@@ -111,7 +112,7 @@ The plasma membrane was stained either by anti-VE-Cadherin antibodies or fluorop
 \label{endothelial_morphometry:image_processing}
 An image processing pipeline was developed for the segmentation and extraction of endothelial organelle morphometric features. The pipeline was developed in Python version 2.7 with extensive use of the scikit-image~\cite{VanderWalt2014} and scikit-learn~\cite{Pedregosa2011} libraries. A generalised image processing approach was created that is customisable to the specific experimental setup. Functionality was therefore included to allow selection of the appropriate segmentation method depending on the channels imaged and their configuration. If a plasma membrane and nuclei stain were present then cell segmentation could be performed and analysis automatically includes a cell assignment step, thereby facilitating single cell analysis.
 
-The flowchart in \autoref{figure:image_processing:flowchart} presents each step in the image processing pipeline for segmentation and feature extraction of four image channels. There are some dependencies between channels, for example the plasma membrane channel is dependent on an input from the nucleus channel as the nucleus acts as a seed for the cell. The WPB channel is dependent on an input from the plasma membrane channel to assign WPB to its constituent cell. Channels are processed in an order relative to these dependencies, such that the nucleus channel is processed first, followed by the plasma membrane channel and then other cell organelles, and finally organelles are assigned to their respective cells. These intra-channel dependencies are facilitated by co-localisation in the Opera confocal microscope achieved with beads for skewcrop and flatfield correction.
+The flowchart in \autoref{figure:image_processing:flowchart} presents each step in the image processing pipeline for segmentation and feature extraction of four image channels. There are some dependencies between channels, for example the plasma membrane channel is dependent on an input from the nucleus channel as the nucleus acts as a seed for the cell. The WPB channel is dependent on an input from the plasma membrane channel to assign WPB to its constituent cell. Channels are processed in an order relative to these dependencies, such that the nucleus channel is processed first, followed by the plasma membrane channel and then other cell organelles, and finally organelles are assigned to their respective cells. These inter-channel dependencies are facilitated by co-localisation in the Opera confocal microscope achieved with beads for skewcrop and flatfield correction.
 
 \afterpage{
 	\begin{landscape}
@@ -183,7 +184,7 @@ A step was performed prior to performing image processing of a data set to ident
 		\label{figure:image_processing:quality_control_2}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Examples of images excluded from high-throughput analysis]{Examples of images that are unusable and have been excluded from further processing, by a visual inspection of images with high and low mean pixel values. Image (a) could be due to non-flatfield correction or occlusion by debris or dirt, and image (b) is symptomatic of a laser malfunction on the microscope.}
+\caption[Examples of images excluded from high-throughput analysis]{Examples of images that are unusable and have been excluded from further processing, by a visual inspection of images with high and low mean pixel values. Image (a) could be due to non-flatfield correction or occlusion by debris or dirt, and image (b) is symptomatic of a laser malfunction on the microscope. Scale bars: \SI{10.0}{\micro\meter}.}
 \label{figure:image_processing:quality_control}
 \end{figure}
 
@@ -248,7 +249,7 @@ Segmentation of nuclei was the first stage in morphometric analysis of endotheli
 		\label{figure:image_processing:nuclei_segmentation:05}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Nuclei segmentation]{The major sequence of processes involved in segmentation of nuclei. Image (a) is the raw image, (b) after applying Otsu's threshold, (c) following a binary hole fill, (d) depicts the watershed transform, (e) is after a classification step, and finally image (f) shows a quality control image output with segmentation contours. The red box in images (a) and (b) highlights the effect of binary hole filling, the green box in images (c) and (d) shows an example of splitting with the watershed transform, and the yellow box in images (d) and (e) highlights the removal of non-nuclei objects via classification.}
+\caption[Nuclei segmentation]{The major sequence of processes involved in segmentation of nuclei. Image (a) is the raw image, (b) after applying Otsu's threshold, (c) following a binary hole fill, (d) depicts the watershed transform, (e) is after a classification step, and finally image (f) shows a quality control image output with segmentation contours. The red box in images (a) and (b) highlights the effect of binary hole filling, the green box in images (c) and (d) shows an example of splitting with the watershed transform, and the yellow box in images (d) and (e) highlights the removal of non-nuclei objects via classification. Scale bars: \SI{10.0}{\micro\meter}.}
 \label{figure:image_processing:nuclei_segmentation}
 \end{figure}
 
@@ -256,18 +257,18 @@ Segmentation of nuclei was the first stage in morphometric analysis of endotheli
 The first step in segmentation of nuclei was to apply an intensity threshold to the image to create a binary image (see \autoref{figure:image_processing:nuclei_segmentation:01}), separating foreground and background objects. A variety of thresholding methods were trialled for this purpose, and Otsu's method was found by eye to give an accurate segmentation contours over a sample of images. Otsu's method~\cite{Otsu1979} is a widely used thresholding technique that calculates a threshold by maximising the variance between two classes of pixels, and was found to be very effective at segmenting objects in the nuclei images.
 
 \subsubsection{Binary hole fill (A.1)}
-The mottled nature of nuclei staining and variation in staining across an image can lead to holes in thresholded foreground objects, as shown by the red box in \autoref{figure:image_processing:nuclei_segmentation:02}. Binary holes were problematic since they create inaccuracy in morphological measurement, specifically in the measurement of area. In addition holes in segmented objects along the image border created image processing errors. Specifically, holes on the border in later processing with the watershed transform could result in incorrect splitting of a region into multiple objects. As such it was necessary to fill small holes in binary objects.
+The mottled nature of nuclei staining and variation in staining across an image can lead to holes in thresholded foreground objects, as shown by the red box in \autoref{figure:image_processing:nuclei_segmentation:02}. Holes in binary objects are problematic since they create inaccuracy in morphological measurement, specifically in the measurement of area. In addition holes in segmented objects along the image border lead to errors in image processing. Holes on the border in later processing with the watershed transform could result in incorrect splitting of a region into multiple objects. As such it was necessary to fill small holes in binary objects.
 
 The available hole-filling algorithm in Python has the limitation that it does not fill holes in objects on the image border. The algorithm provided by SciPy\footnote{Jones E., Oliphant E., Peterson P., et al. SciPy: Open Source Scientific Tools for Python, 2001-, \url{http://www.scipy.org/} accessed 2016-04-26} requires binary holes to be surrounded completely by a connected border of foreground pixels.
 
-To overcome this, a custom binary hole filler was implemented on the assumption that the background area is always larger than the largest foreground connected component. This assumption should always hold in correctly acquired nuclei images. The hole filler algorithm extracts the background region by performing a connected component analysis on the image. All other pixels, that are not part of that connected component are set to foreground pixels. The result of applying the binary hole filler is exemplified by the red box in \autoref{figure:image_processing:nuclei_segmentation:01} and \autoref{figure:image_processing:nuclei_segmentation:02}.
+To overcome this, a custom binary hole filler was implemented on the condition that the background area is always larger than the largest foreground connected component. This condition should always hold in correctly acquired nuclei images. The hole filler algorithm extracts the background region by performing a connected component analysis on the image. All other pixels, that are not part of that connected component are set to foreground pixels. The result of applying the binary hole filler is exemplified by the red box in \autoref{figure:image_processing:nuclei_segmentation:01} and \autoref{figure:image_processing:nuclei_segmentation:02}.
 
 \subsubsection{Watershed transform (A.2)}
 The watershed transform is a versatile and commonly applied region-based segmentation algorithm~\cite{Vincent1991}. It takes its name from an analogy with hydrology, where watershed lines are the divisions in a landscape splitting an area into catchment basins. The concept of watershed basins can be visualised as the domains of attraction for rain falling over a region. Alternatively, consider a landscape being submerged in a lake: basins will fill with water and at points where water from different basins meet, dams are built~\cite{Roerdink2000}. In extending this idea to digital images, we can consider that an image has a topographic relief dictated by its pixel values. Catchment basins in this relief can be found, and the lines dividing these basins are watershed lines. In the case of nucleus segmentation, a watershed transform was used to separate nuclei that are close, overlapping, or touching. The application of the watershed can be observed by the splitting of the objects in \autoref{figure:image_processing:nuclei_segmentation:02} and \autoref{figure:image_processing:nuclei_segmentation:03}.
 
 There are many technical variations in the implementations of the watershed algorithm, which can be applied depending on the segmentation problem. The watershed transform may be applied to the raw pixel intensity image, or a transformed version of the image. For separation of touching nuclei a watershed transform was performed on a transformed image. A euclidean distance transform was first applied, so that each foreground pixel is given a value, relative to the distance to its nearest boundary. A watershed on a euclidean distance transformed image gives a watershed based entirely on the shape characteristics of the binary objects, where markers are the local maxima of the distance function to the background for separating overlapping objects.
 
-The \emph{skimage} watershed function was used to perform a watershed in this pipeline. It apportions pixels into marked basins using the method described by Vincent et al., 1991~\cite{Vincent1991}, and returns a labelled image.
+The scikit-image watershed function was used to perform a watershed in this pipeline. It apportions pixels into marked basins using the method described by Vincent et al., 1991~\cite{Vincent1991}, and returns a labelled image.
 
 \subsubsection{Binary classification (A.3)}
 A supervised machine learning binary classification was used to remove incorrectly segmented foreground non-nucleus objects. A classifier was built to predict the class of segmented foreground objects, identifying nucleus or non-nucleus foreground structures. Non-nucleus segmented structures could be, for example: the result of staining artefacts, debris, dead cells or very small thresholded regions. Initial attempts at removing non-nucleus structures by removing connected components less than a specified size were inadequate. Although this size filter was effective for removing the majority of debris and small thresholded regions, it was not effective for removal of staining artefacts and dead cells.
@@ -283,7 +284,7 @@ Generation of a labelled training set was semi-automated, to reduce tedious manu
 The class of each object in the features data table was determined in a semi-automated fashion. In the binary images, connected components beneath the resolution limit of the microscope were removed as noise by morphological opening. The larger remaining structures were cross referenced with their raw nucleus stained images, and where a non-nucleus structure had been incorrectly segmented its pixels were set to background. In this way all incorrectly segmented foreground object were removed from the binary images. The binary images were then used as a reference set. For each of the 14510 instances in the results features data, the pixel value at the $x$ and $y$ centroid position for the structure was checked. The class was assigned by reading the pixel value corresponding to the location of the segmented object in the binary reference image set. If the pixel value was that of a foreground pixel then the object was a nucleus and assigned a label 1. If the pixel value was that of a background pixel then the object was a non-nucleus object and was assigned a label of 0. Of the 14510 examples, 9425 were labelled as nucleus objects, and 5085 as non-nucleus objects.
 
 \paragraph{Data pre-processing}
-For effective training of an SVM classifier some data pre-processing steps were performed. Firstly, from the labelled data set only numeric features containing morphometric and pixel intensity information were retained. The categorical attributes specifically row, column, field of view, and particle ID numbers were removed (see \autoref{table:endothelial_morphometry:region_properties}).
+For effective training of a SVM classifier some data pre-processing steps were performed. Firstly, from the labelled data set only numeric features containing morphometric and pixel intensity information were retained. The categorical attributes specifically row, column, field of view, and particle ID numbers were removed (see \autoref{table:endothelial_morphometry:region_properties}).
 
 The remaining features were scaled to standardise their range of values, thereby avoiding features with greater numeric ranges from dominating the function training. There are various methods of feature scaling. Here a standardisation method was used. For a sample ($x$), the standardised version ($x'$) is calculated using the mean ($\bar{x}$), and standard deviation ($\sigma$), as follows:
 \begin{equation}
@@ -323,7 +324,7 @@ Objects that were predicted to be non-nucleus were removed by setting their pixe
 \label{endothelial_morphometry:image_processing:cell}
 The segmentation of individual endothelial cells opens up a deeper analytical study of phenomena at a cellular level. In population analysis it is not possible to tell how individual cells respond to secretagogue or drug treatments. After having performed cell segmentation all organelles can be assigned to their respective cells. To do this each segmented organelle was assigned an identifier, relating to the cell from which it was derived.
 
-Stages in cell segmentation are outlined in \autoref{figure:image_processing:flowchart}, and the major intermediary stages are shown visually in \autoref{figure:image_processing:cell_segmentation}. The general approach to cell segmentation involved pre-processing steps to enhance contrast and reduce noise (see \autoref{figure:image_processing:cell_segmentation:clahe_denoise}), followed by separation of cells in the confluent monolayer. A range of techniques were trialled to separate touching cells in the confluent endothelial monolayer. Methods were trialled based on a survey of automated segmentations applied to optical imaging of mammalian cells~\cite{Bajcsy2015}. This survey of methods categorises segmentation methods as being spatially blind or spatially guided, where spatially blind techniques are essentially threshold based. As expected, spatially blind methods such as thresholding were not reliable for finding cell boundaries. These methods were not adept at handling the intensity variation along cell boundaries, variation in staining or overlapping cells. Furthermore spatially blind techniques also do not use information provided by nuclei seed points.
+Stages in cell segmentation are outlined in \autoref{figure:image_processing:flowchart}, and the major intermediary stages are shown visually in \autoref{figure:image_processing:cell_segmentation}. The general approach to cell segmentation involved pre-processing steps to enhance contrast and reduce noise (see \autoref{figure:image_processing:cell_segmentation:clahe_denoise}), followed by separation of cells in the confluent monolayer. A range of techniques were trialled to separate touching cells in the confluent endothelial monolayer. Methods were trialled based on a survey of automated segmentations applied to optical imaging of mammalian cells~\cite{Bajcsy2015}. This survey of methods categorises segmentation methods as being spatially blind or spatially guided, where spatially blind techniques are essentially threshold based. As expected, spatially blind methods such as thresholding were not reliable for finding cell boundaries. These methods were not adept at handling the intensity variation along cell boundaries, variation in staining, or overlapping cells. Furthermore spatially blind techniques also do not use information provided by nuclei seed points.
 
 Spatially guided techniques produced more accurate cell segmentation results, using nuclei as cell markers. Of the spatially guided segmentation methods region growing, evolving generalised voronoi diagram~\cite{Yu2010}, random walk, level set methods and marker-based watersheds were trialled. Region growing and level sets were found to be too computationally expensive for the scale of the high-throughput surveys, and the results were inconsistent with different staining protocols. The remaining three techniques; evolving generalised voronoi diagram method, random walk segmentation and marker based watershed produced comparable results. The watershed method was used because it was found to give the greatest accuracy according to overlap ratio measures with the gold standard (see \autoref{endothelial_morphometry:performance_evaluation:cell}). The watershed has the added bonus of being efficient and implementable in Python through scikit-image~\cite{VanderWalt2014}.
 
@@ -373,7 +374,7 @@ To perform the watershed, the pre-processed image was inverted and the binary nu
 		\vspace{1ex}
 	\end{subfigure}
 	\vspace{-1ex}
-\caption[Cell segmentation]{Processes involved in segmentation of cells. Image (a) is the raw acquired image, (b) after applying contrast limited adaptive histogram equalisation and denoising to (a), (c) following inversion and addition of nuclei to (b), (d) depicts the watershed transform applied to (c), and (e) is after clearing borders and relabelling (d), and finally image (f) is a quality control image with segmentation contours.}
+\caption[Cell segmentation]{Processes involved in segmentation of cells. Image (a) is the raw acquired image, (b) after applying contrast limited adaptive histogram equalisation and denoising to (a), (c) following inversion and addition of nuclei to (b), (d) depicts the watershed transform applied to (c), and (e) is after clearing borders and relabelling (d), and finally image (f) is a quality control image with segmentation contours. Scale bars: \SI{10.0}{\micro\meter}.}
 \label{figure:image_processing:cell_segmentation}
 \end{figure}
 
@@ -422,7 +423,7 @@ The segmentation method needed to accurately find contours of both strongly and 
 		\zoombox[magnification=5,color code=blue, dashed]{0.337, 0.590}
 	\end{tikzpicture}
 \label{figure:image_processing:wpb_segmentation}
-\caption[Segmentation contours of Weibel-Palade bodies]{Fluorescent Weibel-Palade bodies are shown in image (a) with overlaid segmentation contours by adaptive thresholding. Image (b) shows magnified regions of the image, in the red, yellow and green boxes the segmentation of both highly and weakly fluorescent organelles can be seen. The blue box shows the removal of a cluster of WPBs that were inseparable and therefore removed from analysis.}
+\caption[Segmentation contours of Weibel-Palade bodies]{Fluorescent Weibel-Palade bodies are shown in image (a) with overlaid segmentation contours by adaptive thresholding. Image (b) shows magnified regions of the image, in the red, yellow and green boxes the segmentation of both highly and weakly fluorescent organelles can be seen. The blue box shows the removal of a cluster of WPBs that were inseparable and therefore removed from analysis. Scale bar: \SI{10.0}{\micro\meter}; magnified regions: \SI{20.0\times15.0}{\micro\meter}.}
 \end{figure}
 
 \subsubsection{Remove small objects (C.1)}
@@ -445,7 +446,7 @@ The WPB cargo vWF is amenable to antibody labelling when exocytosed. Exocytosed 
 		\zoombox[magnification=5,color code=green, dashed]{0.625, 0.245}
 		\zoombox[magnification=5,color code=blue, dashed]{0.835, 0.175}
 	\end{tikzpicture}
-\caption[Segmentation contours of exocytic site]{Image (a) shows segmentation contours overlaid on to an example von-Willebrand factor stained exocytic sites image.  Image (b) contains four magnified regions of image (a), where the red and yellow boxes, show a cluster of exocytic sites, and a single exocytic site respectively. The green and blue boxed images demonstrate instances where the watershed transform has split adjacent exocytic sites.}
+\caption[Segmentation contours of exocytic site]{Image (a) shows segmentation contours overlaid on to an example von-Willebrand factor stained exocytic sites image.  Image (b) contains four magnified regions of image (a), where the red and yellow boxes, show a cluster of exocytic sites, and a single exocytic site respectively. The green and blue boxed images demonstrate instances where the watershed transform has split adjacent exocytic sites. Scale bar: \SI{10.0}{\micro\meter}; magnified regions: \SI{20.0\times15.0}{\micro\meter}.}
 \label{figure:image_processing:exit_sites_segmentation}
 \end{figure}
 
@@ -463,7 +464,7 @@ The final step in segmentation of vWF exocytic sites was to remove segmented obj
 
 \subsection{Additional functions}
 \label{endothelial_morphometry:image_processing:additiona_functions}
-For the specific purpose of morphometric analysis of endothelial organelles, some functionality was required that were not provided natively by Python or any Python libraries. Here additional functions used in image analysis are detailed.
+For the specific purpose of morphometric analysis of endothelial organelles, some functionality was required that is not provided natively by Python or any Python libraries. Here additional functions used in image analysis are detailed.
 
 \subsubsection{Feret diameter}
 A feature identified of particular importance that was not available natively in the \emph{regionprops} function was a measure of the maximum caliper diameter (also known as the Feret diameter). This is defined as the distance between the most separated points of the segmented region boundary. This has previously been identified as a descriptive feature for morphometric analyses of WPBs~\cite{Ferraro2014}, and is as such listed in \autoref{table:endothelial_morphometry:region_properties}. A function was written to calculate the Feret diameter of each region: see listing \autoref{listing:feret_function}.
@@ -569,15 +570,15 @@ An example colour image output created using the \emph{create\_composite} functi
 \begin{figure}[htbp!] %008002007.tif from 160413_Jess_SPA_Morph
 	\centering
 	\includegraphics[width=\textwidth]{composite_image}
-	\caption[Colour composite image with segmentation contours]{An example colour composite image, including the following channels: red channel for cell nuclei, green for plasma membrane staining, and cyan colour for vWF staining. Segmentation contours are overlaid for all segmented objects in the image, except segmentation contours of cells on the edge of the image have been excluded. Edge cells may not be completely within the field of view so are not used in data analysis of cellular populations.}
+	\caption[Colour composite image with segmentation contours]{An example colour composite image, including the following channels: red channel for cell nuclei, green for plasma membrane staining, and cyan colour for vWF staining. Segmentation contours are overlaid for all segmented objects in the image, except segmentation contours of cells on the edge of the image have been excluded. Edge cells may not be completely within the field of view so are not used in data analysis of cellular populations. Scale bar: \SI{10.0}{\micro\meter}.}
 	\label{figure:endothelial_morphometry:image_processing:composite_image}
 \end{figure}
 
 \section{Performance evaluation}
 \label{endothelial_morphometry:performance_evaluation}
-To evaluate the segmentation performance of nuclei, cell boundaries, vWF exocytic sites and WPBs in endothelial cells, methods and metrics have been chosen based on the type of image data and how the data was used. Segmentation performance may be evaluated in a binary or a continuous manner. For example determining whether or not a particle was detected is a binary problem, whilst the accuracy in dividing spatial regions is a continuous problem where the ratio of overlap to the gold standard data is calculate.
+To evaluate the segmentation performance of nuclei, cell boundaries, vWF exocytic sites and WPBs in endothelial cells, methods and metrics have been chosen based on the type of image data and how the data was used. Segmentation performance may be evaluated in a binary or a continuous manner. For example determining whether or not a particle was detected is a binary problem, whilst the accuracy in dividing spatial regions is a continuous problem. Spatial segmentation can be evaluated by calculating the ratio of overlap between a segmentation result with a gold standard segmentation.
 
-A secondary validation of segmentation methods is also established by the consistency of biological results achieved. For example, the consistency with other methods of experimental methods such as low-throughput microscopy or enzyme-linked immunosorbent assays (ELISA) may be assessed.
+A secondary validation of segmentation methods is established by the consistency of biological results achieved. For example, the consistency with other methods of experimental methods such as low-throughput microscopy or enzyme-linked immunosorbent assays (ELISA) may be assessed.
 
 \subsection{Nucleus segmentation evaluation}
 \label{endothelial_morphometry:performance_evaluation:nucleus}
@@ -652,7 +653,7 @@ To evaluate segmentation performance a data set was prepared containing data whe
 		\label{figure:performance_evaluation:staining_2}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Cell staining protocols]{Images of plasma membrane staining acquired from two different staining protocols. Image (a) shows a wheat germ agglutinin (WGA) cell membrane stain (staining I), and image (b) shows a VE-cadherin cell-cell junction stain (staining II).}
+\caption[Cell staining protocols]{Images of plasma membrane staining acquired from two different staining protocols. Image (a) shows a wheat germ agglutinin (WGA) cell membrane stain (staining I), and image (b) shows a VE-cadherin cell-cell junction stain (staining II). Scale bars: \SI{10.0}{\micro\meter}.}
 \label{figure:performance_evaluation:staining}
 \end{figure}
 
@@ -760,26 +761,35 @@ Of the 720 hand labelled exocytic sites across the nine images, 683 were correct
 
 \section{Results}
 \label{endothelial_morphometry:results}
-Briefly presented here are results from a high-throughput study of vWF exocytic sites, included to give an indication of the experimental scale, and methods of data visualisation. This experiment included three groups of HUVECs: an unstimulated control group, a group stimulated with phorbol 12-myristate 13-acetate (PMA) \SI{100}{\nanogram\per\millilitre} for \SI{10}{\minute}, and a group stimulated with \SI{100}{\nanogram\per\millilitre} histamine for \SI{10}{\minute}. Samples were immunostained for internal vWF and VE-cadherin. Following washing, samples were incubated with fluorescently-conjugated secondary antibodies to stain for exocytosed vWF, VE-cadherin, and Hoescht to visualise the nucleus. Cells were then imaged and image data were pre-processed to remove any unusable images, following this the image processing workflow was run to segment organelles and  extract morphometric features.
+Briefly presented here are results from a high-throughput study of vWF exocytic sites, included to give an indication of the experimental scale, and methods of data visualisation. This experiment included four groups of HUVECs: an unstimulated control group, a group stimulated with \SI{100}{\nanogram\per\millilitre} thrombin for \SI{10}{\minute}, a group stimulated with phorbol 12-myristate 13-acetate (PMA) \SI{100}{\nanogram\per\millilitre} for \SI{10}{\minute}, and a group stimulated with \SI{100}{\nanogram\per\millilitre} histamine for \SI{10}{\minute}. Samples were immunostained for internal vWF and VE-cadherin. Following washing, samples were incubated with fluorescently-conjugated secondary antibodies to stain for exocytosed vWF, VE-cadherin, and Hoescht to visualise the nucleus. Cells were then imaged and image data were pre-processed to remove any unusable images, following this the image processing workflow was run to segment organelles and  extract morphometric features.
 
-In this data set 44724 exocytic were segmented; 501 from the control cell group, 18342 from the histamine stimulated group, and 26535 from the PMA stimulated group. The results shown in \autoref{figure:results:exit_sites_bar} reflect the relative exocytic strengths of the secretagogues histamine and PMA. An additional result that has led to further study is the difference in exocytic site area shown in \autoref{figure:results:exit_sites_area}, potentially suggesting different vWF exocytic mechanisms between secretagogues.
+In this data set 13110 exocytic sites were segmented; 108 from the control cell group, 3639 from thrombin stimulated group, 3068 from the histamine stimulated group, and 6295 from the PMA stimulated group. The results shown in \autoref{figure:results:exit_sites_bar} reflect the relative exocytic strengths of the secretagogues thrombin, histamine and PMA. The mean number of exocytic sites per cell is is a more useful indicator than the total number of exocytic sites for each treatment group because it is relative to the number of cells in each group, which may vary due to the cell confluency. An additional result that has led to further insight is the difference in exocytic site area shown in \autoref{figure:results:exit_sites_area}, potentially suggesting different vWF exocytic mechanisms between secretagogues.
+
+Single cell analysis also facilitates visualisation of distributions of exocytic site numbers per cell as shown in \autoref{figure:results:exit_sites_hist_g}. These normalised data could indicate a difference in cellular response between secretagogue treatments. Histamine tends to affect more cells but have a reduced secretory response, whereas thrombin and PMA effect fewer cells but cause a larger exocytic response. This is demonstrated by the increase in the number of cells with five or more exocytic sites in the thrombin and PMA groups as compared to the histamine group.
 
 \begin{figure}[htbp]\centering
 	\begin{subfigure}[b]{0.43\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{150429_Jess_actin_poisons_exocytic_sites_bar}
+		\includegraphics[width=\linewidth]{151002_Jess_sec_panel_4_exocytic_sites_bar}
 		\caption{}
 		\label{figure:results:exit_sites_bar}
 		\vspace{1ex}
 	\end{subfigure}\hfill
 	\begin{subfigure}[b]{0.43\linewidth}
 		\centering
-		\includegraphics[width=\linewidth]{150429_Jess_actin_poisons_exocytic_sites_area}
+		\includegraphics[width=\linewidth]{151002_Jess_sec_panel_4_exocytic_sites_area}
 		\caption{}
 		\label{figure:results:exit_sites_area}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Results example from vWF exocytic sites]{Exocytic sites example data from three cell groups: unistmulated, histamine stimulated and phorbol 12-myristate 13-acetate (PMA) stimulated. Plot (a) is a bar chart showing the number of exit sites in the different endothelial cell groups. Plot (b) is a density plot to show the distribution of exocytic site areas amongst the three groups, with the median exocytic site area plotted as a dashed line.}
+	\begin{subfigure}[b]{\linewidth}
+		\centering
+		\includegraphics[width=\linewidth]{151002_Jess_sec_panel_4_exocytic_sites_hist_g}
+		\caption{}
+		\label{figure:results:exit_sites_hist_g}
+		\vspace{1ex}
+	\end{subfigure}\hfill
+\caption[Results example from vWF exocytic sites]{Exocytic sites example data from four cell groups: unistmulated, thrombin, histamine stimulated and phorbol 12-myristate 13-acetate (PMA) stimulated. Plot (a) is a bar chart showing the mean number of exocytic sites per cell in the different endothelial cell groups, where error bars are calculated as the standard error on the mean. Plot (b) is a density plot to show the distribution of exocytic site areas amongst the four groups, with the median exocytic site area plotted as a dashed line. Plot (c) is a normalised distribution of the number of exocytic sites per cell for each of the four treatment groups.}
 \label{figure:results:exit_sites}
 \end{figure}
 
@@ -859,13 +869,13 @@ A $k$-fold cross-validation technique was applied prior to each machine learning
 
 In $k$-fold cross-validation the data is randomly split into $k$ equally sized subsamples. Of the $k$ subsamples, a single subsample is retained as the testing data for testing the model, and the remaining $k - 1$ subsamples are used as training data. The cross-validation process is then repeated $k$ times (the folds), with each of the $k$ subsamples used exactly once as the testing data. The $k$ results from the folds can then be averaged to produce a single heuristic estimation of the performance. In this way all observations are used for training once and testing at least once.
 
-To perform cross-validation of the labelled groups A and E (\autoref{table:endothelial_morphometry:cell_classification:cell_proportions}}, and of the 3842 cells a sample of 1200, approximately a third of the total labelled data was extracted for 5-fold cross-validation. The extracted data were shuffled and partitioned into five complimentary subsets, and a predictive model was built on each data subset. In each case, the remaining data that were not used to generate the model were used to test the performance of the model. A 5-fold cross-validation was used, such that five predictive models were built and each one's performance tested on different data partitions, reducing the variability.
+To perform cross-validation of the labelled groups A and E (\autoref{table:endothelial_morphometry:cell_classification:cell_proportions}), and of the 3842 cells a sample of 1200, approximately a third of the total labelled data was extracted for 5-fold cross-validation. The extracted data were shuffled and partitioned into five complimentary subsets, and a predictive model was built on each data subset. In each case, the remaining data that were not used to generate the model were used to test the performance of the model. A 5-fold cross-validation was used, such that five predictive models were built and each one's performance tested on different data partitions, reducing the variability.
 
 \subsection{Machine learning methods}
 Three commonly used machine learning techniques were trialled for cell classification, one based on hyperplane separation, one on decision trees, and one utilising an ensemble of decision trees. A brief introduction is given to each technique, along with the results of 5-fold cross-validation.
 
 \subsubsection{Support vector machine}
-The first supervised machine learning algorithm trialled for classification of cell types in this experiment was a support vector machine (SVM). An SVM is a discriminative classifier, formally defined by a separating hyperplane. The algorithm uses labelled training data to output an optimal hyperplane which categorises unseen examples. In essence, SVMs look for the optimal separating hyperplane between two classes, by maximising the margin between the classes~\cite{Cortes1995}. The goal in training a SVM is to find the separating hyperplane with the largest margin, generally, the larger the margin the better the generalisation of the classifier.
+The first supervised machine learning algorithm trialled for classification of cell types in this experiment was a support vector machine (SVM). A SVM is a discriminative classifier, formally defined by a separating hyperplane. The algorithm uses labelled training data to output an optimal hyperplane which categorises unseen examples. In essence, SVMs look for the optimal separating hyperplane between two classes, by maximising the margin between the classes~\cite{Cortes1995}. The goal in training a SVM is to find the separating hyperplane with the largest margin, generally, the larger the margin the better the generalisation of the classifier.
 
 SVM requires two parameters, the cost and gamma functions. The cost function controls the cost of misclassification on the training data. A small cost value reduces the number of ignored data points and leads to a soft margin, while a large cost value is stricter, but can potentially overfit the data. The gamma function is the parameter of the Gaussian radial basis function.
 
@@ -927,7 +937,7 @@ The cross-validation gave a sensitivity of $0.77$ and a specificity of $0.85$. T
 \subsubsection{Random forests}
 The third learning method trialled for cell classification is an extension of decision tree cell classification called the random forest. This ensemble based method uses an average over multiple trees to improve the predictive ability of the classifier and limit over-fitting of the data. Rather than growing a single tree with many branches, a random forest builds an ensemble of shallower trees, where different weights are assigned to each feature~\cite{Breiman2001}. Many permutations of trees are generated by using different subsets of the data. This leads to different classification results in each tree depending on the bias of the data subset.
 
-The key idea of an ensemble random forest decision tree implementation is that errors in shallow decision trees will be washed out when aggregated, and leading to a more accurate prediction. \autoref{figure:endothelial_morphometry:random_forest_error_rate} shows how the residual mean squared error rates of the random forest algorithm are reduced as the number of trees increase. For this cell classification problem, the random forest algorithm was implemented in the R programming language~\cite{RCoreTeam2014} version 3.2 with 500 trees and 3 variables considered at each split.
+The key idea of an ensemble random forest decision tree implementation is that errors in shallow decision trees will be washed out when aggregated leading to a more accurate prediction. \autoref{figure:endothelial_morphometry:random_forest_error_rate} shows how the residual mean squared error rates of the random forest algorithm are reduced as the number of trees increase. For this cell classification problem, the random forest algorithm was implemented in the R programming language~\cite{RCoreTeam2014} version 3.2 with 500 trees and 3 variables considered at each split.
 
 \begin{figure}[htbp]\centering
 	\begin{subfigure}[b]{0.70\linewidth}
@@ -1019,7 +1029,7 @@ A measure of the error of each method was calculated by summing the cumulative e
 
 \section{Summary}
 \label{endothelial_morphometry:summary}
-This chapter presenting a high-throughput morphometric analysis of endothelial organelles is introduced in \autoref{endothelial_morphometry:introduction}, with a description of equipment and image acquisition methods given in \autoref{endothelial_morphometry:image_acquisition}. In \autoref{endothelial_morphometry:image_processing} methods were presented to segment and extract morphometric features from microscopy images of endothelial cells and their prominent organelles. A set of quantitative evaluation metrics to asses the performance of these segmentation methods is described in \autoref{endothelial_morphometry:performance_evaluation}.
+This chapter presented a high-throughput morphometric analysis of endothelial organelles is introduced in \autoref{endothelial_morphometry:introduction}, with a description of equipment and image acquisition methods given in \autoref{endothelial_morphometry:image_acquisition}. In \autoref{endothelial_morphometry:image_processing} methods were presented to segment and extract morphometric features from microscopy images of endothelial cells and their prominent organelles. A set of quantitative evaluation metrics to asses the performance of these segmentation methods is described in \autoref{endothelial_morphometry:performance_evaluation}.
 
 The segmentation method was able to detect nuclei with a high degree of accuracy, where the precision, recall and F\textsubscript{1} scores for detection of nuclei within images were each 0.97 (see \autoref{table:endothelial_morphometry:performance_metrics}). Cell segmentation presented a more challenging problem since accurate contour detection was required, and multiple plasma membrane stains were used. The most accurate method of cell segmentation gave a Dice score of 0.78 and a Jaccard score of 0.69 when evaluated over 517 hand labelled gold standard cells. Finally an evaluation of the performance of detection of vWF exocytic sites was performed using a gold standard set of 720 hand labelled vWF exocytic sites from nine images. The automatic segmentation method was able to correctly detect 683 of the 720 sites, giving a recall of 0.95, a precision score to 0.88, and an F\textsubscript{1} score of 0.91.
 

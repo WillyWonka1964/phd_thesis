@@ -10,7 +10,7 @@
 \nomenclature[z-ATP]{$ATP$}{adenosine-5'-triphosphate}
 \nomenclature[z-GDP]{$GDP$}{guanosine diphosphate}
 \nomenclature[z-GTP]{$GTP$}{guanosine-5'-triphosphate}
-\nomenclature[z-PMA]{$PMA$}{phosphate-buffered saline}
+\nomenclature[z-PMA]{$PBS$}{phosphate-buffered saline}
 
 Platelets contain alpha-granules, dense-granules and lysosomes that secrete bioactive molecules important for many platelet functions. Depletion or deficiencies in these granules are associated with bleeding disorders. A commonly applied approach to diagnose patients with bleeding disorders caused by dense-granule defects is to image a sample of their platelets with an electron microscope and count the number of dense-granules. This approach requires specialised equipment and techniques, it is laborious, is difficult to automate in a clinical setting, and is highly operator-dependent. Developments in super-resolution microscopy have provided advantageous alternative imaging techniques that can be used to image platelet dense-granules. Imaging of platelets and their dense-granules via super-resolution microscopy provides the basis of a novel diagnostic tool to identify patients with bleeding disorders.
 
@@ -56,7 +56,7 @@ Techniques for diagnosing platelet granule disorders have been limited to either
 		\label{figure:introduction:em_platelet_d}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Whole mount electron microscopy images of platelets]{Whole mount electron microscopy images of platelets. Image (a) is an example of a single platelet from one of 7 healthy volunteers. Images (b, c and d) are examples obtained from each of HPS patients one, two and three, respectively. Note the lack of dense-granules (black spots) seen in the HPS patients (b, c and d) compared to the example from the healthy volunteer in image (a). Scale bars: \SIunit{1}{\micro\meter}. Adapted from Westmoreland et al., 2016~\cite{Westmoreland2016}.}
+\caption[Whole mount electron microscopy images of platelets]{Whole mount electron microscopy images of platelets. Image (a) is an example of a single platelet from one of 7 healthy volunteers. Images (b, c and d) are examples obtained from each of HPS patients one, two and three, respectively. Note the lack of dense-granules (black spots) seen in the HPS patients (b, c and d) compared to the example from the healthy volunteer in image (a). Scale bars: \SIunit{1.0}{\micro\meter}. Adapted from Westmoreland et al., 2016~\cite{Westmoreland2016}.}
 \label{figure:introduction:em_platelet}
 \end{figure}
 
@@ -99,7 +99,7 @@ Each super-resolution image was reconstructed from a sequence of nine images acq
 		\caption{}
 		\label{figure:image_acquisition:sim_platelets:hps_3}
 	\end{subfigure}
-	\caption[Structured illumination microscopy images of platelets]{Structured illumination microscopy (SIM) example images of platelets from one of seven healthy volunteers in image (a). Image (b, c and d) were obtained from Hermansky-Pudlak (HPS) patients 1, 2 and 3, respectively. The two-color channels were acquired sequentially under excitation of the sample with laser light at 488 nm (CD63) and 561 nm (tubulin); z-stacks are displayed as maximum intensity projections and in the lookup table has been inverted in these images for clarity, where tubulin is cyan and CD63 is magenta coloured.}
+	\caption[Structured illumination microscopy images of platelets]{Structured illumination microscopy (SIM) example images of platelets from one of seven healthy volunteers in image (a). Image (b, c and d) were obtained from Hermansky-Pudlak (HPS) patients 1, 2 and 3, respectively. The two-color channels were acquired sequentially under excitation of the sample with laser light at 488 nm (CD63) and 561 nm (tubulin); z-stacks are displayed as maximum intensity projections and in the lookup table has been inverted in these images for clarity, where tubulin is cyan and CD63 is magenta coloured. Scale bars: \SI{1.0}{\micro\meter}.}
 	\label{figure:image_acquisition:sim_platelets}
 \end{figure}
 
@@ -243,7 +243,7 @@ The segmentation of platelets was the first step in the image processing pipelin
 		\label{figure:image_processing:platelet:tub_11}
 		\vspace{1ex}
 	\end{subfigure}
-\caption[Image processing for platelet segmentation]{This figure shows the  major sequence of image processes involved in segmentation of platelets: image (a) is the raw image, and image (b) after the addition of the CD63 channel and following image pre-processing by de-noising, a Gaussian blur and contrast enhancement. Image (c) depicts the thresholding step using the minimum error threshold. Image (d) shows the binary hole fill, and image (e) following a watershed transform. Image (f) was obtained after a morphological filter, (g) after a binary erosion. Image (h) shows a labelled image and finally image (i) shows the image output with segmentation contours.}
+\caption[Image processing for platelet segmentation]{This figure shows the  major sequence of image processes involved in segmentation of platelets: image (a) is the raw image, and image (b) after the addition of the CD63 channel and following image pre-processing by de-noising, a Gaussian blur and contrast enhancement. Image (c) depicts the thresholding step using the minimum error threshold. Image (d) shows the binary hole fill, and image (e) following a watershed transform. Image (f) was obtained after a morphological filter, (g) after a binary erosion. Image (h) shows a labelled image and finally image (i) shows the image output with segmentation contours. Scale bars: \SI{10.0}{\micro\meter}.}
 \label{figure:image_processing:platelets}
 \end{figure}
 
@@ -273,7 +273,7 @@ Segmentation of CD63 positive structures marking granules was the second step in
 
 \begin{figure}[htbp]\centering
 	\begin{subfigure}[b]{0.45\linewidth}
-		\begin{tikzpicture}[spy using outlines={circle,yellow,solid,magnification=4,size=2.7cm, connect spies}]
+		\begin{tikzpicture}[spy using outlines={rectangle,yellow,solid,magnification=4,size=2.7cm, connect spies}]
 		\node[anchor=south west,inner sep=0]  at (0,0) {\includegraphics[width=\textwidth]{CD63_0}};
 		\spy [every spy on node/.append style={ultra thick}] on (3.9,3.9) in node [right] at (4.3,5.7);
 		\spy [every spy on node/.append style={ultra thick}] on (1.8,4.6) in node [right] at (0.1,1.4);
@@ -283,7 +283,7 @@ Segmentation of CD63 positive structures marking granules was the second step in
 		\vspace{1ex}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\linewidth}
-		\begin{tikzpicture}[spy using outlines={circle,yellow,solid,magnification=4,size=2.7cm, connect spies}]
+		\begin{tikzpicture}[spy using outlines={rectangle,yellow,solid,magnification=4,size=2.7cm, connect spies}]
 		\node[anchor=south west,inner sep=0]  at (0,0) {\includegraphics[width=\textwidth]{CD63_1}};
 		\spy [every spy on node/.append style={ultra thick}] on (3.9,3.9) in node [right] at (4.3,5.7);
 		\spy [every spy on node/.append style={ultra thick}] on (1.8,4.6) in node [right] at (0.1,1.4);
@@ -293,7 +293,7 @@ Segmentation of CD63 positive structures marking granules was the second step in
 		\vspace{1ex}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\linewidth}
-		\begin{tikzpicture}[spy using outlines={circle,yellow,solid,magnification=4,size=2.7cm, connect spies}]
+		\begin{tikzpicture}[spy using outlines={rectangle,yellow,solid,magnification=4,size=2.7cm, connect spies}]
 		\node[anchor=south west,inner sep=0]  at (0,0) {\includegraphics[width=\textwidth]{CD63_3}};
 		\spy [every spy on node/.append style={ultra thick}] on (3.9,3.9) in node [right] at (4.3,5.7);
 		\spy [every spy on node/.append style={ultra thick}] on (1.8,4.6) in node [right] at (0.1,1.4);
@@ -303,7 +303,7 @@ Segmentation of CD63 positive structures marking granules was the second step in
 		\vspace{1ex}
 	\end{subfigure}
 	\begin{subfigure}[b]{0.45\linewidth}
-		\begin{tikzpicture}[spy using outlines={circle,yellow,solid,magnification=4,size=2.7cm, connect spies}]
+		\begin{tikzpicture}[spy using outlines={rectangle,yellow,solid,magnification=4,size=2.7cm, connect spies}]
 		\node[anchor=south west,inner sep=0]  at (0,0) {\includegraphics[width=\textwidth]{CD63_4}};
 		\spy [every spy on node/.append style={ultra thick}] on (3.9,3.9) in node [right] at (4.3,5.7);
 		\spy [every spy on node/.append style={ultra thick}] on (1.8,4.6) in node [right] at (0.1,1.4);
@@ -312,7 +312,7 @@ Segmentation of CD63 positive structures marking granules was the second step in
 		\label{figure:platelets:image_processing:CD63_4}
 		\vspace{1ex}
 	\end{subfigure}
-	\caption[CD63 positive-granule segmentation]{The major sequence of processes involved in segmentation of CD63-positive granules: image (a) is the raw CD63 channel image, image (b) is after Moment-preserving thresholding, image (c) is following a watershed transform, and finally image (d) shows segmentation contours on the original image. The yellow circles are magnified regions to demonstrate the segmentation process better.}
+	\caption[CD63 positive-granule segmentation]{The major sequence of processes involved in segmentation of CD63-positive granules: image (a) is the raw CD63 channel image, image (b) is after Moment-preserving thresholding, image (c) is following a watershed transform, and finally image (d) shows segmentation contours on the original image. The yellow circles are magnified regions to demonstrate the segmentation process better. Scale bars: \SI{10.0}{\micro\meter}; magnified regions: \SI{3.3\times3.3}{\micro\meter}.}
 	\label{figure:image_processing:granules}
 \end{figure}
 
@@ -357,7 +357,7 @@ The radial profiles of HPS patient platelets was compared to radial profiles of 
 			\node [image node] {\includegraphics[width=0.32\textwidth]{cd63Overlay_patient_1_patientc_WLR_SIM_MIP_16_radial}};
 			\zoombox[magnification=9,color code=yellow, dashed]{0.632, 0.760}
 		\end{tikzpicture}
-	\caption[Surface accumulation of CD63 in Hermansky-Pudlak syndrome patients]{Examples showing the CD63 at the platelet surface in Hermansky-Pudlak syndrome (HPS) platelets. A representative image with tubulin (red) and CD63 (green) staining is shown from the controls in image (a), the CD63 stain of this is shown in image (b), and a representative platelet with concentric rings magnified from the image in (c). Similarly a representative image from a Hermansky-Pudlak syndrome (HPS) patient is shown in image (d), the CD63 stain of this is shown in image (e), and a representative platelet with concentric rings magnified from the image in (f). The accumulation of CD63 at the platelet surface can be seen in the patient images. In these images all platelet with white rings indicate the outer ring in the concentric radial profile analysis, only platelets with a white ring were segmented and analysed in the radial profile analysis.}
+	\caption[Surface accumulation of CD63 in Hermansky-Pudlak syndrome patients]{Examples showing the CD63 at the platelet surface in Hermansky-Pudlak syndrome (HPS) platelets. A representative image with tubulin (red) and CD63 (green) staining is shown from the controls in image (a), the CD63 stain of this is shown in image (b), and a \SI{9.0\times 9.0}{\micro\meter} magnified region showing a representative platelet with concentric rings is shown in image (c). Similarly a representative image from a Hermansky-Pudlak syndrome (HPS) patient is shown in image (d), the CD63 stain of this is shown in image (e), and a \SI{9.0\times 9.0}{\micro\meter} magnified region showing a representative platelet with concentric rings is shown in image (f). The accumulation of CD63 at the platelet surface can be seen in the patient images. In these images all platelet with white rings indicate the outer ring in the concentric radial profile analysis, only platelets with a white ring were segmented and analysed in the radial profile analysis.}
 	\label{figure:platelets:radial:radial_overlay}
 \end{figure}
 
@@ -375,7 +375,7 @@ Platelet samples from three HPS patients and seven healthy volunteers were obtai
 
 In each of the 194 images in this proof-of-principle dataset segmentation of platelets and CD63-positive structures was performed. The number of CD63-positive objects was counted for each platelet, and a host of additional features were also collected. The number of CD63-positive structures can be used to distinguish patients with dense-granule deficiencies from controls.
 
-\autoref{figure:platelets:results:count_ecdf} shows the ability of the SIM method to distinguish between platelets of healthy volunteers and HPS patients. The cumulative frequency distribution plot shows the three HPS patients shifted left of the healthy controls. All of the HPS patients had fewer CD63 dense-granules than the healthy volunteers. The mean number of granules per platelet provides a striking diagnostic indicator, across the controls the mean number of CD63 positive structures per platelet is 6.8$\pm$0.1, compared to 2.4$\pm$0.1 in patients with HPS.
+\autoref{figure:platelets:results:count_ecdf} shows the ability of the SIM method to distinguish between platelets of healthy volunteers and HPS patients. The cumulative frequency distribution plot shows the three HPS patients shifted left of the healthy controls. All of the HPS patients had fewer CD63 dense-granules than the healthy volunteers. The mean number of granules per platelet provides a striking diagnostic indicator, across the controls the mean number of CD63 positive structures per platelet is 6.8$\pm$0.5, compared to 2.4$\pm$0.5 in patients with HPS.
 
 \begin{figure}[htbp]{}
 	\centering
